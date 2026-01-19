@@ -3,143 +3,1033 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="MISCON26 - Watchmen On The Wall. A transformative student conference by PCM (Public Campus Ministries) under the North Zimbabwe Conference of the Seventh-day Adventist Church. April 3-6, 2026.">
+        
+        <title>MISCON26 | Watchmen On The Wall</title>
 
-        <title>Laravel</title>
-
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+        
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
     </head>
-    <body class="antialiased font-sans">
-        <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" />
-            <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-                <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-                        <div class="flex lg:justify-center lg:col-start-2">
-                            <svg class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]" viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="currentColor"/></svg>
+    <body class="antialiased overflow-x-hidden" x-data="{ mobileMenuOpen: false, showScrollTop: false }" 
+          @scroll.window="showScrollTop = window.scrollY > 500">
+        
+        <!-- Animated Background -->
+        <div class="fixed inset-0 bg-mesh noise-overlay -z-10"></div>
+        
+        <!-- Floating Particles -->
+        <div class="fixed inset-0 overflow-hidden pointer-events-none -z-5">
+            <div class="particle w-2 h-2 bg-miscon-gold top-[10%] left-[10%] animation-delay-100"></div>
+            <div class="particle w-3 h-3 bg-pcm-purple top-[20%] right-[15%] animation-delay-300"></div>
+            <div class="particle w-2 h-2 bg-pcm-pink top-[40%] left-[5%] animation-delay-500"></div>
+            <div class="particle w-4 h-4 bg-miscon-gold/30 top-[60%] right-[10%] animation-delay-200"></div>
+            <div class="particle w-2 h-2 bg-pcm-blue top-[80%] left-[20%] animation-delay-400"></div>
+            <div class="particle w-3 h-3 bg-miscon-gold/50 top-[70%] right-[25%] animation-delay-600"></div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" 
+             :class="window.scrollY > 50 ? 'glass-dark py-3' : 'py-6'" 
+             x-data="{ scrolled: false }"
+             @scroll.window="scrolled = window.scrollY > 50">
+            <div class="container mx-auto px-6">
+                <div class="flex items-center justify-between">
+                    <!-- Logo -->
+                    <a href="#" class="flex items-center gap-3 group">
+                        <div class="relative w-12 h-14 transition-transform duration-300 group-hover:scale-110">
+                            <!-- PCM Shield Logo -->
+                            <svg viewBox="0 0 100 120" class="w-full h-full">
+                                <defs>
+                                    <linearGradient id="pcmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3b82f6"/>
+                                        <stop offset="50%" style="stop-color:#8b5cf6"/>
+                                        <stop offset="100%" style="stop-color:#ec4899"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Shield shape -->
+                                <path d="M50 5 L95 20 L95 60 Q95 95 50 115 Q5 95 5 60 L5 20 Z" 
+                                      fill="url(#pcmGradient)" stroke="white" stroke-width="3"/>
+                                <!-- PCM Text -->
+                                <text x="50" y="45" text-anchor="middle" fill="white" font-family="Outfit" font-weight="bold" font-size="20">PCM</text>
+                                <!-- Book icon -->
+                                <path d="M30 60 L50 55 L70 60 L70 80 L50 75 L30 80 Z" fill="none" stroke="white" stroke-width="2"/>
+                                <line x1="50" y1="55" x2="50" y2="75" stroke="white" stroke-width="2"/>
+                                <!-- Graduation cap -->
+                                <path d="M35 50 L50 42 L65 50 L50 58 Z" fill="white"/>
+                                <line x1="62" y1="50" x2="62" y2="60" stroke="white" stroke-width="2"/>
+                            </svg>
                         </div>
-                        @if (Route::has('login'))
-                            <livewire:welcome.navigation />
-                        @endif
-                    </header>
+                        <div class="hidden sm:block">
+                            <span class="text-xl font-bold tracking-tight">MISCON</span>
+                            <span class="text-xl font-bold text-miscon-gold">26</span>
+                        </div>
+                    </a>
 
-                    <main class="mt-6">
-                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <a
-                                href="https://laravel.com/docs"
-                                id="docs-card"
-                                class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div id="screenshot-container" class="relative flex w-full flex-1 items-stretch">
-                                    <img
-                                        src="https://laravel.com/assets/img/welcome/docs-light.svg"
-                                        alt="Laravel documentation screenshot"
-                                        class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
-                                        onerror="
-                                            document.getElementById('screenshot-container').classList.add('!hidden');
-                                            document.getElementById('docs-card').classList.add('!row-span-1');
-                                            document.getElementById('docs-card-content').classList.add('!flex-row');
-                                            document.getElementById('background').classList.add('!hidden');
-                                        "
-                                    />
-                                    <img
-                                        src="https://laravel.com/assets/img/welcome/docs-dark.svg"
-                                        alt="Laravel documentation screenshot"
-                                        class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block"
-                                    />
-                                    <div
-                                        class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"
-                                    ></div>
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center gap-8">
+                        <a href="#about" class="nav-link text-sm font-medium uppercase tracking-wider">About</a>
+                        <a href="#speakers" class="nav-link text-sm font-medium uppercase tracking-wider">Speakers</a>
+                        <a href="#schedule" class="nav-link text-sm font-medium uppercase tracking-wider">Schedule</a>
+                        <a href="#registration" class="nav-link text-sm font-medium uppercase tracking-wider">Register</a>
+                        <a href="#contact" class="btn-primary text-sm font-semibold uppercase tracking-wider">
+                            <span class="relative z-10">Get Tickets</span>
+                        </a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden relative w-10 h-10 flex items-center justify-center">
+                        <div class="w-6 flex flex-col gap-1.5 transition-all duration-300" :class="mobileMenuOpen ? 'gap-0' : ''">
+                            <span class="w-full h-0.5 bg-white transition-all duration-300 origin-center" 
+                                  :class="mobileMenuOpen ? 'rotate-45 translate-y-0.5' : ''"></span>
+                            <span class="w-full h-0.5 bg-white transition-all duration-300" 
+                                  :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
+                            <span class="w-full h-0.5 bg-white transition-all duration-300 origin-center" 
+                                  :class="mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="md:hidden glass-dark mt-4 mx-6 rounded-2xl p-6"
+                 x-cloak>
+                <div class="flex flex-col gap-4">
+                    <a href="#about" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10">About</a>
+                    <a href="#speakers" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10">Speakers</a>
+                    <a href="#schedule" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10">Schedule</a>
+                    <a href="#registration" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10">Register</a>
+                    <a href="#contact" class="btn-primary text-center mt-2">Get Tickets</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+            <!-- Hero Background Image Overlay -->
+            <div class="absolute inset-0 hero-gradient"></div>
+            
+            <!-- Decorative Elements -->
+            <div class="absolute top-20 left-10 w-72 h-72 bg-pcm-purple/20 rounded-full blur-[100px] animate-pulse-slow"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-pcm-pink/20 rounded-full blur-[120px] animate-pulse-slow animation-delay-500"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-miscon-gold/10 rounded-full animate-spin-slow"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-pcm-purple/10 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-5xl mx-auto text-center">
+                    <!-- Pre-title -->
+                    <div class="animate-slide-down">
+                        <span class="inline-block px-6 py-2 rounded-full glass text-sm font-medium tracking-widest uppercase mb-8">
+                            North Zimbabwe Conference Presents
+                        </span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h1 class="animate-scale-in animation-delay-200">
+                        <span class="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight">
+                            MISCON
+                            <span class="gradient-text">26</span>
+                        </span>
+                    </h1>
+
+                    <!-- Theme -->
+                    <div class="mt-8 animate-slide-up animation-delay-400">
+                        <h2 class="font-script text-4xl sm:text-5xl md:text-6xl text-miscon-gold text-shadow">
+                            Watchmen
+                        </h2>
+                        <p class="text-xl sm:text-2xl md:text-3xl font-light tracking-[0.3em] uppercase mt-2">
+                            On The <span class="font-bold text-miscon-gold">Wall</span>
+                        </p>
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="mt-12 flex flex-wrap justify-center gap-6 animate-fade-in animation-delay-600">
+                        <div class="flex items-center gap-2 text-white/80">
+                            <svg class="w-5 h-5 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span class="font-medium">April 3-6, 2026</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-white/80">
+                            <svg class="w-5 h-5 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-medium">Amai Mugabe Group of Schools</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up animation-delay-800">
+                        <a href="#registration" class="btn-primary group">
+                            <span class="relative z-10 flex items-center gap-2">
+                                Register Now
+                                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </span>
+                        </a>
+                        <a href="#about" class="btn-outline">Learn More</a>
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <div class="mt-16 animate-fade-in animation-delay-1000" x-data="countdown()">
+                        <p class="text-sm uppercase tracking-widest text-white/60 mb-6">Event Starts In</p>
+                        <div class="flex justify-center gap-4 sm:gap-6">
+                            <div class="countdown-box">
+                                <span class="text-3xl sm:text-4xl font-bold gradient-text" x-text="days">00</span>
+                                <p class="text-xs uppercase tracking-wider text-white/60 mt-2">Days</p>
+                            </div>
+                            <div class="countdown-box">
+                                <span class="text-3xl sm:text-4xl font-bold gradient-text" x-text="hours">00</span>
+                                <p class="text-xs uppercase tracking-wider text-white/60 mt-2">Hours</p>
+                            </div>
+                            <div class="countdown-box">
+                                <span class="text-3xl sm:text-4xl font-bold gradient-text" x-text="minutes">00</span>
+                                <p class="text-xs uppercase tracking-wider text-white/60 mt-2">Minutes</p>
+                            </div>
+                            <div class="countdown-box">
+                                <span class="text-3xl sm:text-4xl font-bold gradient-text" x-text="seconds">00</span>
+                                <p class="text-xs uppercase tracking-wider text-white/60 mt-2">Seconds</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+                <a href="#about" class="flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors">
+                    <span class="text-xs uppercase tracking-widest">Scroll</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 relative">
+            <div class="container mx-auto px-6">
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <!-- Left Content -->
+                        <div class="reveal">
+                            <span class="inline-block px-4 py-1 rounded-full bg-miscon-gold/10 text-miscon-gold text-sm font-medium tracking-wider uppercase mb-6">
+                                About The Event
+                            </span>
+                            <h2 class="text-4xl sm:text-5xl font-bold leading-tight mb-6">
+                                Rise As 
+                                <span class="gradient-text">Watchmen</span>
+                                <br>In Your Generation
+                            </h2>
+                            <p class="text-lg text-white/70 leading-relaxed mb-6">
+                                MISCON26 is the premier student conference organized by <strong class="text-white">Public Campus Ministries (PCM)</strong> 
+                                under the North Zimbabwe Conference of the Seventh-day Adventist Church.
+                            </p>
+                            <p class="text-lg text-white/70 leading-relaxed mb-8">
+                                This year's theme, <strong class="text-miscon-gold">"Watchmen On The Wall"</strong>, calls upon 
+                                young people to stand as spiritual guardians in their campuses, communities, and nations. Join us for 
+                                four transformative days of powerful preaching, worship, fellowship, and spiritual renewal.
+                            </p>
+                            
+                            <!-- Stats -->
+                            <div class="grid grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <span class="block text-4xl font-bold gradient-text">4</span>
+                                    <span class="text-sm text-white/60">Days</span>
                                 </div>
-
-                                <div class="relative flex items-center gap-6 lg:items-end">
-                                    <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                        <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                            <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#FF2D20" d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z"/><path fill="#FF2D20" d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z"/></svg>
-                                        </div>
-
-                                        <div class="pt-3 sm:pt-5 lg:pt-0">
-                                            <h2 class="text-xl font-semibold text-black dark:text-white">Documentation</h2>
-
-                                            <p class="mt-4 text-sm/relaxed">
-                                                Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                                <div class="text-center">
+                                    <span class="block text-4xl font-bold gradient-text">6+</span>
+                                    <span class="text-sm text-white/60">Speakers</span>
                                 </div>
-                            </a>
-
-                            <a
-                                href="https://laracasts.com"
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g fill="#FF2D20"><path d="M24 8.25a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v12a2.5 2.5 0 0 0 2.5 2.5h19a2.5 2.5 0 0 0 2.5-2.5v-12Zm-7.765 5.868a1.221 1.221 0 0 1 0 2.264l-6.626 2.776A1.153 1.153 0 0 1 8 18.123v-5.746a1.151 1.151 0 0 1 1.609-1.035l6.626 2.776ZM19.564 1.677a.25.25 0 0 0-.177-.427H15.6a.106.106 0 0 0-.072.03l-4.54 4.543a.25.25 0 0 0 .177.427h3.783c.027 0 .054-.01.073-.03l4.543-4.543ZM22.071 1.318a.047.047 0 0 0-.045.013l-4.492 4.492a.249.249 0 0 0 .038.385.25.25 0 0 0 .14.042h5.784a.5.5 0 0 0 .5-.5v-2a2.5 2.5 0 0 0-1.925-2.432ZM13.014 1.677a.25.25 0 0 0-.178-.427H9.101a.106.106 0 0 0-.073.03l-4.54 4.543a.25.25 0 0 0 .177.427H8.4a.106.106 0 0 0 .073-.03l4.54-4.543ZM6.513 1.677a.25.25 0 0 0-.177-.427H2.5A2.5 2.5 0 0 0 0 3.75v2a.5.5 0 0 0 .5.5h1.4a.106.106 0 0 0 .073-.03l4.54-4.543Z"/></g></svg>
-                                </div>
-
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laracasts</h2>
-
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                    </p>
-                                </div>
-
-                                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                            </a>
-
-                            <a
-                                href="https://laravel-news.com"
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g fill="#FF2D20"><path d="M8.75 4.5H5.5c-.69 0-1.25.56-1.25 1.25v4.75c0 .69.56 1.25 1.25 1.25h3.25c.69 0 1.25-.56 1.25-1.25V5.75c0-.69-.56-1.25-1.25-1.25Z"/><path d="M24 10a3 3 0 0 0-3-3h-2V2.5a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2V20a3.5 3.5 0 0 0 3.5 3.5h17A3.5 3.5 0 0 0 24 20V10ZM3.5 21.5A1.5 1.5 0 0 1 2 20V3a.5.5 0 0 1 .5-.5h14a.5.5 0 0 1 .5.5v17c0 .295.037.588.11.874a.5.5 0 0 1-.484.625L3.5 21.5ZM22 20a1.5 1.5 0 1 1-3 0V9.5a.5.5 0 0 1 .5-.5H21a1 1 0 0 1 1 1v10Z"/><path d="M12.751 6.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 7.3v-.5a.75.75 0 0 1 .751-.753ZM12.751 10.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 11.3v-.5a.75.75 0 0 1 .751-.753ZM4.751 14.047h10a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-10A.75.75 0 0 1 4 15.3v-.5a.75.75 0 0 1 .751-.753ZM4.75 18.047h7.5a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-7.5A.75.75 0 0 1 4 19.3v-.5a.75.75 0 0 1 .75-.753Z"/></g></svg>
-                                </div>
-
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laravel News</h2>
-
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                    </p>
-                                </div>
-
-                                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                            </a>
-
-                            <div class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <g fill="#FF2D20">
-                                            <path
-                                                d="M16.597 12.635a.247.247 0 0 0-.08-.237 2.234 2.234 0 0 1-.769-1.68c.001-.195.03-.39.084-.578a.25.25 0 0 0-.09-.267 8.8 8.8 0 0 0-4.826-1.66.25.25 0 0 0-.268.181 2.5 2.5 0 0 1-2.4 1.824.045.045 0 0 0-.045.037 12.255 12.255 0 0 0-.093 3.86.251.251 0 0 0 .208.214c2.22.366 4.367 1.08 6.362 2.118a.252.252 0 0 0 .32-.079 10.09 10.09 0 0 0 1.597-3.733ZM13.616 17.968a.25.25 0 0 0-.063-.407A19.697 19.697 0 0 0 8.91 15.98a.25.25 0 0 0-.287.325c.151.455.334.898.548 1.328.437.827.981 1.594 1.619 2.28a.249.249 0 0 0 .32.044 29.13 29.13 0 0 0 2.506-1.99ZM6.303 14.105a.25.25 0 0 0 .265-.274 13.048 13.048 0 0 1 .205-4.045.062.062 0 0 0-.022-.07 2.5 2.5 0 0 1-.777-.982.25.25 0 0 0-.271-.149 11 11 0 0 0-5.6 2.815.255.255 0 0 0-.075.163c-.008.135-.02.27-.02.406.002.8.084 1.598.246 2.381a.25.25 0 0 0 .303.193 19.924 19.924 0 0 1 5.746-.438ZM9.228 20.914a.25.25 0 0 0 .1-.393 11.53 11.53 0 0 1-1.5-2.22 12.238 12.238 0 0 1-.91-2.465.248.248 0 0 0-.22-.187 18.876 18.876 0 0 0-5.69.33.249.249 0 0 0-.179.336c.838 2.142 2.272 4 4.132 5.353a.254.254 0 0 0 .15.048c1.41-.01 2.807-.282 4.117-.802ZM18.93 12.957l-.005-.008a.25.25 0 0 0-.268-.082 2.21 2.21 0 0 1-.41.081.25.25 0 0 0-.217.2c-.582 2.66-2.127 5.35-5.75 7.843a.248.248 0 0 0-.09.299.25.25 0 0 0 .065.091 28.703 28.703 0 0 0 2.662 2.12.246.246 0 0 0 .209.037c2.579-.701 4.85-2.242 6.456-4.378a.25.25 0 0 0 .048-.189 13.51 13.51 0 0 0-2.7-6.014ZM5.702 7.058a.254.254 0 0 0 .2-.165A2.488 2.488 0 0 1 7.98 5.245a.093.093 0 0 0 .078-.062 19.734 19.734 0 0 1 3.055-4.74.25.25 0 0 0-.21-.41 12.009 12.009 0 0 0-10.4 8.558.25.25 0 0 0 .373.281 12.912 12.912 0 0 1 4.826-1.814ZM10.773 22.052a.25.25 0 0 0-.28-.046c-.758.356-1.55.635-2.365.833a.25.25 0 0 0-.022.48c1.252.43 2.568.65 3.893.65.1 0 .2 0 .3-.008a.25.25 0 0 0 .147-.444c-.526-.424-1.1-.917-1.673-1.465ZM18.744 8.436a.249.249 0 0 0 .15.228 2.246 2.246 0 0 1 1.352 2.054c0 .337-.08.67-.23.972a.25.25 0 0 0 .042.28l.007.009a15.016 15.016 0 0 1 2.52 4.6.25.25 0 0 0 .37.132.25.25 0 0 0 .096-.114c.623-1.464.944-3.039.945-4.63a12.005 12.005 0 0 0-5.78-10.258.25.25 0 0 0-.373.274c.547 2.109.85 4.274.901 6.453ZM9.61 5.38a.25.25 0 0 0 .08.31c.34.24.616.561.8.935a.25.25 0 0 0 .3.127.631.631 0 0 1 .206-.034c2.054.078 4.036.772 5.69 1.991a.251.251 0 0 0 .267.024c.046-.024.093-.047.141-.067a.25.25 0 0 0 .151-.23A29.98 29.98 0 0 0 15.957.764a.25.25 0 0 0-.16-.164 11.924 11.924 0 0 0-2.21-.518.252.252 0 0 0-.215.076A22.456 22.456 0 0 0 9.61 5.38Z"
-                                            />
-                                        </g>
-                                    </svg>
-                                </div>
-
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Vibrant Ecosystem</h2>
-
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]">Forge</a>, <a href="https://vapor.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Vapor</a>, <a href="https://nova.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Nova</a>, <a href="https://envoyer.io" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Envoyer</a>, and <a href="https://herd.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Herd</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Echo</a>, <a href="https://laravel.com/docs/horizon" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Telescope</a>, and more.
-                                    </p>
+                                <div class="text-center">
+                                    <span class="block text-4xl font-bold gradient-text">1000+</span>
+                                    <span class="text-sm text-white/60">Expected</span>
                                 </div>
                             </div>
                         </div>
-                    </main>
 
-                    <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </footer>
+                        <!-- Right Content - Featured Image -->
+                        <div class="reveal-right relative">
+                            <div class="relative rounded-3xl overflow-hidden glow-pcm">
+                                <div class="aspect-[4/5] bg-gradient-to-br from-pcm-blue via-pcm-purple to-pcm-pink p-1 rounded-3xl">
+                                    <div class="w-full h-full bg-miscon-navy rounded-3xl flex items-center justify-center overflow-hidden">
+                                        <img src="{{ asset('images/main-speaker.jpg') }}" 
+                                             alt="Dr. Kabani - Main Speaker" 
+                                             class="w-full h-full object-cover"
+                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="hidden flex-col items-center justify-center text-center p-8">
+                                            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-pcm-blue via-pcm-purple to-pcm-pink flex items-center justify-center mb-6">
+                                                <span class="text-4xl font-bold">DK</span>
+                                            </div>
+                                            <h3 class="text-2xl font-bold">Dr. Kabani</h3>
+                                            <p class="text-miscon-gold">Main Speaker</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Floating Badge -->
+                                <div class="absolute -bottom-4 -right-4 glass rounded-2xl p-4 animate-float">
+                                    <p class="text-sm font-medium text-miscon-gold">Main Speaker</p>
+                                    <p class="text-xl font-bold">Dr. Kabani</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Decorative Elements -->
+                            <div class="absolute -top-8 -left-8 w-24 h-24 border-2 border-miscon-gold/30 rounded-full float-element-delayed"></div>
+                            <div class="absolute -bottom-8 -right-8 w-16 h-16 bg-miscon-gold/20 rounded-full blur-xl"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Speakers Section -->
+        <section id="speakers" class="py-24 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-0 left-1/4 w-96 h-96 bg-pcm-purple/10 rounded-full blur-[150px]"></div>
+                <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-pcm-pink/10 rounded-full blur-[150px]"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block px-4 py-1 rounded-full bg-miscon-gold/10 text-miscon-gold text-sm font-medium tracking-wider uppercase mb-6">
+                        Meet Our Speakers
+                    </span>
+                    <h2 class="text-4xl sm:text-5xl font-bold">
+                        Anointed <span class="gradient-text">Voices</span>
+                    </h2>
+                    <p class="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
+                        Learn from experienced ministers and scholars who will share powerful messages to equip you for your calling.
+                    </p>
+                </div>
+
+                <!-- Main Speaker Feature -->
+                <div class="max-w-4xl mx-auto mb-16 reveal">
+                    <div class="glass rounded-3xl p-8 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-pcm-blue/20 via-pcm-purple/20 to-pcm-pink/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative flex flex-col md:flex-row items-center gap-8">
+                            <div class="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden flex-shrink-0 ring-4 ring-miscon-gold/30">
+                                <img src="{{ asset('images/dr-kabani.jpg') }}" 
+                                     alt="Dr. Kabani" 
+                                     class="w-full h-full object-cover"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="hidden w-full h-full bg-gradient-to-br from-pcm-blue via-pcm-purple to-pcm-pink items-center justify-center">
+                                    <span class="text-5xl font-bold">DK</span>
+                                </div>
+                            </div>
+                            <div class="text-center md:text-left flex-1">
+                                <span class="inline-block px-3 py-1 rounded-full bg-miscon-gold text-miscon-navy text-xs font-bold uppercase tracking-wider mb-3">
+                                    Main Speaker
+                                </span>
+                                <h3 class="text-3xl sm:text-4xl font-bold mb-2">Dr. Kabani</h3>
+                                <p class="text-white/60 mb-4">Dynamic preacher and spiritual leader whose messages transform lives and ignite revival in the hearts of young people across the region.</p>
+                                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                                    <span class="px-3 py-1 rounded-full glass text-sm">Keynote Sessions</span>
+                                    <span class="px-3 py-1 rounded-full glass text-sm">Evening Devotionals</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Speakers Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Speaker 1 -->
+                    <div class="speaker-card glass rounded-2xl p-6 reveal animation-delay-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-pcm-blue to-pcm-purple flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl font-bold">NM</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold">Dr. N. Matinhira</h4>
+                                <p class="text-sm text-miscon-gold">Guest Speaker</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-white/60">Bringing wisdom and insight to inspire the next generation of spiritual leaders.</p>
+                    </div>
+
+                    <!-- Speaker 2 -->
+                    <div class="speaker-card glass rounded-2xl p-6 reveal animation-delay-200">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-pcm-purple to-pcm-pink flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl font-bold">CM</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold">Elder Chenge Matondo</h4>
+                                <p class="text-sm text-miscon-gold">Guest Speaker</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-white/60">A passionate minister dedicated to youth empowerment and spiritual development.</p>
+                    </div>
+
+                    <!-- Speaker 3 -->
+                    <div class="speaker-card glass rounded-2xl p-6 reveal animation-delay-300">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-pcm-pink to-miscon-gold flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl font-bold">MM</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold">Elder M. Machando</h4>
+                                <p class="text-sm text-miscon-gold">Guest Speaker</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-white/60">Equipping young people with practical tools for Christian living on campus.</p>
+                    </div>
+
+                    <!-- Speaker 4 -->
+                    <div class="speaker-card glass rounded-2xl p-6 reveal animation-delay-400">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-miscon-gold to-pcm-blue flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl font-bold">DM</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold">Dr. Matanda</h4>
+                                <p class="text-sm text-miscon-gold">Guest Speaker</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-white/60">Sharing profound biblical insights for modern-day challenges.</p>
+                    </div>
+
+                    <!-- Speaker 5 -->
+                    <div class="speaker-card glass rounded-2xl p-6 reveal animation-delay-500">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-pcm-blue to-miscon-gold flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl font-bold">DM</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold">Dr. Mapondera</h4>
+                                <p class="text-sm text-miscon-gold">Guest Speaker</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-white/60">A voice of encouragement calling youth to their divine purpose.</p>
+                    </div>
+
+                    <!-- More Speakers Coming -->
+                    <div class="speaker-card glass rounded-2xl p-6 reveal animation-delay-600 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto rounded-xl bg-white/5 border-2 border-dashed border-white/20 flex items-center justify-center mb-4">
+                                <svg class="w-8 h-8 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                            </div>
+                            <p class="text-white/60 text-sm">More speakers to be announced</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="py-24 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block px-4 py-1 rounded-full bg-miscon-gold/10 text-miscon-gold text-sm font-medium tracking-wider uppercase mb-6">
+                        Event Schedule
+                    </span>
+                    <h2 class="text-4xl sm:text-5xl font-bold">
+                        Four Days of <span class="gradient-text">Transformation</span>
+                    </h2>
+                </div>
+
+                <!-- Schedule Tabs -->
+                <div class="max-w-4xl mx-auto" x-data="{ activeDay: 'day1' }">
+                    <!-- Day Selector -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+                        <button @click="activeDay = 'day1'" 
+                                class="px-6 py-3 rounded-full font-medium transition-all duration-300"
+                                :class="activeDay === 'day1' ? 'bg-miscon-gold text-miscon-navy' : 'glass hover:border-miscon-gold/50'">
+                            <span class="block text-xs uppercase tracking-wider opacity-70">Thursday</span>
+                            <span class="block font-bold">April 3</span>
+                        </button>
+                        <button @click="activeDay = 'day2'" 
+                                class="px-6 py-3 rounded-full font-medium transition-all duration-300"
+                                :class="activeDay === 'day2' ? 'bg-miscon-gold text-miscon-navy' : 'glass hover:border-miscon-gold/50'">
+                            <span class="block text-xs uppercase tracking-wider opacity-70">Friday</span>
+                            <span class="block font-bold">April 4</span>
+                        </button>
+                        <button @click="activeDay = 'day3'" 
+                                class="px-6 py-3 rounded-full font-medium transition-all duration-300"
+                                :class="activeDay === 'day3' ? 'bg-miscon-gold text-miscon-navy' : 'glass hover:border-miscon-gold/50'">
+                            <span class="block text-xs uppercase tracking-wider opacity-70">Sabbath</span>
+                            <span class="block font-bold">April 5</span>
+                        </button>
+                        <button @click="activeDay = 'day4'" 
+                                class="px-6 py-3 rounded-full font-medium transition-all duration-300"
+                                :class="activeDay === 'day4' ? 'bg-miscon-gold text-miscon-navy' : 'glass hover:border-miscon-gold/50'">
+                            <span class="block text-xs uppercase tracking-wider opacity-70">Sunday</span>
+                            <span class="block font-bold">April 6</span>
+                        </button>
+                    </div>
+
+                    <!-- Day 1 Schedule -->
+                    <div x-show="activeDay === 'day1'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform translate-y-4"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="space-y-4">
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">14:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Registration & Check-in</h4>
+                                <p class="text-white/60 text-sm">Welcome delegates and assign accommodations</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-blue/20 text-pcm-blue text-xs font-medium">Arrival</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">17:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Opening Ceremony</h4>
+                                <p class="text-white/60 text-sm">Official opening and welcome address</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-miscon-gold/20 text-miscon-gold text-xs font-medium">Ceremony</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">19:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Evening Devotional</h4>
+                                <p class="text-white/60 text-sm">Speaker: Dr. Kabani</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-purple/20 text-pcm-purple text-xs font-medium">Main Session</span>
+                        </div>
+                    </div>
+
+                    <!-- Day 2 Schedule -->
+                    <div x-show="activeDay === 'day2'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform translate-y-4"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="space-y-4">
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">05:30</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Morning Devotion</h4>
+                                <p class="text-white/60 text-sm">Prayer and meditation session</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-pink/20 text-pcm-pink text-xs font-medium">Devotion</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">09:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Plenary Session</h4>
+                                <p class="text-white/60 text-sm">Speaker: Dr. N. Matinhira</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-purple/20 text-pcm-purple text-xs font-medium">Session</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">14:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Breakout Sessions</h4>
+                                <p class="text-white/60 text-sm">Workshops and small group discussions</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-blue/20 text-pcm-blue text-xs font-medium">Workshop</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">19:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Evening Service</h4>
+                                <p class="text-white/60 text-sm">Speaker: Dr. Kabani</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-miscon-gold/20 text-miscon-gold text-xs font-medium">Main Session</span>
+                        </div>
+                    </div>
+
+                    <!-- Day 3 Schedule (Sabbath) -->
+                    <div x-show="activeDay === 'day3'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform translate-y-4"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="space-y-4">
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">05:30</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Early Morning Prayer</h4>
+                                <p class="text-white/60 text-sm">Consecration and preparation for Sabbath</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-pink/20 text-pcm-pink text-xs font-medium">Prayer</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">09:30</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Sabbath School</h4>
+                                <p class="text-white/60 text-sm">Interactive Bible study session</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-blue/20 text-pcm-blue text-xs font-medium">Study</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">11:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Divine Service</h4>
+                                <p class="text-white/60 text-sm">Speaker: Dr. Kabani</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-miscon-gold/20 text-miscon-gold text-xs font-medium">Main Session</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">15:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Afternoon Program</h4>
+                                <p class="text-white/60 text-sm">Special presentations and testimonies</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-purple/20 text-pcm-purple text-xs font-medium">Program</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">18:30</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Sunset Vespers & AY Program</h4>
+                                <p class="text-white/60 text-sm">Welcoming the end of Sabbath</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-pink/20 text-pcm-pink text-xs font-medium">Worship</span>
+                        </div>
+                    </div>
+
+                    <!-- Day 4 Schedule -->
+                    <div x-show="activeDay === 'day4'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform translate-y-4"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="space-y-4">
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">06:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Morning Devotion</h4>
+                                <p class="text-white/60 text-sm">Final morning reflection</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-pink/20 text-pcm-pink text-xs font-medium">Devotion</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">09:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Closing Session</h4>
+                                <p class="text-white/60 text-sm">Final charge and commissioning</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-miscon-gold/20 text-miscon-gold text-xs font-medium">Closing</span>
+                        </div>
+                        <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">12:00</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">Departure</h4>
+                                <p class="text-white/60 text-sm">Safe travels and blessings</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-pcm-blue/20 text-pcm-blue text-xs font-medium">Departure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section id="registration" class="py-24 relative overflow-hidden">
+            <!-- Background -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-pcm-purple/20 via-transparent to-transparent"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block px-4 py-1 rounded-full bg-miscon-gold/10 text-miscon-gold text-sm font-medium tracking-wider uppercase mb-6">
+                        Registration
+                    </span>
+                    <h2 class="text-4xl sm:text-5xl font-bold">
+                        Secure Your <span class="gradient-text">Spot</span>
+                    </h2>
+                    <p class="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
+                        Don't miss this life-changing experience. Register now and be part of MISCON26!
+                    </p>
+                </div>
+
+                <!-- Pricing Cards -->
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                    <!-- Student Price -->
+                    <div class="reveal animation-delay-100">
+                        <div class="price-tag h-full">
+                            <div class="price-tag-inner flex flex-col">
+                                <div class="text-center mb-8">
+                                    <span class="text-sm uppercase tracking-wider text-white/60">Students</span>
+                                    <div class="mt-4 flex items-baseline justify-center gap-1">
+                                        <span class="text-5xl font-bold gradient-text">$45</span>
+                                        <span class="text-white/60">USD</span>
+                                    </div>
+                                </div>
+                                
+                                <ul class="space-y-4 mb-8 flex-1">
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Full conference access</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Accommodation (4 nights)</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Meals included</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Conference materials</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Certificate of attendance</span>
+                                    </li>
+                                </ul>
+
+                                <a href="#contact" class="btn-primary w-full text-center">
+                                    <span class="relative z-10">Register as Student</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alumni Price -->
+                    <div class="reveal animation-delay-200">
+                        <div class="price-tag h-full">
+                            <div class="price-tag-inner flex flex-col">
+                                <div class="text-center mb-8">
+                                    <span class="text-sm uppercase tracking-wider text-white/60">Alumni</span>
+                                    <div class="mt-4 flex items-baseline justify-center gap-1">
+                                        <span class="text-5xl font-bold gradient-text">$65</span>
+                                        <span class="text-white/60">USD</span>
+                                    </div>
+                                </div>
+                                
+                                <ul class="space-y-4 mb-8 flex-1">
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Full conference access</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Accommodation (4 nights)</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Meals included</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Conference materials</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Certificate of attendance</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span class="text-white/80">Alumni networking session</span>
+                                    </li>
+                                </ul>
+
+                                <a href="#contact" class="btn-primary w-full text-center">
+                                    <span class="relative z-10">Register as Alumni</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 relative">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-16 reveal">
+                        <span class="inline-block px-4 py-1 rounded-full bg-miscon-gold/10 text-miscon-gold text-sm font-medium tracking-wider uppercase mb-6">
+                            Get In Touch
+                        </span>
+                        <h2 class="text-4xl sm:text-5xl font-bold">
+                            Contact <span class="gradient-text">Us</span>
+                        </h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 reveal">
+                        <!-- Contact Info -->
+                        <div class="glass rounded-3xl p-8">
+                            <h3 class="text-2xl font-bold mb-6">Event Information</h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-miscon-gold/10 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-6 h-6 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">Venue</h4>
+                                        <p class="text-white/70">Amai Mugabe Group of Schools</p>
+                                        <p class="text-white/50 text-sm">North Zimbabwe Conference</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-miscon-gold/10 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-6 h-6 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">Phone</h4>
+                                        <a href="tel:+263782504742" class="text-miscon-gold hover:underline">+263 78 250 4742</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-miscon-gold/10 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-6 h-6 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">Date</h4>
+                                        <p class="text-white/70">April 3-6, 2026</p>
+                                        <p class="text-white/50 text-sm">Thursday to Sunday</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Links -->
+                            <div class="mt-8 pt-8 border-t border-white/10">
+                                <h4 class="font-semibold mb-4">Follow PCM</h4>
+                                <div class="flex gap-4">
+                                    <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-miscon-gold/50 transition-all duration-300">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-miscon-gold/50 transition-all duration-300">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="https://wa.me/263782504742" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-miscon-gold/50 transition-all duration-300">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Registration Form -->
+                        <div class="glass rounded-3xl p-8">
+                            <h3 class="text-2xl font-bold mb-6">Quick Inquiry</h3>
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Full Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all" placeholder="Your name">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Email Address</label>
+                                    <input type="email" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all" placeholder="your@email.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Phone Number</label>
+                                    <input type="tel" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all" placeholder="+263...">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">I am registering as</label>
+                                    <select class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all">
+                                        <option value="" class="bg-miscon-navy">Select type</option>
+                                        <option value="student" class="bg-miscon-navy">Student ($45)</option>
+                                        <option value="alumni" class="bg-miscon-navy">Alumni ($65)</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-primary w-full">
+                                    <span class="relative z-10">Submit Inquiry</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 border-t border-white/10">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-3">
+                        <!-- PCM Logo Small -->
+                        <div class="w-10 h-12">
+                            <svg viewBox="0 0 100 120" class="w-full h-full">
+                                <defs>
+                                    <linearGradient id="pcmGradientFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3b82f6"/>
+                                        <stop offset="50%" style="stop-color:#8b5cf6"/>
+                                        <stop offset="100%" style="stop-color:#ec4899"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L95 20 L95 60 Q95 95 50 115 Q5 95 5 60 L5 20 Z" 
+                                      fill="url(#pcmGradientFooter)" stroke="white" stroke-width="3"/>
+                                <text x="50" y="45" text-anchor="middle" fill="white" font-family="Outfit" font-weight="bold" font-size="20">PCM</text>
+                                <path d="M30 60 L50 55 L70 60 L70 80 L50 75 L30 80 Z" fill="none" stroke="white" stroke-width="2"/>
+                                <line x1="50" y1="55" x2="50" y2="75" stroke="white" stroke-width="2"/>
+                                <path d="M35 50 L50 42 L65 50 L50 58 Z" fill="white"/>
+                                <line x1="62" y1="50" x2="62" y2="60" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-bold">MISCON<span class="text-miscon-gold">26</span></p>
+                            <p class="text-xs text-white/60">Public Campus Ministries</p>
+                        </div>
+                    </div>
+
+                    <p class="text-white/60 text-sm text-center">
+                        &copy; 2026 North Zimbabwe Conference | Seventh-day Adventist Church
+                    </p>
+
+                    <div class="flex items-center gap-6 text-sm text-white/60">
+                        <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                        <a href="#" class="hover:text-white transition-colors">Terms</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button x-show="showScrollTop"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-90"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-90"
+                @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-miscon-gold text-miscon-navy flex items-center justify-center shadow-lg hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 z-50"
+                x-cloak>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+            </svg>
+        </button>
+
+        <!-- Alpine.js -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        
+        <script>
+            // Countdown Timer
+            function countdown() {
+                return {
+                    days: '00',
+                    hours: '00',
+                    minutes: '00',
+                    seconds: '00',
+                    init() {
+                        this.updateCountdown();
+                        setInterval(() => this.updateCountdown(), 1000);
+                    },
+                    updateCountdown() {
+                        const eventDate = new Date('April 3, 2026 00:00:00').getTime();
+                        const now = new Date().getTime();
+                        const distance = eventDate - now;
+
+                        if (distance < 0) {
+                            this.days = '00';
+                            this.hours = '00';
+                            this.minutes = '00';
+                            this.seconds = '00';
+                            return;
+                        }
+
+                        this.days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                        this.hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                        this.minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                        this.seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+                    }
+                }
+            }
+
+            // Intersection Observer for reveal animations
+            document.addEventListener('DOMContentLoaded', function() {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+                    observer.observe(el);
+                });
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Parallax effect for floating elements
+            document.addEventListener('mousemove', (e) => {
+                const particles = document.querySelectorAll('.particle');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                particles.forEach((particle, index) => {
+                    const speed = (index + 1) * 0.01;
+                    const xOffset = (x - 0.5) * 100 * speed;
+                    const yOffset = (y - 0.5) * 100 * speed;
+                    particle.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                });
+            });
+        </script>
     </body>
 </html>
