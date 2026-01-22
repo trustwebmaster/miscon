@@ -591,10 +591,10 @@
                             <p class="text-sm uppercase tracking-wider text-white/60 mb-2">Registration Fee</p>
                             <div class="flex items-baseline justify-center gap-1">
                                 <span class="text-5xl font-bold gradient-text" x-text="'$' + (formData.type === 'student' ? '45' : '65')">$45</span>
-                                <span class="text-white/60">USD</span>
-                            </div>
+                                    <span class="text-white/60">USD</span>
+                                </div>
                             <p class="text-sm text-white/40 mt-2" x-text="formData.type === 'student' ? 'Current student rate' : 'Alumni rate (includes networking)'"></p>
-                        </div>
+                            </div>
 
                         <!-- Form Fields -->
                         <form @submit.prevent="goToPayment()" class="space-y-6">
@@ -605,7 +605,7 @@
                                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                        </svg>
+                                    </svg>
                                     </span>
                                     <input type="text" x-model="formData.fullName" required
                                            class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
@@ -614,20 +614,64 @@
                             </div>
 
                             <!-- University / Former School -->
-                            <div>
+                            <div x-data="institutionSelect()" class="relative">
                                 <label class="block text-sm font-medium text-white/80 mb-2">
-                                    <span x-text="formData.type === 'student' ? 'University' : 'Former School'"></span>
+                                    <span x-text="$parent.formData.type === 'student' ? 'University / College' : 'Former School'"></span>
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                         </svg>
                                     </span>
-                                    <input type="text" x-model="formData.university" required
-                                           class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
-                                           :placeholder="formData.type === 'student' ? 'e.g., University of Zimbabwe' : 'e.g., University of Zimbabwe (2020)'">
+                                    <input type="text"
+                                           x-model="search"
+                                           @focus="open = true"
+                                           @click="open = true"
+                                           @input="$parent.formData.university = ''"
+                                           class="w-full pl-12 pr-10 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                           :placeholder="$parent.formData.type === 'student' ? 'Search for your institution...' : 'Search for your former school...'"
+                                           autocomplete="off">
+                                    <input type="hidden" x-model="$parent.formData.university" required>
+                                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+                                        <svg class="w-5 h-5 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+
+                                <!-- Dropdown -->
+                                <div x-show="open"
+                                     @click.outside="open = false"
+                                     x-transition:enter="transition ease-out duration-200"
+                                     x-transition:enter-start="opacity-0 translate-y-2"
+                                     x-transition:enter-end="opacity-100 translate-y-0"
+                                     x-transition:leave="transition ease-in duration-150"
+                                     x-transition:leave-start="opacity-100 translate-y-0"
+                                     x-transition:leave-end="opacity-0 translate-y-2"
+                                     class="absolute z-50 w-full mt-2 max-h-72 overflow-y-auto rounded-xl bg-miscon-navy/95 backdrop-blur-xl border border-white/10 shadow-2xl"
+                                     x-cloak>
+                                    <template x-for="(institutions, category) in filteredInstitutions" :key="category">
+                                        <div x-show="institutions.length > 0">
+                                            <div class="sticky top-0 px-4 py-2 bg-miscon-navy/90 backdrop-blur border-b border-white/10">
+                                                <span class="text-xs font-semibold uppercase tracking-wider text-miscon-gold" x-text="category"></span>
+                                            </div>
+                                            <template x-for="inst in institutions" :key="inst">
+                                                <button type="button"
+                                                        @click="selectInstitution(inst)"
+                                                        class="w-full px-4 py-3 text-left hover:bg-white/10 transition-colors flex items-center gap-3 border-b border-white/5 last:border-b-0">
+                                                    <svg class="w-4 h-4 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                                    </svg>
+                                                    <span class="text-sm text-white/80" x-text="inst"></span>
+                                                </button>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <div x-show="Object.values(filteredInstitutions).flat().length === 0" class="px-4 py-6 text-center text-white/40 text-sm">
+                                        No institutions found matching your search
+                                    </div>
                                 </div>
                             </div>
 
@@ -1260,6 +1304,94 @@
                         level: ''
                     };
                     window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
+                }
+            }
+        }
+
+        function institutionSelect() {
+            return {
+                open: false,
+                search: '',
+                institutions: {
+                    'Public / State Universities': [
+                        'Bindura University of Science Education (BUSE)',
+                        'Chinhoyi University of Technology (CUT)',
+                        'Great Zimbabwe University (GZU)',
+                        'Gwanda State University (GSU)',
+                        'Harare Institute of Technology (HIT)',
+                        'Lupane State University (LSU)',
+                        'Manicaland State University of Applied Sciences',
+                        'Marondera University of Agricultural Sciences and Technology',
+                        'Midlands State University (MSU)',
+                        'National University of Science and Technology (NUST)',
+                        'University of Zimbabwe (UZ)',
+                        'Zimbabwe National Defence University',
+                        'Zimbabwe Open University (ZOU)'
+                    ],
+                    'Private Universities': [
+                        'Africa University (AU)',
+                        'Arrupe Jesuit University',
+                        'Catholic University in Zimbabwe (CUZ)',
+                        'Reformed Church University',
+                        'Solusi University',
+                        'Women\'s University in Africa (WUA)',
+                        'Zimbabwe Ezekiel Guti University (ZEGU)'
+                    ],
+                    'Polytechnics & Technical Colleges': [
+                        'Harare Polytechnic',
+                        'Bulawayo Polytechnic',
+                        'Gweru Polytechnic',
+                        'Kwekwe Polytechnic',
+                        'Mutare Polytechnic',
+                        'J. M. Nkomo Polytechnic',
+                        'Kushinga Phikelela Polytechnic',
+                        'Masvingo Polytechnic',
+                        'Zimbabwe College of Music',
+                        'Redcliff Technical College',
+                        'Nyagura Technical College',
+                        'Rusape Technical College'
+                    ],
+                    'Teachers\' Colleges': [
+                        'Belvedere Technical Teachers\' College',
+                        'Bondolfi Teachers College',
+                        'Hillside Teachers College',
+                        'Madziwa Teachers College',
+                        'Marymount Teachers College',
+                        'Masvingo Teachers\' College',
+                        'Mkoba Teachers College',
+                        'Morgan Zintec Teachers College',
+                        'Morgenster Teachers College',
+                        'Mutare Teachers\' College',
+                        'Nyadire Teachers College',
+                        'Seke Teachers College',
+                        'United College of Education',
+                        'Chinhoyi Technical Teachers College'
+                    ],
+                    'Other Colleges': [
+                        'Speciss College',
+                        'Zimbabwe Institute of Legal Studies',
+                        'Mutare College',
+                        'Trust Academy',
+                        'Herentials College',
+                        'Lighthouse College',
+                        'ILSA College',
+                        'Zimbabwe Women Empowerment Institution'
+                    ]
+                },
+                get filteredInstitutions() {
+                    const searchLower = this.search.toLowerCase();
+                    const filtered = {};
+                    for (const [category, insts] of Object.entries(this.institutions)) {
+                        filtered[category] = insts.filter(inst =>
+                            inst.toLowerCase().includes(searchLower)
+                        );
+                    }
+                    return filtered;
+                },
+                selectInstitution(inst) {
+                    this.search = inst;
+                    this.$parent.formData.university = inst;
+                    this.open = false;
                 }
             }
         }
