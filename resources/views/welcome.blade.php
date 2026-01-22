@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="MISCON26 - Watchmen On The Wall. A transformative student conference by PCM.">
     <title>MISCON26 | Watchmen On The Wall</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
@@ -760,13 +761,28 @@
                                 </div>
                             </div>
 
+                            <!-- Error Message -->
+                            <div x-show="errorMessage" x-transition class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-3">
+                                <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span x-text="errorMessage"></span>
+                            </div>
+
                             <!-- Submit Button -->
-                            <button type="submit" class="btn-primary w-full py-4 text-lg font-semibold ripple-effect group">
-                                <span class="relative z-10 flex items-center justify-center gap-2">
+                            <button type="submit" class="btn-primary w-full py-4 text-lg font-semibold ripple-effect group disabled:opacity-50 disabled:cursor-not-allowed" :disabled="isSubmitting">
+                                <span class="relative z-10 flex items-center justify-center gap-2" x-show="!isSubmitting">
                                     Proceed to Payment
                                     <svg class="w-5 h-5 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
+                                </span>
+                                <span class="relative z-10 flex items-center justify-center gap-2" x-show="isSubmitting">
+                                    <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Creating Registration...
                                 </span>
                             </button>
                         </form>
@@ -870,9 +886,17 @@
                             </div>
                         </div>
 
+                        <!-- Error Message -->
+                        <div x-show="errorMessage" x-transition class="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-3">
+                            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span x-text="errorMessage"></span>
+                        </div>
+
                         <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button @click="step = 1" class="btn-outline flex-1 py-4">
+                            <button @click="step = 1; errorMessage = ''" class="btn-outline flex-1 py-4">
                                 <span class="flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -931,7 +955,11 @@
                             <div class="space-y-3">
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Reference</span>
-                                    <span class="font-mono font-semibold text-miscon-gold" x-text="'MISCON26-' + Math.random().toString(36).substr(2, 8).toUpperCase()"></span>
+                                    <span class="font-mono font-semibold text-miscon-gold" x-text="reference"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-white/60">Paynow Ref</span>
+                                    <span class="font-mono text-sm" x-text="paynowReference"></span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Type</span>
@@ -1111,6 +1139,11 @@
                 paymentMethod: 'ecocash',
                 paymentPhone: '',
                 isProcessing: false,
+                isSubmitting: false,
+                registrationId: null,
+                reference: '',
+                paynowReference: '',
+                errorMessage: '',
                 formData: {
                     type: 'student',
                     fullName: '',
@@ -1120,28 +1153,103 @@
                     gender: '',
                     level: ''
                 },
-                goToPayment() {
-                    if (this.formData.fullName && this.formData.university && this.formData.phone && this.formData.idNumber && this.formData.gender && this.formData.level) {
+                async goToPayment() {
+                    if (!this.formData.fullName || !this.formData.university || !this.formData.phone || !this.formData.idNumber || !this.formData.gender || !this.formData.level) {
+                        return;
+                    }
+
+                    this.isSubmitting = true;
+                    this.errorMessage = '';
+
+                    try {
+                        const response = await fetch('/api/registration', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                type: this.formData.type,
+                                full_name: this.formData.fullName,
+                                university: this.formData.university,
+                                phone: this.formData.phone,
+                                id_number: this.formData.idNumber,
+                                gender: this.formData.gender,
+                                level: this.formData.level,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            this.errorMessage = data.message || 'Registration failed. Please try again.';
+                            this.isSubmitting = false;
+                            return;
+                        }
+
+                        this.registrationId = data.data.id;
+                        this.reference = data.data.reference;
                         this.paymentPhone = this.formData.phone;
                         this.step = 2;
                         window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
+                    } catch (error) {
+                        console.error('Registration error:', error);
+                        this.errorMessage = 'Network error. Please check your connection and try again.';
+                    } finally {
+                        this.isSubmitting = false;
                     }
                 },
-                processPayment() {
-                    if (!this.paymentPhone) return;
+                async processPayment() {
+                    if (!this.paymentPhone || !this.registrationId) return;
+
                     this.isProcessing = true;
-                    // Simulate payment processing
-                    setTimeout(() => {
-                        this.isProcessing = false;
+                    this.errorMessage = '';
+
+                    try {
+                        const response = await fetch('/api/registration/payment', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                registration_id: this.registrationId,
+                                payment_method: this.paymentMethod,
+                                payment_phone: this.paymentPhone,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            this.errorMessage = data.message || 'Payment failed. Please try again.';
+                            this.isProcessing = false;
+                            return;
+                        }
+
+                        this.paynowReference = data.data.paynow_reference;
+                        this.reference = data.data.reference;
                         this.step = 3;
                         window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
-                    }, 2500);
+                    } catch (error) {
+                        console.error('Payment error:', error);
+                        this.errorMessage = 'Network error. Please check your connection and try again.';
+                    } finally {
+                        this.isProcessing = false;
+                    }
                 },
                 resetForm() {
                     this.step = 1;
                     this.paymentMethod = 'ecocash';
                     this.paymentPhone = '';
                     this.isProcessing = false;
+                    this.isSubmitting = false;
+                    this.registrationId = null;
+                    this.reference = '';
+                    this.paynowReference = '';
+                    this.errorMessage = '';
                     this.formData = {
                         type: 'student',
                         fullName: '',
