@@ -40,6 +40,8 @@ return [
         'integration_key' => env('PAYNOW_INTEGRATION_KEY'),
         'return_url' => env('PAYNOW_RETURN_URL'),
         'result_url' => env('PAYNOW_RESULT_URL'),
+        'test_mode' => env('PAYNOW_TEST_MODE', false),
+        'merchant_email' => env('PAYNOW_MERCHANT_EMAIL'), // Required for test mode
     ],
 
 ];

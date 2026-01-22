@@ -9,16 +9,57 @@ use Illuminate\Support\Facades\Log;
 
 class PaynowService
 {
-    protected Paynow $paynow;
+    protected ?Paynow $paynow = null;
+    protected bool $configured = false;
+    protected bool $testMode = false;
+    protected ?string $merchantEmail = null;
 
     public function __construct()
     {
-        $this->paynow = new Paynow(
-            config('services.paynow.integration_id'),
-            config('services.paynow.integration_key'),
-            config('services.paynow.return_url'),
-            config('services.paynow.result_url')
-        );
+        $integrationId = config('services.paynow.integration_id');
+        $integrationKey = config('services.paynow.integration_key');
+        $returnUrl = config('services.paynow.return_url');
+        $resultUrl = config('services.paynow.result_url');
+        $this->testMode = config('services.paynow.test_mode', false);
+        $this->merchantEmail = config('services.paynow.merchant_email');
+
+        // Check if all required config is present
+        if ($integrationId && $integrationKey && $returnUrl && $resultUrl) {
+            $this->paynow = new Paynow(
+                $integrationId,
+                $integrationKey,
+                $returnUrl,
+                $resultUrl
+            );
+            $this->configured = true;
+        } else {
+            Log::warning('Paynow not configured. Missing credentials.', [
+                'has_integration_id' => !empty($integrationId),
+                'has_integration_key' => !empty($integrationKey),
+                'has_return_url' => !empty($returnUrl),
+                'has_result_url' => !empty($resultUrl),
+            ]);
+        }
+    }
+
+    /**
+     * Check if Paynow is properly configured
+     */
+    public function isConfigured(): bool
+    {
+        return $this->configured;
+    }
+
+    /**
+     * Get the email to use for Paynow (merchant email in test mode)
+     */
+    protected function getAuthEmail(string $fallbackEmail): string
+    {
+        // In test mode, Paynow requires the merchant's registered email
+        if ($this->testMode && $this->merchantEmail) {
+            return $this->merchantEmail;
+        }
+        return $fallbackEmail;
     }
 
     /**
@@ -40,9 +81,33 @@ class PaynowService
         string $phone,
         string $method
     ): array {
+        // Check if Paynow is configured
+        if (!$this->configured || !$this->paynow) {
+            Log::error('Paynow payment attempted but not configured', [
+                'reference' => $reference,
+            ]);
+
+            return [
+                'success' => false,
+                'error' => 'Payment service is not configured. Please contact the administrator.',
+            ];
+        }
+
         try {
+            // Use merchant email in test mode
+            $authEmail = $this->getAuthEmail($email);
+
+            Log::info('Initiating Paynow payment', [
+                'reference' => $reference,
+                'email' => $authEmail,
+                'amount' => $amount,
+                'phone' => $phone,
+                'method' => $method,
+                'test_mode' => $this->testMode,
+            ]);
+
             // Create payment
-            $payment = $this->paynow->createPayment($reference, $email);
+            $payment = $this->paynow->createPayment($reference, $authEmail);
             $payment->add($description, $amount);
 
             // Send mobile payment request
@@ -63,19 +128,44 @@ class PaynowService
                 ];
             }
 
+            // Get detailed error from response
+            $errorMessage = $response->error ?? null;
+            $responseData = method_exists($response, 'data') ? $response->data() : [];
+            
             Log::warning('Paynow payment initiation failed', [
                 'reference' => $reference,
-                'error' => $response->error ?? 'Unknown error',
+                'error' => $errorMessage,
+                'status' => $response->status ?? 'unknown',
+                'response_data' => $responseData,
+            ]);
+
+            // Provide user-friendly error messages
+            $userError = match(strtolower($errorMessage ?? '')) {
+                'invalid id.' => 'Payment service configuration error. Please contact support.',
+                'invalid integration' => 'Payment service configuration error. Please contact support.',
+                '' => 'Payment could not be initiated. Please try again.',
+                default => $errorMessage ?? 'Payment initiation failed. Please try again.',
+            };
+
+            return [
+                'success' => false,
+                'error' => $userError,
+            ];
+        } catch (\Paynow\Payments\InvalidIntegrationException $e) {
+            Log::error('Paynow invalid integration', [
+                'reference' => $reference,
+                'message' => $e->getMessage(),
             ]);
 
             return [
                 'success' => false,
-                'error' => $response->error ?? 'Payment initiation failed',
+                'error' => 'Payment service configuration error. Please contact the administrator.',
             ];
         } catch (\Exception $e) {
             Log::error('Paynow payment exception', [
                 'reference' => $reference,
                 'message' => $e->getMessage(),
+                'class' => get_class($e),
                 'trace' => $e->getTraceAsString(),
             ]);
 
