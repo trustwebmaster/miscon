@@ -17,6 +17,7 @@ Route::view('profile', 'profile')
 Route::prefix('api/registration')->name('registration.')->group(function () {
     Route::post('/', [RegistrationController::class, 'store'])->name('store');
     Route::post('/payment', [RegistrationController::class, 'processPayment'])->name('payment');
+    Route::post('/check', [RegistrationController::class, 'checkByIdNumber'])->name('check');
     Route::get('/status/{reference}', [RegistrationController::class, 'status'])->name('status');
     Route::get('/stats', [RegistrationController::class, 'stats'])->name('stats');
 });

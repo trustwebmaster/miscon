@@ -132,7 +132,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * Check registration status
+     * Check registration status by reference
      */
     public function status(string $reference): JsonResponse
     {
@@ -154,6 +154,57 @@ class RegistrationController extends Controller
                 'amount' => $registration->amount,
                 'payment_status' => $registration->payment_status,
                 'paid_at' => $registration->paid_at?->format('Y-m-d H:i:s'),
+            ],
+        ]);
+    }
+
+    /**
+     * Check registration status by ID number (reg number or national ID)
+     */
+    public function checkByIdNumber(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id_number' => ['required', 'string', 'max:50'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please enter your registration number or national ID',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $registration = Registration::where('id_number', $request->id_number)->first();
+
+        if (!$registration) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No registration found with this ID. Please check your registration number or national ID and try again.',
+                'found' => false,
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration found!',
+            'found' => true,
+            'data' => [
+                'reference' => $registration->reference,
+                'full_name' => $registration->full_name,
+                'type' => $registration->type,
+                'university' => $registration->university,
+                'phone' => $registration->phone,
+                'id_number' => $registration->id_number,
+                'gender' => ucfirst($registration->gender),
+                'level' => $registration->level,
+                'amount' => $registration->amount,
+                'payment_status' => $registration->payment_status,
+                'payment_method' => $registration->payment_method ? ucfirst($registration->payment_method) : null,
+                'paynow_reference' => $registration->paynow_reference,
+                'paid_at' => $registration->paid_at?->format('d M Y, H:i'),
+                'registered_at' => $registration->created_at->format('d M Y, H:i'),
+                'is_paid' => $registration->isPaid(),
             ],
         ]);
     }

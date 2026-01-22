@@ -58,6 +58,12 @@
                     <a href="#speakers" class="nav-link text-sm font-medium uppercase tracking-wider">Speakers</a>
                     <a href="#gallery" class="nav-link text-sm font-medium uppercase tracking-wider">Gallery</a>
                     <a href="#schedule" class="nav-link text-sm font-medium uppercase tracking-wider">Schedule</a>
+                    <button @click="$dispatch('open-status-modal')" class="nav-link text-sm font-medium uppercase tracking-wider flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Check Status
+                    </button>
                     <a href="#registration" class="btn-primary text-sm font-semibold uppercase tracking-wider magnetic-btn">
                         <span class="relative z-10">Register</span>
                     </a>
@@ -80,6 +86,12 @@
                 <a href="#speakers" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors">Speakers</a>
                 <a href="#gallery" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors">Gallery</a>
                 <a href="#schedule" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors">Schedule</a>
+                <button @click="mobileMenuOpen = false; $dispatch('open-status-modal')" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors text-left flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Check Status
+                </button>
                 <a href="#registration" @click="mobileMenuOpen = false" class="btn-primary text-center mt-2">Register Now</a>
             </div>
         </div>
@@ -400,6 +412,180 @@
         <div class="max-w-5xl max-h-[85vh] relative">
             <img :src="lightboxImage" alt="Gallery Image" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl">
             <p x-text="lightboxCaption" class="text-center mt-4 text-lg font-medium"></p>
+        </div>
+    </div>
+
+    <!-- Registration Status Check Modal -->
+    <div x-data="statusChecker()"
+         @open-status-modal.window="openModal()"
+         @keydown.escape.window="closeModal()">
+        <!-- Modal Backdrop -->
+        <div x-show="isOpen"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+             @click.self="closeModal()"
+             x-cloak>
+
+            <!-- Modal Content -->
+            <div x-show="isOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+                 class="w-full max-w-lg glass rounded-3xl overflow-hidden">
+
+                <!-- Modal Header -->
+                <div class="relative p-6 border-b border-white/10 bg-gradient-to-r from-pcm-blue/20 via-pcm-purple/20 to-pcm-pink/20">
+                    <button @click="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-miscon-gold/20 flex items-center justify-center">
+                            <svg class="w-7 h-7 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Check Registration Status</h3>
+                            <p class="text-sm text-white/60">Verify your MISCON26 registration</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6">
+                    <!-- Search Form -->
+                    <div x-show="!result">
+                        <p class="text-white/70 text-sm mb-4">Enter your registration number (for students) or national ID (for alumni) to check your registration status.</p>
+
+                        <form @submit.prevent="checkStatus()">
+                            <div class="relative mb-4">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                                    </svg>
+                                </span>
+                                <input type="text"
+                                       x-model="idNumber"
+                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                       placeholder="Enter Reg Number or National ID"
+                                       required>
+                            </div>
+
+                            <!-- Error Message -->
+                            <div x-show="errorMessage" x-transition class="mb-4 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-3">
+                                <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span x-text="errorMessage"></span>
+                            </div>
+
+                            <button type="submit"
+                                    class="w-full py-4 bg-miscon-gold hover:bg-miscon-gold/90 text-miscon-navy font-semibold rounded-xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    :disabled="isLoading || !idNumber">
+                                <span x-show="!isLoading" class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    Check Status
+                                </span>
+                                <span x-show="isLoading" class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Searching...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Result Display -->
+                    <div x-show="result" x-transition>
+                        <!-- Status Badge -->
+                        <div class="text-center mb-6">
+                            <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full"
+                                 :class="result?.is_paid ? 'bg-green-500/20 border border-green-500/30' : 'bg-yellow-500/20 border border-yellow-500/30'">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                                     :class="result?.is_paid ? 'bg-green-500' : 'bg-yellow-500'">
+                                    <svg x-show="result?.is_paid" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <svg x-show="!result?.is_paid" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <p class="font-bold" :class="result?.is_paid ? 'text-green-400' : 'text-yellow-400'" x-text="result?.is_paid ? 'REGISTERED & PAID' : 'PAYMENT PENDING'"></p>
+                                    <p class="text-xs text-white/60" x-text="result?.is_paid ? 'You\'re all set for MISCON26!' : 'Please complete your payment'"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Registration Details -->
+                        <div class="bg-white/5 rounded-2xl p-5 border border-white/10 mb-6">
+                            <div class="grid gap-4">
+                                <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                    <span class="text-white/60 text-sm">Full Name</span>
+                                    <span class="font-semibold" x-text="result?.full_name"></span>
+                                </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                    <span class="text-white/60 text-sm">Type</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium"
+                                          :class="result?.type === 'student' ? 'bg-pcm-blue/20 text-pcm-blue' : 'bg-pcm-purple/20 text-pcm-purple'"
+                                          x-text="result?.type === 'student' ? 'Student' : 'Alumni'"></span>
+                                </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                    <span class="text-white/60 text-sm">Institution</span>
+                                    <span class="text-sm text-right max-w-[200px] truncate" x-text="result?.university" :title="result?.university"></span>
+                                </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                    <span class="text-white/60 text-sm" x-text="result?.type === 'student' ? 'Reg Number' : 'National ID'"></span>
+                                    <span class="font-mono text-sm" x-text="result?.id_number"></span>
+                                </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                    <span class="text-white/60 text-sm">Reference</span>
+                                    <span class="font-mono text-miscon-gold text-sm" x-text="result?.reference"></span>
+                                </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                    <span class="text-white/60 text-sm">Amount</span>
+                                    <span class="font-semibold" x-text="'$' + result?.amount + ' USD'"></span>
+                                </div>
+                                <div class="flex justify-between items-center" x-show="result?.is_paid">
+                                    <span class="text-white/60 text-sm">Paid On</span>
+                                    <span class="text-sm text-green-400" x-text="result?.paid_at"></span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-white/60 text-sm">Registered On</span>
+                                    <span class="text-sm" x-text="result?.registered_at"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-3">
+                            <button @click="resetSearch()" class="flex-1 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-colors font-medium flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                New Search
+                            </button>
+                            <button @click="closeModal()" class="flex-1 py-3 rounded-xl bg-miscon-gold text-miscon-navy font-semibold hover:bg-miscon-gold/90 transition-colors">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1392,6 +1578,70 @@
                     this.search = inst;
                     this.$parent.formData.university = inst;
                     this.open = false;
+                }
+            }
+        }
+
+        function statusChecker() {
+            return {
+                isOpen: false,
+                idNumber: '',
+                isLoading: false,
+                errorMessage: '',
+                result: null,
+                openModal() {
+                    this.isOpen = true;
+                    document.body.style.overflow = 'hidden';
+                },
+                closeModal() {
+                    this.isOpen = false;
+                    document.body.style.overflow = '';
+                    // Reset after close animation
+                    setTimeout(() => {
+                        this.resetSearch();
+                    }, 300);
+                },
+                resetSearch() {
+                    this.idNumber = '';
+                    this.errorMessage = '';
+                    this.result = null;
+                },
+                async checkStatus() {
+                    if (!this.idNumber.trim()) {
+                        this.errorMessage = 'Please enter your registration number or national ID';
+                        return;
+                    }
+
+                    this.isLoading = true;
+                    this.errorMessage = '';
+
+                    try {
+                        const response = await fetch('/api/registration/check', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                id_number: this.idNumber.trim(),
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            this.errorMessage = data.message || 'Registration not found. Please check your ID and try again.';
+                            return;
+                        }
+
+                        this.result = data.data;
+                    } catch (error) {
+                        console.error('Status check error:', error);
+                        this.errorMessage = 'Network error. Please check your connection and try again.';
+                    } finally {
+                        this.isLoading = false;
+                    }
                 }
             }
         }
