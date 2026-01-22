@@ -16,10 +16,16 @@ Route::view('profile', 'profile')
 // Registration API Routes
 Route::prefix('api/registration')->name('registration.')->group(function () {
     Route::post('/', [RegistrationController::class, 'store'])->name('store');
+    Route::post('/pay', [RegistrationController::class, 'registerAndPay'])->name('pay'); // Register + pay in one request
     Route::post('/payment', [RegistrationController::class, 'processPayment'])->name('payment');
+    Route::post('/payment/poll', [RegistrationController::class, 'pollPaymentStatus'])->name('payment.poll');
     Route::post('/check', [RegistrationController::class, 'checkByIdNumber'])->name('check');
     Route::get('/status/{reference}', [RegistrationController::class, 'status'])->name('status');
     Route::get('/stats', [RegistrationController::class, 'stats'])->name('stats');
 });
+
+// Paynow callback routes
+Route::post('/paynow/result', [RegistrationController::class, 'paynowCallback'])->name('paynow.result');
+Route::get('/paynow/return', [RegistrationController::class, 'paynowReturn'])->name('paynow.return');
 
 require __DIR__.'/auth.php';

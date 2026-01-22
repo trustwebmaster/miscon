@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registration;
+use App\Services\PaynowService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class RegistrationController extends Controller
 {
+    protected PaynowService $paynowService;
+
+    public function __construct(PaynowService $paynowService)
+    {
+        $this->paynowService = $paynowService;
+    }
+
     /**
      * Store a new registration
      */
@@ -73,13 +82,131 @@ class RegistrationController extends Controller
     }
 
     /**
-     * Process payment (simulated for now)
+     * Register and initiate payment in one atomic request
+     * Registration is only saved when payment is initiated
+     */
+    public function registerAndPay(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            // Registration fields
+            'type' => ['required', Rule::in(['student', 'alumni'])],
+            'full_name' => ['required', 'string', 'max:255'],
+            'university' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            'id_number' => ['required', 'string', 'max:50'],
+            'gender' => ['required', Rule::in(['male', 'female'])],
+            'level' => ['required', 'string', 'max:50'],
+            // Payment fields
+            'payment_method' => ['required', Rule::in(['ecocash', 'innbucks', 'onemoney'])],
+            'payment_phone' => ['required', 'string', 'max:20'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Check for duplicate registration (ID number must be unique)
+        $existingById = Registration::where('id_number', $request->id_number)->first();
+
+        if ($existingById) {
+            // If already paid, reject
+            if ($existingById->isPaid()) {
+                $idLabel = $request->type === 'student' ? 'registration number' : 'national ID';
+                return response()->json([
+                    'success' => false,
+                    'message' => "A registration with this {$idLabel} has already been completed and paid.",
+                ], 422);
+            }
+
+            // If pending/processing, allow retry with same registration
+            $registration = $existingById;
+        } else {
+            // Create new registration
+            $registration = Registration::create([
+                'reference' => Registration::generateReference(),
+                'type' => $request->type,
+                'full_name' => $request->full_name,
+                'university' => $request->university,
+                'phone' => $request->phone,
+                'id_number' => $request->id_number,
+                'gender' => $request->gender,
+                'level' => $request->level,
+                'amount' => Registration::getAmount($request->type),
+                'payment_status' => 'pending',
+            ]);
+        }
+
+        // Format phone number for Paynow
+        $formattedPhone = PaynowService::formatPhone($request->payment_phone);
+        $paymentMethod = PaynowService::mapPaymentMethod($request->payment_method);
+
+        // Generate email (use phone as email if no real email available)
+        $email = $formattedPhone . '@miscon26.co.zw';
+
+        // Create description
+        $description = "MISCON26 Registration - {$registration->reference}";
+
+        // Initiate payment with Paynow
+        $result = $this->paynowService->initiateMobilePayment(
+            $registration->reference,
+            $email,
+            (float) $registration->amount,
+            $description,
+            $formattedPhone,
+            $paymentMethod
+        );
+
+        if (!$result['success']) {
+            Log::warning('Payment initiation failed', [
+                'registration_id' => $registration->id,
+                'error' => $result['error'] ?? 'Unknown error',
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Failed to initiate payment. Please try again.',
+            ], 400);
+        }
+
+        // Update registration with payment details
+        $registration->update([
+            'payment_method' => $request->payment_method,
+            'payment_phone' => $formattedPhone,
+            'payment_status' => 'processing',
+            'paynow_poll_url' => $result['poll_url'],
+        ]);
+
+        Log::info('Payment initiated successfully', [
+            'registration_id' => $registration->id,
+            'reference' => $registration->reference,
+            'amount' => $registration->amount,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment initiated successfully',
+            'data' => [
+                'registration_id' => $registration->id,
+                'reference' => $registration->reference,
+                'amount' => $registration->amount,
+                'payment_status' => 'processing',
+                'instructions' => $result['instructions'] ?? 'Please check your phone and enter your PIN to complete the payment.',
+            ],
+        ]);
+    }
+
+    /**
+     * Process payment via Paynow Zimbabwe (for existing registration)
      */
     public function processPayment(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'registration_id' => ['required', 'exists:registrations,id'],
-            'payment_method' => ['required', Rule::in(['ecocash', 'innbucks'])],
+            'payment_method' => ['required', Rule::in(['ecocash', 'innbucks', 'onemoney'])],
             'payment_phone' => ['required', 'string', 'max:20'],
         ]);
 
@@ -101,34 +228,217 @@ class RegistrationController extends Controller
             ], 400);
         }
 
+        // Format phone number for Paynow
+        $formattedPhone = PaynowService::formatPhone($request->payment_phone);
+        $paymentMethod = PaynowService::mapPaymentMethod($request->payment_method);
+
+        // Generate email (use phone as email if no real email available)
+        $email = $formattedPhone . '@miscon26.co.zw';
+
+        // Create description
+        $description = "MISCON26 Registration - {$registration->reference}";
+
+        // Initiate payment with Paynow
+        $result = $this->paynowService->initiateMobilePayment(
+            $registration->reference,
+            $email,
+            (float) $registration->amount,
+            $description,
+            $formattedPhone,
+            $paymentMethod
+        );
+
+        if (!$result['success']) {
+            Log::warning('Payment initiation failed', [
+                'registration_id' => $registration->id,
+                'error' => $result['error'] ?? 'Unknown error',
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Failed to initiate payment. Please try again.',
+            ], 400);
+        }
+
         // Update registration with payment details
         $registration->update([
             'payment_method' => $request->payment_method,
-            'payment_phone' => $request->payment_phone,
+            'payment_phone' => $formattedPhone,
             'payment_status' => 'processing',
+            'paynow_poll_url' => $result['poll_url'],
         ]);
-
-        // Simulate Paynow payment processing
-        // In production, this would integrate with the actual Paynow API
-        $paynowReference = 'PN-' . strtoupper(substr(md5(uniqid()), 0, 10));
-
-        // Simulate successful payment (in production, this would be a webhook callback)
-        $registration->markAsPaid($paynowReference);
 
         return response()->json([
             'success' => true,
-            'message' => 'Payment processed successfully',
+            'message' => 'Payment initiated successfully',
             'data' => [
                 'registration_id' => $registration->id,
                 'reference' => $registration->reference,
-                'paynow_reference' => $paynowReference,
                 'amount' => $registration->amount,
-                'payment_status' => $registration->payment_status,
-                'full_name' => $registration->full_name,
-                'type' => $registration->type,
-                'phone' => $registration->phone,
+                'payment_status' => 'processing',
+                'instructions' => $result['instructions'] ?? 'Please check your phone and enter your PIN to complete the payment.',
             ],
         ]);
+    }
+
+    /**
+     * Poll payment status
+     */
+    public function pollPaymentStatus(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'registration_id' => ['required', 'exists:registrations,id'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $registration = Registration::findOrFail($request->registration_id);
+
+        // If already paid, return success
+        if ($registration->isPaid()) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'status' => 'paid',
+                    'paid' => true,
+                    'paynow_reference' => $registration->paynow_reference,
+                    'reference' => $registration->reference,
+                ],
+            ]);
+        }
+
+        // If no poll URL, payment hasn't been initiated
+        if (!$registration->paynow_poll_url) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment has not been initiated for this registration.',
+            ], 400);
+        }
+
+        // Poll Paynow for status
+        $result = $this->paynowService->pollTransaction($registration->paynow_poll_url);
+
+        if (!$result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Failed to check payment status',
+            ], 400);
+        }
+
+        $status = strtolower($result['status']);
+
+        // Update registration based on status
+        if ($result['paid'] || $status === 'paid') {
+            $registration->update([
+                'payment_status' => 'completed',
+                'paynow_reference' => $result['paynow_reference'],
+                'paid_at' => now(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'status' => 'paid',
+                    'paid' => true,
+                    'paynow_reference' => $result['paynow_reference'],
+                    'reference' => $registration->reference,
+                    'full_name' => $registration->full_name,
+                    'type' => $registration->type,
+                    'amount' => $registration->amount,
+                ],
+            ]);
+        }
+
+        // Handle other statuses
+        $statusMapping = [
+            'created' => 'processing',
+            'sent' => 'processing',
+            'pending' => 'processing',
+            'awaiting delivery' => 'processing',
+            'delivered' => 'processing',
+            'cancelled' => 'failed',
+            'disputed' => 'failed',
+            'refunded' => 'failed',
+            'failed' => 'failed',
+        ];
+
+        $newStatus = $statusMapping[$status] ?? 'processing';
+
+        if ($newStatus === 'failed') {
+            $registration->update([
+                'payment_status' => 'failed',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'status' => $status,
+                'paid' => false,
+                'payment_status' => $newStatus,
+            ],
+        ]);
+    }
+
+    /**
+     * Handle Paynow result callback (server-to-server)
+     */
+    public function paynowCallback(Request $request): JsonResponse
+    {
+        Log::info('Paynow callback received', ['data' => $request->all()]);
+
+        $status = $this->paynowService->processCallback();
+
+        if (!$status) {
+            Log::error('Failed to process Paynow callback');
+            return response()->json(['status' => 'error'], 400);
+        }
+
+        $reference = $status->reference();
+        $registration = Registration::where('reference', $reference)->first();
+
+        if (!$registration) {
+            Log::warning('Registration not found for Paynow callback', ['reference' => $reference]);
+            return response()->json(['status' => 'not found'], 404);
+        }
+
+        if ($status->paid()) {
+            $registration->update([
+                'payment_status' => 'completed',
+                'paynow_reference' => $status->paynowReference(),
+                'paid_at' => now(),
+            ]);
+
+            Log::info('Payment completed via callback', [
+                'reference' => $reference,
+                'paynow_reference' => $status->paynowReference(),
+            ]);
+        } else {
+            $paynowStatus = strtolower($status->status());
+            if (in_array($paynowStatus, ['cancelled', 'disputed', 'refunded', 'failed'])) {
+                $registration->update([
+                    'payment_status' => 'failed',
+                ]);
+            }
+        }
+
+        return response()->json(['status' => 'ok']);
+    }
+
+    /**
+     * Handle Paynow return URL (user redirect after payment)
+     */
+    public function paynowReturn(Request $request)
+    {
+        // Redirect back to the registration page
+        // The frontend will handle checking the status
+        return redirect('/#registration')->with('payment_completed', true);
     }
 
     /**

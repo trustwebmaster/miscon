@@ -26,6 +26,7 @@ class Registration extends Model
         'payment_method',
         'payment_phone',
         'paynow_reference',
+        'paynow_poll_url',
         'paid_at',
     ];
 

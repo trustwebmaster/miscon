@@ -721,7 +721,7 @@
             </div>
 
             <!-- Registration Form -->
-            <div class="max-w-3xl mx-auto" x-data="registrationForm()">
+            <div class="max-w-3xl mx-auto" x-data="registrationForm()" @institution-selected.window="formData.university = $event.detail">
                 <!-- Step Indicator -->
                 <div class="flex items-center justify-center gap-4 mb-12">
                     <div class="flex items-center gap-2">
@@ -802,7 +802,7 @@
                             <!-- University / Former School -->
                             <div x-data="institutionSelect()" class="relative">
                                 <label class="block text-sm font-medium text-white/80 mb-2">
-                                    <span x-text="$parent.formData.type === 'student' ? 'University / College' : 'Former School'"></span>
+                                    <span x-text="$root.formData.type === 'student' ? 'University / College' : 'Former School'"></span>
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
@@ -815,11 +815,10 @@
                                            x-model="search"
                                            @focus="open = true"
                                            @click="open = true"
-                                           @input="$parent.formData.university = ''"
+                                           @input="$dispatch('institution-selected', '')"
                                            class="w-full pl-12 pr-10 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
-                                           :placeholder="$parent.formData.type === 'student' ? 'Search for your institution...' : 'Search for your former school...'"
+                                           :placeholder="$root.formData.type === 'student' ? 'Search for your institution...' : 'Search for your former school...'"
                                            autocomplete="off">
-                                    <input type="hidden" x-model="$parent.formData.university" required>
                                     <span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
                                         <svg class="w-5 h-5 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1124,9 +1123,27 @@
                             <span x-text="errorMessage"></span>
                         </div>
 
+                        <!-- Waiting for Payment State -->
+                        <div x-show="isPolling" x-transition class="mb-8">
+                            <div class="bg-[#00a651]/10 border border-[#00a651]/30 rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 mx-auto mb-4 relative">
+                                    <div class="absolute inset-0 border-4 border-[#00a651]/30 rounded-full"></div>
+                                    <div class="absolute inset-0 border-4 border-[#00a651] rounded-full border-t-transparent animate-spin"></div>
+                                    <div class="absolute inset-3 bg-[#00a651]/20 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-[#00a651]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h4 class="text-lg font-semibold text-[#00a651] mb-2">Waiting for Payment</h4>
+                                <p class="text-white/70 text-sm mb-4" x-text="paymentInstructions"></p>
+                                <p class="text-white/50 text-xs">Please complete the payment on your phone. This page will update automatically.</p>
+                            </div>
+                        </div>
+
                         <!-- Action Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button @click="step = 1; errorMessage = ''" class="btn-outline flex-1 py-4">
+                        <div class="flex flex-col sm:flex-row gap-4" x-show="!isPolling">
+                            <button @click="step = 1; errorMessage = ''" class="btn-outline flex-1 py-4" :disabled="isProcessing">
                                 <span class="flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -1141,13 +1158,20 @@
                                     </svg>
                                     Pay Now
                                 </span>
-                                <span class="flex items-center justify-center gap-2" x-show="isProcessing">
+                                <span class="flex items-center justify-center gap-2" x-show="isProcessing && !isPolling">
                                     <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    Processing...
+                                    Initiating Payment...
                                 </span>
+                            </button>
+                        </div>
+
+                        <!-- Cancel Polling Button -->
+                        <div x-show="isPolling" class="mt-4">
+                            <button @click="cancelPayment()" class="w-full py-3 text-white/60 hover:text-white text-sm font-medium transition-colors">
+                                Cancel and try again
                             </button>
                         </div>
 
@@ -1370,10 +1394,15 @@
                 paymentPhone: '',
                 isProcessing: false,
                 isSubmitting: false,
+                isPolling: false,
                 registrationId: null,
                 reference: '',
                 paynowReference: '',
                 errorMessage: '',
+                paymentInstructions: '',
+                pollInterval: null,
+                pollAttempts: 0,
+                maxPollAttempts: 60, // 5 minutes with 5-second intervals
                 formData: {
                     type: 'student',
                     fullName: '',
@@ -1383,16 +1412,53 @@
                     gender: '',
                     level: ''
                 },
-                async goToPayment() {
-                    if (!this.formData.fullName || !this.formData.university || !this.formData.phone || !this.formData.idNumber || !this.formData.gender || !this.formData.level) {
+                goToPayment() {
+                    this.errorMessage = '';
+
+                    // Validate all required fields
+                    if (!this.formData.fullName) {
+                        this.errorMessage = 'Please enter your full name.';
+                        return;
+                    }
+                    if (!this.formData.university) {
+                        this.errorMessage = 'Please select your university/institution.';
+                        return;
+                    }
+                    if (!this.formData.phone) {
+                        this.errorMessage = 'Please enter your phone number.';
+                        return;
+                    }
+                    if (!this.formData.idNumber) {
+                        this.errorMessage = this.formData.type === 'student' ? 'Please enter your registration number.' : 'Please enter your national ID.';
+                        return;
+                    }
+                    if (!this.formData.gender) {
+                        this.errorMessage = 'Please select your gender.';
+                        return;
+                    }
+                    if (!this.formData.level) {
+                        this.errorMessage = this.formData.type === 'student' ? 'Please select your level.' : 'Please enter your graduation year.';
                         return;
                     }
 
-                    this.isSubmitting = true;
+                    // All validations passed - proceed to payment step (don't save yet)
+                    this.paymentPhone = this.formData.phone;
+                    this.step = 2;
+                    window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
+                },
+                async processPayment() {
+                    if (!this.paymentPhone) {
+                        this.errorMessage = 'Please enter your payment phone number.';
+                        return;
+                    }
+
+                    this.isProcessing = true;
                     this.errorMessage = '';
+                    this.paymentInstructions = '';
 
                     try {
-                        const response = await fetch('/api/registration', {
+                        // Send registration + payment data together
+                        const response = await fetch('/api/registration/pay', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -1400,6 +1466,7 @@
                                 'Accept': 'application/json',
                             },
                             body: JSON.stringify({
+                                // Registration data
                                 type: this.formData.type,
                                 full_name: this.formData.fullName,
                                 university: this.formData.university,
@@ -1407,45 +1474,7 @@
                                 id_number: this.formData.idNumber,
                                 gender: this.formData.gender,
                                 level: this.formData.level,
-                            }),
-                        });
-
-                        const data = await response.json();
-
-                        if (!response.ok) {
-                            this.errorMessage = data.message || 'Registration failed. Please try again.';
-                            this.isSubmitting = false;
-                            return;
-                        }
-
-                        this.registrationId = data.data.id;
-                        this.reference = data.data.reference;
-                        this.paymentPhone = this.formData.phone;
-                        this.step = 2;
-                        window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
-                    } catch (error) {
-                        console.error('Registration error:', error);
-                        this.errorMessage = 'Network error. Please check your connection and try again.';
-                    } finally {
-                        this.isSubmitting = false;
-                    }
-                },
-                async processPayment() {
-                    if (!this.paymentPhone || !this.registrationId) return;
-
-                    this.isProcessing = true;
-                    this.errorMessage = '';
-
-                    try {
-                        const response = await fetch('/api/registration/payment', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                registration_id: this.registrationId,
+                                // Payment data
                                 payment_method: this.paymentMethod,
                                 payment_phone: this.paymentPhone,
                             }),
@@ -1459,27 +1488,122 @@
                             return;
                         }
 
-                        this.paynowReference = data.data.paynow_reference;
+                        // Store registration ID for polling
+                        this.registrationId = data.data.registration_id;
                         this.reference = data.data.reference;
-                        this.step = 3;
-                        window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
+
+                        // Show instructions from Paynow
+                        this.paymentInstructions = data.data.instructions || 'Please check your phone and enter your PIN to complete the payment.';
+
+                        // Start polling for payment status
+                        this.isPolling = true;
+                        this.pollAttempts = 0;
+                        this.startPolling();
                     } catch (error) {
                         console.error('Payment error:', error);
                         this.errorMessage = 'Network error. Please check your connection and try again.';
-                    } finally {
                         this.isProcessing = false;
                     }
                 },
+                startPolling() {
+                    // Clear any existing interval
+                    if (this.pollInterval) {
+                        clearInterval(this.pollInterval);
+                    }
+
+                    // Poll every 5 seconds
+                    this.pollInterval = setInterval(() => {
+                        this.pollPaymentStatus();
+                    }, 5000);
+
+                    // Also poll immediately
+                    this.pollPaymentStatus();
+                },
+                stopPolling() {
+                    if (this.pollInterval) {
+                        clearInterval(this.pollInterval);
+                        this.pollInterval = null;
+                    }
+                    this.isPolling = false;
+                    this.isProcessing = false;
+                },
+                async pollPaymentStatus() {
+                    this.pollAttempts++;
+
+                    // Stop polling after max attempts
+                    if (this.pollAttempts > this.maxPollAttempts) {
+                        this.stopPolling();
+                        this.errorMessage = 'Payment verification timed out. If you completed the payment, please check your status using the "Check Status" button.';
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/api/registration/payment/poll', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                registration_id: this.registrationId,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            console.log('Poll error:', data.message);
+                            return;
+                        }
+
+                        // Check if payment was successful
+                        if (data.data.paid) {
+                            this.stopPolling();
+                            this.paynowReference = data.data.paynow_reference;
+                            this.step = 3;
+                            window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
+                            return;
+                        }
+
+                        // Check if payment failed
+                        if (data.data.payment_status === 'failed') {
+                            this.stopPolling();
+                            this.errorMessage = 'Payment was not successful. Please try again.';
+                            return;
+                        }
+
+                        // Still processing - continue polling
+                        console.log('Payment status:', data.data.status);
+                    } catch (error) {
+                        console.error('Poll error:', error);
+                    }
+                },
+                cancelPayment() {
+                    this.stopPolling();
+                    this.errorMessage = '';
+                    this.paymentInstructions = '';
+                },
+                retryPayment() {
+                    this.errorMessage = '';
+                    this.paymentInstructions = '';
+                    this.isProcessing = false;
+                    this.isPolling = false;
+                },
                 resetForm() {
+                    this.stopPolling();
                     this.step = 1;
                     this.paymentMethod = 'ecocash';
                     this.paymentPhone = '';
                     this.isProcessing = false;
                     this.isSubmitting = false;
+                    this.isPolling = false;
                     this.registrationId = null;
                     this.reference = '';
                     this.paynowReference = '';
                     this.errorMessage = '';
+                    this.paymentInstructions = '';
+                    this.pollAttempts = 0;
                     this.formData = {
                         type: 'student',
                         fullName: '',
@@ -1576,7 +1700,7 @@
                 },
                 selectInstitution(inst) {
                     this.search = inst;
-                    this.$parent.formData.university = inst;
+                    this.$dispatch('institution-selected', inst);
                     this.open = false;
                 }
             }
