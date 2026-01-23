@@ -18,6 +18,7 @@ class Registration extends Model
         'full_name',
         'university',
         'phone',
+        'email',
         'id_number',
         'gender',
         'level',

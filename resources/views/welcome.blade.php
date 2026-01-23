@@ -875,6 +875,22 @@
                                 </div>
                             </div>
 
+                            <!-- Email Address -->
+                            <div>
+                                <label class="block text-sm font-medium text-white/80 mb-2">Email Address <span class="text-red-400">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </span>
+                                    <input type="email" x-model="formData.email" required
+                                           class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                           placeholder="e.g., yourname@email.com">
+                                </div>
+                                <p class="mt-2 text-xs text-white/40">We'll send your confirmation and event updates to this email</p>
+                            </div>
+
                             <!-- Registration Number / National ID -->
                             <div>
                                 <label class="block text-sm font-medium text-white/80 mb-2">
@@ -1231,7 +1247,7 @@
                         </div>
 
                         <p class="text-sm text-white/40 mb-8">
-                            A confirmation SMS has been sent to <span class="text-white/60" x-text="formData.phone"></span>
+                            A confirmation email has been sent to <span class="text-white/60" x-text="formData.email"></span>
                         </p>
 
                         <!-- Action Buttons -->
@@ -1408,6 +1424,7 @@
                     fullName: '',
                     university: '',
                     phone: '',
+                    email: '',
                     idNumber: '',
                     gender: '',
                     level: ''
@@ -1426,6 +1443,14 @@
                     }
                     if (!this.formData.phone) {
                         this.errorMessage = 'Please enter your phone number.';
+                        return;
+                    }
+                    if (!this.formData.email) {
+                        this.errorMessage = 'Please enter your email address.';
+                        return;
+                    }
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) {
+                        this.errorMessage = 'Please enter a valid email address.';
                         return;
                     }
                     if (!this.formData.idNumber) {
@@ -1471,6 +1496,7 @@
                                 full_name: this.formData.fullName,
                                 university: this.formData.university,
                                 phone: this.formData.phone,
+                                email: this.formData.email,
                                 id_number: this.formData.idNumber,
                                 gender: this.formData.gender,
                                 level: this.formData.level,
@@ -1609,6 +1635,7 @@
                         fullName: '',
                         university: '',
                         phone: '',
+                        email: '',
                         idNumber: '',
                         gender: '',
                         level: ''

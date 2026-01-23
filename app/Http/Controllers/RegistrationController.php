@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationConfirmation;
 use App\Models\Registration;
 use App\Services\PaynowService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -29,6 +31,7 @@ class RegistrationController extends Controller
             'full_name' => ['required', 'string', 'max:255'],
             'university' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'email', 'max:255'],
             'id_number' => ['required', 'string', 'max:50'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'level' => ['required', 'string', 'max:50'],
@@ -61,6 +64,7 @@ class RegistrationController extends Controller
             'full_name' => $request->full_name,
             'university' => $request->university,
             'phone' => $request->phone,
+            'email' => $request->email,
             'id_number' => $request->id_number,
             'gender' => $request->gender,
             'level' => $request->level,
@@ -93,6 +97,7 @@ class RegistrationController extends Controller
             'full_name' => ['required', 'string', 'max:255'],
             'university' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'email', 'max:255'],
             'id_number' => ['required', 'string', 'max:50'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'level' => ['required', 'string', 'max:50'],
@@ -123,6 +128,8 @@ class RegistrationController extends Controller
             }
 
             // If pending/processing, allow retry with same registration
+            // Update email if changed
+            $existingById->update(['email' => $request->email]);
             $registration = $existingById;
         } else {
             // Create new registration
@@ -132,6 +139,7 @@ class RegistrationController extends Controller
                 'full_name' => $request->full_name,
                 'university' => $request->university,
                 'phone' => $request->phone,
+                'email' => $request->email,
                 'id_number' => $request->id_number,
                 'gender' => $request->gender,
                 'level' => $request->level,
@@ -335,11 +343,30 @@ class RegistrationController extends Controller
 
         // Update registration based on status
         if ($result['paid'] || $status === 'paid') {
+            $wasPaid = $registration->isPaid();
+
             $registration->update([
                 'payment_status' => 'completed',
                 'paynow_reference' => $result['paynow_reference'],
                 'paid_at' => now(),
             ]);
+
+            // Send confirmation email if payment was just completed
+            if (!$wasPaid && $registration->email) {
+                try {
+                    Mail::to($registration->email)->send(new RegistrationConfirmation($registration));
+                    Log::info('Registration confirmation email sent', [
+                        'registration_id' => $registration->id,
+                        'email' => $registration->email,
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('Failed to send registration confirmation email', [
+                        'registration_id' => $registration->id,
+                        'email' => $registration->email,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
 
             return response()->json([
                 'success' => true,
@@ -409,11 +436,30 @@ class RegistrationController extends Controller
         }
 
         if ($status->paid()) {
+            $wasPaid = $registration->isPaid();
+
             $registration->update([
                 'payment_status' => 'completed',
                 'paynow_reference' => $status->paynowReference(),
                 'paid_at' => now(),
             ]);
+
+            // Send confirmation email if payment was just completed
+            if (!$wasPaid && $registration->email) {
+                try {
+                    Mail::to($registration->email)->send(new RegistrationConfirmation($registration));
+                    Log::info('Registration confirmation email sent via callback', [
+                        'registration_id' => $registration->id,
+                        'email' => $registration->email,
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('Failed to send registration confirmation email via callback', [
+                        'registration_id' => $registration->id,
+                        'email' => $registration->email,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
 
             Log::info('Payment completed via callback', [
                 'reference' => $reference,
@@ -547,5 +593,45 @@ class RegistrationController extends Controller
             'success' => true,
             'data' => $stats,
         ]);
+    }
+
+    /**
+     * Send a test email to verify SMTP configuration
+     */
+    public function testEmail(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            Mail::raw('This is a test email from MISCON26. Your SMTP settings are working.', function ($message) use ($request) {
+                $message->to($request->email)
+                    ->subject('MISCON26 SMTP Test Email');
+            });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Test email sent successfully',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to send test email', [
+                'email' => $request->email,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send test email. Check your SMTP configuration.',
+            ], 500);
+        }
     }
 }

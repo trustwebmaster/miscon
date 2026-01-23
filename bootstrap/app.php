@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
             'paynow/result', // Paynow callback doesn't send CSRF token
+            'api/registration/test-email', // Test email endpoint
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

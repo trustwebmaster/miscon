@@ -19,6 +19,7 @@ Route::prefix('api/registration')->name('registration.')->group(function () {
     Route::post('/pay', [RegistrationController::class, 'registerAndPay'])->name('pay'); // Register + pay in one request
     Route::post('/payment', [RegistrationController::class, 'processPayment'])->name('payment');
     Route::post('/payment/poll', [RegistrationController::class, 'pollPaymentStatus'])->name('payment.poll');
+    Route::post('/test-email', [RegistrationController::class, 'testEmail'])->name('email.test');
     Route::post('/check', [RegistrationController::class, 'checkByIdNumber'])->name('check');
     Route::get('/status/{reference}', [RegistrationController::class, 'status'])->name('status');
     Route::get('/stats', [RegistrationController::class, 'stats'])->name('stats');
