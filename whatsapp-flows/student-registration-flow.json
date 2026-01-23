@@ -1,0 +1,382 @@
+{
+    "version": "7.3",
+ "screens": [
+    {
+      "id": "STUDENT_DETAILS",
+      "title": "Student Registration",
+      "terminal": false,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Student Registration - $45"
+          },
+          {
+            "type": "TextBody",
+            "text": "Please fill in your details:"
+          },
+          {
+            "type": "TextInput",
+            "name": "full_name",
+            "label": "Full Name",
+            "required": true,
+            "helper-text": "As it appears on your student ID",
+            "input-type": "text"
+          },
+          {
+            "type": "TextInput",
+            "name": "university",
+            "label": "University",
+            "required": true,
+            "input-type": "text",
+            "helper-text": "Your current institution"
+          },
+          {
+            "type": "TextInput",
+            "name": "email",
+            "label": "Email Address",
+            "required": true,
+            "input-type": "email",
+            "helper-text": "We'll send your confirmation here"
+          },
+          {
+            "type": "TextInput",
+            "name": "id_number",
+            "label": "Reg Number",
+            "required": true,
+            "input-type": "text",
+            "helper-text": "Your student registration number"
+          },
+          {
+            "type": "Dropdown",
+            "name": "gender",
+            "label": "Gender",
+            "required": true,
+            "data-source": [
+              {"id": "male", "title": "Male"},
+              {"id": "female", "title": "Female"}
+            ]
+          },
+          {
+            "type": "Dropdown",
+            "name": "level",
+            "label": "Level of Study",
+            "required": true,
+            "data-source": [
+              {"id": "Part 1", "title": "Part 1"},
+              {"id": "Part 2", "title": "Part 2"},
+              {"id": "Part 3", "title": "Part 3"},
+              {"id": "Part 4", "title": "Part 4"},
+              {"id": "Part 5", "title": "Part 5"},
+              {"id": "Intern", "title": "Intern"}
+            ]
+          },
+          {
+            "type": "Footer",
+            "label": "Continue to Payment",
+            "on-click-action": {
+              "name": "navigate",
+              "next": {
+                "type": "screen",
+                "name": "PAYMENT_METHOD"
+              },
+              "payload": {
+                "registration_type": "student",
+                "amount": "45",
+                "full_name": "${form.full_name}",
+                "university": "${form.university}",
+                "email": "${form.email}",
+                "id_number": "${form.id_number}",
+                "gender": "${form.gender}",
+                "level": "${form.level}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "PAYMENT_METHOD",
+      "title": "Payment Method",
+      "terminal": false,
+      "data": {
+        "registration_type": {
+          "type": "string",
+          "__example__": "student"
+        },
+        "amount": {
+          "type": "string",
+          "__example__": "45"
+        },
+        "full_name": {
+          "type": "string",
+          "__example__": "John Doe"
+        },
+        "university": {
+          "type": "string",
+          "__example__": "University of Zimbabwe"
+        },
+        "email": {
+          "type": "string",
+          "__example__": "john@example.com"
+        },
+        "id_number": {
+          "type": "string",
+          "__example__": "R123456"
+        },
+        "gender": {
+          "type": "string",
+          "__example__": "male"
+        },
+        "level": {
+          "type": "string",
+          "__example__": "Part 3"
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Select Payment Method"
+          },
+          {
+            "type": "TextBody",
+            "text": "Amount to pay: $45"
+          },
+          {
+            "type": "RadioButtonsGroup",
+            "name": "payment_method",
+            "label": "Payment Method",
+            "required": true,
+            "data-source": [
+              {
+                "id": "ecocash",
+                "title": "EcoCash",
+                "description": "Pay with EcoCash mobile money"
+              },
+              {
+                "id": "innbucks",
+                "title": "InnBucks",
+                "description": "Pay with InnBucks"
+              },
+              {
+                "id": "onemoney",
+                "title": "OneMoney",
+                "description": "Pay with OneMoney"
+              }
+            ]
+          },
+          {
+            "type": "Footer",
+            "label": "Continue",
+            "on-click-action": {
+              "name": "navigate",
+              "next": {
+                "type": "screen",
+                "name": "PAYMENT_PHONE"
+              },
+              "payload": {
+                "registration_type": "${data.registration_type}",
+                "amount": "${data.amount}",
+                "full_name": "${data.full_name}",
+                "university": "${data.university}",
+                "email": "${data.email}",
+                "id_number": "${data.id_number}",
+                "gender": "${data.gender}",
+                "level": "${data.level}",
+                "payment_method": "${form.payment_method}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "PAYMENT_PHONE",
+      "title": "Payment Phone",
+      "terminal": false,
+      "data": {
+        "registration_type": {
+          "type": "string",
+          "__example__": "student"
+        },
+        "amount": {
+          "type": "string",
+          "__example__": "45"
+        },
+        "full_name": {
+          "type": "string",
+          "__example__": "John Doe"
+        },
+        "university": {
+          "type": "string",
+          "__example__": "University of Zimbabwe"
+        },
+        "email": {
+          "type": "string",
+          "__example__": "john@example.com"
+        },
+        "id_number": {
+          "type": "string",
+          "__example__": "R123456"
+        },
+        "gender": {
+          "type": "string",
+          "__example__": "male"
+        },
+        "level": {
+          "type": "string",
+          "__example__": "Part 3"
+        },
+        "payment_method": {
+          "type": "string",
+          "__example__": "ecocash"
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Enter Payment Phone"
+          },
+          {
+            "type": "TextBody",
+            "text": "Enter the phone number linked to your ${data.payment_method} account:"
+          },
+          {
+            "type": "TextInput",
+            "name": "payment_phone",
+            "label": "Phone Number",
+            "required": true,
+            "input-type": "phone",
+            "helper-text": "e.g., 0771234567"
+          },
+          {
+            "type": "Footer",
+            "label": "Review & Confirm",
+            "on-click-action": {
+              "name": "navigate",
+              "next": {
+                "type": "screen",
+                "name": "CONFIRMATION"
+              },
+              "payload": {
+                "registration_type": "${data.registration_type}",
+                "amount": "${data.amount}",
+                "full_name": "${data.full_name}",
+                "university": "${data.university}",
+                "email": "${data.email}",
+                "id_number": "${data.id_number}",
+                "gender": "${data.gender}",
+                "level": "${data.level}",
+                "payment_method": "${data.payment_method}",
+                "payment_phone": "${form.payment_phone}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "CONFIRMATION",
+      "title": "Confirm Registration",
+      "terminal": true,
+      "success": true,
+      "data": {
+        "registration_type": {
+          "type": "string",
+          "__example__": "student"
+        },
+        "amount": {
+          "type": "string",
+          "__example__": "45"
+        },
+        "full_name": {
+          "type": "string",
+          "__example__": "John Doe"
+        },
+        "university": {
+          "type": "string",
+          "__example__": "University of Zimbabwe"
+        },
+        "email": {
+          "type": "string",
+          "__example__": "john@example.com"
+        },
+        "id_number": {
+          "type": "string",
+          "__example__": "R123456"
+        },
+        "gender": {
+          "type": "string",
+          "__example__": "male"
+        },
+        "level": {
+          "type": "string",
+          "__example__": "Part 3"
+        },
+        "payment_method": {
+          "type": "string",
+          "__example__": "ecocash"
+        },
+        "payment_phone": {
+          "type": "string",
+          "__example__": "0771234567"
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Registration Summary"
+          },
+          {
+            "type": "TextSubheading",
+            "text": "Student Registration - $45"
+          },
+          {
+            "type": "TextBody",
+            "text": "👤 Name: ${data.full_name}\n🏫 University: ${data.university}\n📧 Email: ${data.email}\n🆔 Reg No: ${data.id_number}\n⚧ Gender: ${data.gender}\n📚 Level: ${data.level}\n\n💳 Payment: ${data.payment_method}\n📱 Phone: ${data.payment_phone}\n💰 Amount: $45"
+          },
+          {
+            "type": "OptIn",
+            "name": "terms_accepted",
+            "label": "I confirm this information is correct",
+            "required": true
+          },
+          {
+            "type": "Footer",
+            "label": "Complete Registration",
+            "on-click-action": {
+              "name": "complete",
+              "payload": {
+                "registration_type": "${data.registration_type}",
+                "amount": "${data.amount}",
+                "full_name": "${data.full_name}",
+                "university": "${data.university}",
+                "email": "${data.email}",
+                "id_number": "${data.id_number}",
+                "gender": "${data.gender}",
+                "level": "${data.level}",
+                "payment_method": "${data.payment_method}",
+                "payment_phone": "${data.payment_phone}",
+                "terms_accepted": "${form.terms_accepted}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "routing_model": {
+    "STUDENT_DETAILS": ["PAYMENT_METHOD"],
+    "PAYMENT_METHOD": ["PAYMENT_PHONE"],
+    "PAYMENT_PHONE": ["CONFIRMATION"],
+    "CONFIRMATION": []
+  }
+}

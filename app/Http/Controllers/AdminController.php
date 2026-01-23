@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GuestSpeaker;
+use App\Models\PrayerRequest;
+use App\Models\ProgramSchedule;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -212,5 +215,159 @@ class AdminController extends Controller
     public function show(Registration $registration)
     {
         return view('admin.registration-details', compact('registration'));
+    }
+
+    /**
+     * List prayer requests (admin only)
+     */
+    public function prayerRequests(Request $request)
+    {
+        $status = $request->get('status');
+        
+        $query = PrayerRequest::latest();
+        
+        if ($status) {
+            $query->where('status', $status);
+        }
+        
+        $prayerRequests = $query->paginate(20)->withQueryString();
+        
+        $stats = [
+            'total' => PrayerRequest::count(),
+            'pending' => PrayerRequest::pending()->count(),
+            'prayed' => PrayerRequest::prayed()->count(),
+        ];
+        
+        return view('admin.prayer-requests', compact('prayerRequests', 'stats', 'status'));
+    }
+
+    /**
+     * Mark prayer request as prayed
+     */
+    public function markPrayerRequestPrayed(Request $request, PrayerRequest $prayerRequest)
+    {
+        $prayerRequest->markAsPrayed($request->get('notes'));
+        
+        return back()->with('success', 'Prayer request marked as prayed.');
+    }
+
+    /**
+     * List guest speakers
+     */
+    public function guestSpeakers()
+    {
+        $speakers = GuestSpeaker::ordered()->get();
+        return view('admin.guest-speakers', compact('speakers'));
+    }
+
+    /**
+     * Store new guest speaker
+     */
+    public function storeGuestSpeaker(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'title' => 'nullable|string|max:50',
+            'topic' => 'nullable|string|max:255',
+            'bio' => 'nullable|string',
+            'organization' => 'nullable|string|max:255',
+            'display_order' => 'nullable|integer',
+        ]);
+        
+        GuestSpeaker::create($validated);
+        
+        return back()->with('success', 'Guest speaker added successfully.');
+    }
+
+    /**
+     * Update guest speaker
+     */
+    public function updateGuestSpeaker(Request $request, GuestSpeaker $speaker)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'title' => 'nullable|string|max:50',
+            'topic' => 'nullable|string|max:255',
+            'bio' => 'nullable|string',
+            'organization' => 'nullable|string|max:255',
+            'display_order' => 'nullable|integer',
+            'is_active' => 'boolean',
+        ]);
+        
+        $speaker->update($validated);
+        
+        return back()->with('success', 'Guest speaker updated successfully.');
+    }
+
+    /**
+     * Delete guest speaker
+     */
+    public function deleteGuestSpeaker(GuestSpeaker $speaker)
+    {
+        $speaker->delete();
+        return back()->with('success', 'Guest speaker deleted.');
+    }
+
+    /**
+     * List program schedules
+     */
+    public function programSchedule()
+    {
+        $schedules = ProgramSchedule::ordered()->get()->groupBy(fn($s) => $s->event_date->format('Y-m-d'));
+        return view('admin.program-schedule', compact('schedules'));
+    }
+
+    /**
+     * Store new schedule item
+     */
+    public function storeSchedule(Request $request)
+    {
+        $validated = $request->validate([
+            'event_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'venue' => 'nullable|string|max:255',
+            'speaker' => 'nullable|string|max:255',
+            'category' => 'required|in:plenary,workshop,worship,break,meal,fellowship,other',
+            'display_order' => 'nullable|integer',
+        ]);
+        
+        ProgramSchedule::create($validated);
+        
+        return back()->with('success', 'Schedule item added successfully.');
+    }
+
+    /**
+     * Update schedule item
+     */
+    public function updateSchedule(Request $request, ProgramSchedule $schedule)
+    {
+        $validated = $request->validate([
+            'event_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'venue' => 'nullable|string|max:255',
+            'speaker' => 'nullable|string|max:255',
+            'category' => 'required|in:plenary,workshop,worship,break,meal,fellowship,other',
+            'display_order' => 'nullable|integer',
+            'is_active' => 'boolean',
+        ]);
+        
+        $schedule->update($validated);
+        
+        return back()->with('success', 'Schedule item updated successfully.');
+    }
+
+    /**
+     * Delete schedule item
+     */
+    public function deleteSchedule(ProgramSchedule $schedule)
+    {
+        $schedule->delete();
+        return back()->with('success', 'Schedule item deleted.');
     }
 }

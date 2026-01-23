@@ -2,9 +2,17 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\WhatsAppWebHookController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
+
+// WhatsApp Webhook Routes (must be before auth middleware)
+Route::prefix('webhook/whatsapp')->group(function () {
+    Route::get('/', [WhatsAppWebHookController::class, 'verify'])->name('whatsapp.verify');
+    Route::post('/', [WhatsAppWebHookController::class, 'handle'])->name('whatsapp.handle');
+    Route::post('/flow', [WhatsAppWebHookController::class, 'handleFlowEndpoint'])->name('whatsapp.flow');
+});
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -19,6 +27,22 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/export', [AdminController::class, 'export'])->name('export');
     Route::get('/registration/{registration}', [AdminController::class, 'show'])->name('registration.show');
+    
+    // Prayer Requests
+    Route::get('/prayer-requests', [AdminController::class, 'prayerRequests'])->name('prayer-requests');
+    Route::post('/prayer-requests/{prayerRequest}/prayed', [AdminController::class, 'markPrayerRequestPrayed'])->name('prayer-requests.prayed');
+    
+    // Guest Speakers
+    Route::get('/guest-speakers', [AdminController::class, 'guestSpeakers'])->name('guest-speakers');
+    Route::post('/guest-speakers', [AdminController::class, 'storeGuestSpeaker'])->name('guest-speakers.store');
+    Route::put('/guest-speakers/{speaker}', [AdminController::class, 'updateGuestSpeaker'])->name('guest-speakers.update');
+    Route::delete('/guest-speakers/{speaker}', [AdminController::class, 'deleteGuestSpeaker'])->name('guest-speakers.destroy');
+    
+    // Program Schedule
+    Route::get('/program-schedule', [AdminController::class, 'programSchedule'])->name('program-schedule');
+    Route::post('/program-schedule', [AdminController::class, 'storeSchedule'])->name('program-schedule.store');
+    Route::put('/program-schedule/{schedule}', [AdminController::class, 'updateSchedule'])->name('program-schedule.update');
+    Route::delete('/program-schedule/{schedule}', [AdminController::class, 'deleteSchedule'])->name('program-schedule.destroy');
 });
 
 // Logout Route for admin panel (non-Livewire)

@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'paynow/result', // Paynow callback doesn't send CSRF token
             'api/registration/test-email', // Test email endpoint
+            'webhook/whatsapp', // WhatsApp webhook
+            'webhook/whatsapp/*', // WhatsApp webhook sub-routes
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
