@@ -1537,7 +1537,7 @@
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between text-white/70">
                                     <span>Registration Fee</span>
-                                    <span x-text="'$' + (formData.type === 'student' ? '45' : '65')"></span>
+                                    <span x-text="'$' + getRegistrationAmount()"></span>
                                 </div>
                                 <div class="flex justify-between text-pink-400">
                                     <span class="flex items-center gap-1">
