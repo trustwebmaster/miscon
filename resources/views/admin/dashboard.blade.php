@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Dashboard | MISCON26</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body class="antialiased" x-data="{ sidebarOpen: false, showFilters: false }">
     <!-- Background -->
     <div class="fixed inset-0 bg-mesh -z-10"></div>
-    
+
     <div class="min-h-screen flex">
         <!-- Sidebar -->
         <aside class="fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 lg:translate-x-0 lg:static"
@@ -24,20 +24,7 @@
                 <div class="p-6 border-b border-white/10">
                     <a href="{{ url('/') }}" class="flex items-center gap-3">
                         <div class="w-10 h-12">
-                            <svg viewBox="0 0 100 120" class="w-full h-full">
-                                <defs>
-                                    <linearGradient id="pcmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#3b82f6"/>
-                                        <stop offset="50%" style="stop-color:#8b5cf6"/>
-                                        <stop offset="100%" style="stop-color:#ec4899"/>
-                                    </linearGradient>
-                                </defs>
-                                <path d="M50 5 L95 20 L95 60 Q95 95 50 115 Q5 95 5 60 L5 20 Z" fill="url(#pcmGrad)" stroke="white" stroke-width="3"/>
-                                <text x="50" y="45" text-anchor="middle" fill="white" font-family="Outfit" font-weight="bold" font-size="20">PCM</text>
-                                <path d="M30 60 L50 55 L70 60 L70 80 L50 75 L30 80 Z" fill="none" stroke="white" stroke-width="2"/>
-                                <line x1="50" y1="55" x2="50" y2="75" stroke="white" stroke-width="2"/>
-                                <path d="M35 50 L50 42 L65 50 L50 58 Z" fill="white"/>
-                            </svg>
+                            <img src="{{ asset('images/logo.png') }}" alt="PCM Logo" class="w-full h-full object-contain">
                         </div>
                         <div>
                             <span class="text-xl font-bold">MISCON</span>
@@ -49,15 +36,15 @@
 
                 <!-- Navigation -->
                 <nav class="flex-1 p-4 space-y-2">
-                    <a href="{{ route('admin.dashboard') }}" 
+                    <a href="{{ route('admin.dashboard') }}"
                        class="flex items-center gap-3 px-4 py-3 rounded-xl bg-miscon-gold/20 text-miscon-gold border border-miscon-gold/30">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                         </svg>
                         <span class="font-medium">Dashboard</span>
                     </a>
-                    
-                    <a href="{{ route('admin.export', request()->query()) }}" 
+
+                    <a href="{{ route('admin.export', request()->query()) }}"
                        class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -65,7 +52,7 @@
                         <span class="font-medium">Export CSV</span>
                     </a>
 
-                    <a href="{{ url('/') }}" 
+                    <a href="{{ url('/') }}"
                        class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -99,7 +86,7 @@
         </aside>
 
         <!-- Mobile Overlay -->
-        <div x-show="sidebarOpen" 
+        <div x-show="sidebarOpen"
              x-transition:enter="transition-opacity ease-out duration-300"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
@@ -127,7 +114,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-sm text-white/60 hidden sm:block">{{ now()->format('l, F j, Y') }}</span>
-                        <button @click="showFilters = !showFilters" 
+                        <button @click="showFilters = !showFilters"
                                 class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all lg:hidden">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
@@ -156,7 +143,7 @@
                             </div>
                         </div>
                         <div class="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
-                            <div class="h-full bg-pcm-blue rounded-full transition-all" 
+                            <div class="h-full bg-pcm-blue rounded-full transition-all"
                                  style="width: {{ $stats['total_students'] > 0 ? ($stats['paid_students'] / $stats['total_students']) * 100 : 0 }}%"></div>
                         </div>
                     </div>
@@ -176,7 +163,7 @@
                             </div>
                         </div>
                         <div class="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
-                            <div class="h-full bg-pcm-purple rounded-full transition-all" 
+                            <div class="h-full bg-pcm-purple rounded-full transition-all"
                                  style="width: {{ $stats['total_alumni'] > 0 ? ($stats['paid_alumni'] / $stats['total_alumni']) * 100 : 0 }}%"></div>
                         </div>
                     </div>
@@ -267,7 +254,7 @@
                             <!-- Search -->
                             <div class="lg:col-span-2">
                                 <label class="block text-sm text-white/60 mb-2">Search</label>
-                                <input type="text" name="search" value="{{ $search }}" 
+                                <input type="text" name="search" value="{{ $search }}"
                                        placeholder="Name, phone, email, ref..."
                                        class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:border-miscon-gold focus:ring-1 focus:ring-miscon-gold transition-all">
                             </div>
@@ -297,14 +284,14 @@
                             <!-- Date From -->
                             <div>
                                 <label class="block text-sm text-white/60 mb-2">From Date</label>
-                                <input type="date" name="date_from" value="{{ $dateFrom }}" 
+                                <input type="date" name="date_from" value="{{ $dateFrom }}"
                                        class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-miscon-gold focus:ring-1 focus:ring-miscon-gold transition-all">
                             </div>
 
                             <!-- Date To -->
                             <div>
                                 <label class="block text-sm text-white/60 mb-2">To Date</label>
-                                <input type="date" name="date_to" value="{{ $dateTo }}" 
+                                <input type="date" name="date_to" value="{{ $dateTo }}"
                                        class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-miscon-gold focus:ring-1 focus:ring-miscon-gold transition-all">
                             </div>
                         </div>
@@ -331,7 +318,7 @@
                                         Apply Filters
                                     </span>
                                 </button>
-                                <a href="{{ route('admin.export', request()->query()) }}" 
+                                <a href="{{ route('admin.export', request()->query()) }}"
                                    class="btn-outline py-3 px-6 flex items-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -422,7 +409,7 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('admin.registration.show', $registration) }}" 
+                                            <a href="{{ route('admin.registration.show', $registration) }}"
                                                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-sm transition-all">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>

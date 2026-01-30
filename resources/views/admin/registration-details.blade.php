@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Registration Details | MISCON26 Admin</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body class="antialiased">
     <!-- Background -->
     <div class="fixed inset-0 bg-mesh -z-10"></div>
-    
+
     <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
             <!-- Back Button -->
@@ -78,7 +78,7 @@
                         </svg>
                         Personal Information
                     </h2>
-                    
+
                     <div class="space-y-4">
                         <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pcm-blue via-pcm-purple to-pcm-pink flex items-center justify-center">

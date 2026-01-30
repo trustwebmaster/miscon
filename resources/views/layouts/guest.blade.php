@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'MISCON26') }} - Admin</title>
-        <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
+
         <style>
             [x-cloak] { display: none !important; }
         </style>
@@ -23,7 +23,7 @@
     <body class="font-sans antialiased">
         <!-- Animated Background -->
         <div class="fixed inset-0 bg-mesh -z-10"></div>
-        
+
         <!-- Floating Particles -->
         <div class="fixed inset-0 overflow-hidden pointer-events-none -z-5">
             <div class="particle w-2 h-2 bg-miscon-gold top-[10%] left-[10%]"></div>
@@ -44,20 +44,7 @@
             <a href="/" wire:navigate class="group mb-8 animate-slide-down">
                 <div class="flex items-center gap-4">
                     <div class="relative w-16 h-20 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                        <svg viewBox="0 0 100 120" class="w-full h-full drop-shadow-lg">
-                            <defs>
-                                <linearGradient id="pcmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#3b82f6"/>
-                                    <stop offset="50%" style="stop-color:#8b5cf6"/>
-                                    <stop offset="100%" style="stop-color:#ec4899"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M50 5 L95 20 L95 60 Q95 95 50 115 Q5 95 5 60 L5 20 Z" fill="url(#pcmGradient)" stroke="white" stroke-width="3"/>
-                            <text x="50" y="45" text-anchor="middle" fill="white" font-family="Outfit" font-weight="bold" font-size="20">PCM</text>
-                            <path d="M30 60 L50 55 L70 60 L70 80 L50 75 L30 80 Z" fill="none" stroke="white" stroke-width="2"/>
-                            <line x1="50" y1="55" x2="50" y2="75" stroke="white" stroke-width="2"/>
-                            <path d="M35 50 L50 42 L65 50 L50 58 Z" fill="white"/>
-                        </svg>
+                        <img src="{{ asset('images/logo.png') }}" alt="PCM Logo" class="w-full h-full object-contain drop-shadow-lg">
                     </div>
                     <div class="text-center sm:text-left">
                         <span class="text-3xl font-bold tracking-tight">MISCON</span>
@@ -72,7 +59,7 @@
                 <div class="glass rounded-3xl p-8 sm:p-10 shadow-2xl border border-white/20 hover:border-miscon-gold/30 transition-all duration-500">
                     {{ $slot }}
                 </div>
-                
+
                 <!-- Back to site link -->
                 <div class="mt-6 text-center animate-fade-in animation-delay-400">
                     <a href="/" class="inline-flex items-center gap-2 text-white/60 hover:text-miscon-gold transition-colors group">

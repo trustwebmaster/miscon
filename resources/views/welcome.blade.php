@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="MISCON26 - Watchmen On The Wall. A transformative student conference by PCM.">
     <title>MISCON26 | Watchmen On The Wall</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -36,16 +36,7 @@
             <div class="flex items-center justify-between">
                 <a href="#" class="flex items-center gap-3 group">
                     <div class="relative w-12 h-14 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                        <svg viewBox="0 0 100 120" class="w-full h-full drop-shadow-lg">
-                            <defs><linearGradient id="pcmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#3b82f6"/><stop offset="50%" style="stop-color:#8b5cf6"/><stop offset="100%" style="stop-color:#ec4899"/>
-                            </linearGradient></defs>
-                            <path d="M50 5 L95 20 L95 60 Q95 95 50 115 Q5 95 5 60 L5 20 Z" fill="url(#pcmGradient)" stroke="white" stroke-width="3"/>
-                            <text x="50" y="45" text-anchor="middle" fill="white" font-family="Outfit" font-weight="bold" font-size="20">PCM</text>
-                            <path d="M30 60 L50 55 L70 60 L70 80 L50 75 L30 80 Z" fill="none" stroke="white" stroke-width="2"/>
-                            <line x1="50" y1="55" x2="50" y2="75" stroke="white" stroke-width="2"/>
-                            <path d="M35 50 L50 42 L65 50 L50 58 Z" fill="white"/>
-                        </svg>
+                        <img src="{{ asset('images/logo.png') }}" alt="PCM Logo" class="w-full h-full object-contain drop-shadow-lg">
                     </div>
                     <div class="hidden sm:block">
                         <span class="text-xl font-bold tracking-tight">MISCON</span>
@@ -1327,7 +1318,7 @@
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-12">
-                        <svg viewBox="0 0 100 120" class="w-full h-full"><defs><linearGradient id="pcmGradientFooter" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#3b82f6"/><stop offset="50%" style="stop-color:#8b5cf6"/><stop offset="100%" style="stop-color:#ec4899"/></linearGradient></defs><path d="M50 5 L95 20 L95 60 Q95 95 50 115 Q5 95 5 60 L5 20 Z" fill="url(#pcmGradientFooter)" stroke="white" stroke-width="3"/><text x="50" y="50" text-anchor="middle" fill="white" font-family="Outfit" font-weight="bold" font-size="22">PCM</text></svg>
+                        <img src="{{ asset('images/logo.png') }}" alt="PCM Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
                         <p class="font-bold">MISCON<span class="text-miscon-gold">26</span></p>
