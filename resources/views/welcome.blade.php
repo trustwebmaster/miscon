@@ -2060,8 +2060,14 @@
                 </div>
                 <p class="text-white/60 text-sm text-center">&copy; 2026 North Zimbabwe Conference | SDA Church</p>
             </div>
-            <div class="mt-6 pt-6 border-t border-white/5 text-center">
-                <p class="text-white/40 text-xs">Done by <a href="https://trustmusikiri.co.zw" target="_blank" rel="noopener noreferrer" class="text-miscon-gold hover:text-white transition-colors">Trust Musikiri</a></p>
+            <div class="mt-8 pt-6 border-t border-white/5 flex justify-center">
+                <a href="https://trustmusikiri.co.zw" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-miscon-gold/30 transition-all duration-300">
+                    <svg class="w-4 h-4 text-white/40 group-hover:text-miscon-gold transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                    <span class="text-xs text-white/50 group-hover:text-white/80 transition-colors">Crafted by</span>
+                    <span class="text-xs font-medium text-miscon-gold group-hover:text-white transition-colors">Trust Musikiri</span>
+                </a>
             </div>
         </div>
     </footer>
