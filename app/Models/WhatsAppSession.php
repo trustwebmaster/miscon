@@ -9,6 +9,8 @@ class WhatsAppSession extends Model
 {
     use HasFactory;
 
+    protected $table = 'whatsapp_sessions';
+
     protected $fillable = [
         'phone',
         'current_state',
@@ -103,9 +105,9 @@ class WhatsAppSession extends Model
     }
 
     /**
-     * Touch the session (update last interaction)
+     * Update last interaction timestamp
      */
-    public function touch(): bool
+    public function updateLastInteraction(): bool
     {
         return $this->update(['last_interaction_at' => now()]);
     }

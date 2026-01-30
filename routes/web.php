@@ -14,6 +14,15 @@ Route::prefix('webhook/whatsapp')->group(function () {
     Route::post('/flow', [WhatsAppWebHookController::class, 'handleFlowEndpoint'])->name('whatsapp.flow');
 });
 
+// Simple test route to verify server is accessible
+Route::get('/webhook/test', function () {
+    return response()->json([
+        'status' => 'ok',
+        'message' => 'Webhook endpoint is accessible',
+        'time' => now()->toIso8601String(),
+    ]);
+});
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
