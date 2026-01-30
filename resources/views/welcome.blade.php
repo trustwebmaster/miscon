@@ -2060,6 +2060,9 @@
                 </div>
                 <p class="text-white/60 text-sm text-center">&copy; 2026 North Zimbabwe Conference | SDA Church</p>
             </div>
+            <div class="mt-6 pt-6 border-t border-white/5 text-center">
+                <p class="text-white/40 text-xs">Done by <a href="https://trustmusikiri.co.zw" target="_blank" rel="noopener noreferrer" class="text-miscon-gold hover:text-white transition-colors">Trust Musikiri</a></p>
+            </div>
         </div>
     </footer>
 
