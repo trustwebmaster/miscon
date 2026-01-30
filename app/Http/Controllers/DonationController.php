@@ -62,8 +62,8 @@ class DonationController extends Controller
         // Format phone number for Paynow
         $formattedPhone = PaynowService::formatPhone($request->payment_phone);
 
-        // Default to ecocash for donations
-        $paymentMethod = 'ecocash';
+        // Get payment method from request, default to ecocash if not provided
+        $paymentMethod = $request->input('payment_method', 'ecocash');
 
         // Generate email for Paynow
         $email = $request->donor_email ?: ($formattedPhone . '@donation.miscon26.co.zw');

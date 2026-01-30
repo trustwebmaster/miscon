@@ -1834,18 +1834,56 @@
                             </div>
                         </div>
 
-                        <!-- Phone Number for Paynow -->
+                        <!-- Payment Method Selection -->
+                        <div class="mb-6">
+                            <p class="text-sm font-medium text-white/80 mb-4">Select Payment Method</p>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <button @click="donationPaymentMethod = 'ecocash'" type="button"
+                                        class="p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3"
+                                        :class="donationPaymentMethod === 'ecocash' ? 'border-pink-500 bg-pink-500/10' : 'border-white/10 hover:border-white/30'">
+                                    <div class="w-12 h-12 rounded-lg bg-[#ffc72c] flex items-center justify-center">
+                                        <span class="text-black font-bold text-sm">ECO</span>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="font-semibold">EcoCash</p>
+                                        <p class="text-xs text-white/60">Mobile Money</p>
+                                    </div>
+                                    <div x-show="donationPaymentMethod === 'ecocash'" class="ml-auto">
+                                        <svg class="w-6 h-6 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    </div>
+                                </button>
+                                <button @click="donationPaymentMethod = 'innbucks'" type="button"
+                                        class="p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3"
+                                        :class="donationPaymentMethod === 'innbucks' ? 'border-pink-500 bg-pink-500/10' : 'border-white/10 hover:border-white/30'">
+                                    <div class="w-12 h-12 rounded-lg bg-[#ff6b00] flex items-center justify-center">
+                                        <span class="text-white font-bold text-sm">INN</span>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="font-semibold">InnBucks</p>
+                                        <p class="text-xs text-white/60">Digital Wallet</p>
+                                    </div>
+                                    <div x-show="donationPaymentMethod === 'innbucks'" class="ml-auto">
+                                        <svg class="w-6 h-6 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Phone Number for Payment -->
                         <div>
-                            <label class="block text-sm font-medium text-white/80 mb-2">Phone Number (for Ecocash/OneMoney) <span class="text-red-400">*</span></label>
+                            <label class="block text-sm font-medium text-white/80 mb-2">
+                                <span x-text="donationPaymentMethod === 'ecocash' ? 'EcoCash Number' : 'InnBucks Number'"></span>
+                                <span class="text-red-400">*</span>
+                            </label>
                             <div class="relative">
                                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                                     </svg>
                                 </span>
                                 <input type="tel" x-model="paymentPhone" required
                                        class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30"
-                                       placeholder="e.g., 0771234567">
+                                       :placeholder="donationPaymentMethod === 'ecocash' ? '07XX XXX XXX' : '07XX XXX XXX'">
                             </div>
                         </div>
 
@@ -2662,6 +2700,7 @@
                 donorEmail: '',
                 paymentPhone: '',
                 donorMessage: '',
+                donationPaymentMethod: 'ecocash',
                 isProcessing: false,
                 isPolling: false,
                 donationSuccess: false,
@@ -2727,6 +2766,7 @@
                                 donor_phone: this.paymentPhone,
                                 message: this.donorMessage,
                                 payment_phone: this.paymentPhone,
+                                payment_method: this.donationPaymentMethod,
                             }),
                         });
 
@@ -2836,6 +2876,7 @@
                     this.donorEmail = '';
                     this.paymentPhone = '';
                     this.donorMessage = '';
+                    this.donationPaymentMethod = 'ecocash';
                     this.isProcessing = false;
                     this.isPolling = false;
                     this.donationSuccess = false;
