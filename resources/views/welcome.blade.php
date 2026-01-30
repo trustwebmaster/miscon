@@ -1111,6 +1111,151 @@
                                 </div>
                             </div>
 
+                            <!-- Alumni Family Details Section -->
+                            <div x-show="formData.type === 'alumni'" x-transition class="space-y-6 mt-6">
+                                <!-- Married Option -->
+                                <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex items-center h-6">
+                                            <input type="checkbox"
+                                                   x-model="formData.isMarried"
+                                                   id="isMarried"
+                                                   class="w-5 h-5 rounded border-white/30 bg-white/5 text-miscon-gold focus:ring-miscon-gold/50 cursor-pointer">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label for="isMarried" class="block text-sm font-medium text-white/80 cursor-pointer">
+                                                I am bringing my spouse
+                                            </label>
+                                            <p class="text-xs text-white/50 mt-1">Registration doubles to $130 USD (includes spouse)</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Spouse Details (shown when married is checked) -->
+                                    <div x-show="formData.isMarried" x-transition class="mt-6 space-y-4 pt-6 border-t border-white/10">
+                                        <p class="text-sm font-medium text-miscon-gold">Spouse Details</p>
+
+                                        <!-- Spouse First Name -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-white/80 mb-2">Spouse First Name <span class="text-red-400">*</span></label>
+                                            <div class="relative">
+                                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                    </svg>
+                                                </span>
+                                                <input type="text" x-model="formData.spouseFirstName"
+                                                       :required="formData.isMarried"
+                                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                                       placeholder="Enter spouse's first name">
+                                            </div>
+                                        </div>
+
+                                        <!-- Spouse Surname -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-white/80 mb-2">Spouse Surname <span class="text-red-400">*</span></label>
+                                            <div class="relative">
+                                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                    </svg>
+                                                </span>
+                                                <input type="text" x-model="formData.spouseSurname"
+                                                       :required="formData.isMarried"
+                                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                                       placeholder="Enter spouse's surname">
+                                            </div>
+                                        </div>
+
+                                        <!-- Spouse Phone Number -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-white/80 mb-2">Spouse Phone Number <span class="text-red-400">*</span></label>
+                                            <div class="relative">
+                                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                                    </svg>
+                                                </span>
+                                                <input type="tel" x-model="formData.spousePhone"
+                                                       :required="formData.isMarried"
+                                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                                       placeholder="e.g., 0771234567">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Children Option -->
+                                <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex items-center h-6">
+                                            <input type="checkbox"
+                                                   x-model="formData.hasChildren"
+                                                   id="hasChildren"
+                                                   class="w-5 h-5 rounded border-white/30 bg-white/5 text-miscon-gold focus:ring-miscon-gold/50 cursor-pointer">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label for="hasChildren" class="block text-sm font-medium text-white/80 cursor-pointer">
+                                                I am bringing children
+                                            </label>
+                                            <p class="text-xs text-white/50 mt-1">Children above 4 years: +$20 each | Children under 4 years: Free</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Children Details (shown when hasChildren is checked) -->
+                                    <div x-show="formData.hasChildren" x-transition class="mt-6 space-y-4 pt-6 border-t border-white/10">
+                                        <p class="text-sm font-medium text-miscon-gold">Children Details</p>
+
+                                        <div class="grid sm:grid-cols-2 gap-4">
+                                            <!-- Children Above 4 Years -->
+                                            <div>
+                                                <label class="block text-sm font-medium text-white/80 mb-2">
+                                                    Children above 4 years
+                                                    <span class="text-xs text-white/50 font-normal">(+$20 each)</span>
+                                                </label>
+                                                <div class="relative">
+                                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                                        </svg>
+                                                    </span>
+                                                    <input type="number" x-model.number="formData.childrenAbove4"
+                                                           min="0" max="10"
+                                                           class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                                           placeholder="0">
+                                                </div>
+                                            </div>
+
+                                            <!-- Children Under 4 Years -->
+                                            <div>
+                                                <label class="block text-sm font-medium text-white/80 mb-2">
+                                                    Children under 4 years
+                                                    <span class="text-xs text-white/50 font-normal">(Free)</span>
+                                                </label>
+                                                <div class="relative">
+                                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                                        </svg>
+                                                    </span>
+                                                    <input type="number" x-model.number="formData.childrenUnder4"
+                                                           min="0" max="10"
+                                                           class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
+                                                           placeholder="0">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Children Cost Summary -->
+                                        <div x-show="formData.childrenAbove4 > 0" class="p-3 rounded-lg bg-miscon-gold/10 border border-miscon-gold/30">
+                                            <p class="text-sm text-miscon-gold">
+                                                <span x-text="formData.childrenAbove4"></span> child(ren) above 4 years:
+                                                <span class="font-semibold">+$<span x-text="formData.childrenAbove4 * 20"></span></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Features Preview -->
                             <div class="mt-8 p-6 rounded-2xl bg-white/5 border border-white/10">
                                 <p class="text-sm font-medium text-miscon-gold mb-4">What's Included:</p>
@@ -1221,6 +1366,43 @@
                                 <span class="text-white/60" x-text="getIdFieldLabel()"></span>
                                 <span class="font-medium font-mono" x-text="formData.idNumber"></span>
                             </div>
+
+                            <!-- Spouse Details (Alumni only) -->
+                            <template x-if="formData.type === 'alumni' && formData.isMarried">
+                                <div class="mb-4 pb-4 border-b border-white/10">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-white/60">Spouse</span>
+                                        <span class="font-medium" x-text="formData.spouseFirstName + ' ' + formData.spouseSurname"></span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-white/40">Spouse registration</span>
+                                        <span class="text-miscon-gold">+$65 (included in $130)</span>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Children Details (Alumni only) -->
+                            <template x-if="formData.type === 'alumni' && formData.hasChildren && (formData.childrenAbove4 > 0 || formData.childrenUnder4 > 0)">
+                                <div class="mb-4 pb-4 border-b border-white/10">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-white/60">Children</span>
+                                        <span class="font-medium" x-text="(formData.childrenAbove4 + formData.childrenUnder4) + ' total'"></span>
+                                    </div>
+                                    <template x-if="formData.childrenAbove4 > 0">
+                                        <div class="flex justify-between items-center text-sm mb-1">
+                                            <span class="text-white/40" x-text="formData.childrenAbove4 + ' above 4 years'"></span>
+                                            <span class="text-miscon-gold" x-text="'+$' + (formData.childrenAbove4 * 20)"></span>
+                                        </div>
+                                    </template>
+                                    <template x-if="formData.childrenUnder4 > 0">
+                                        <div class="flex justify-between items-center text-sm">
+                                            <span class="text-white/40" x-text="formData.childrenUnder4 + ' under 4 years'"></span>
+                                            <span class="text-green-400">Free</span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+
                             <div class="flex justify-between items-center text-lg">
                                 <span class="font-semibold">Total Amount</span>
                                 <span class="text-2xl font-bold text-miscon-gold" x-text="'$' + getRegistrationAmount() + ' USD'"></span>
@@ -1954,17 +2136,48 @@
                     email: '',
                     idNumber: '',
                     gender: '',
-                    level: ''
+                    level: '',
+                    // Alumni family fields
+                    isMarried: false,
+                    spouseFirstName: '',
+                    spouseSurname: '',
+                    spousePhone: '',
+                    hasChildren: false,
+                    childrenAbove4: 0,
+                    childrenUnder4: 0
                 },
                 getRegistrationAmount() {
                     if (this.formData.type === 'student') return 45;
-                    if (this.formData.type === 'alumni') return 65;
+                    if (this.formData.type === 'alumni') {
+                        let amount = 65;
+                        // Double to $130 if married (includes spouse)
+                        if (this.formData.isMarried) {
+                            amount = 130;
+                        }
+                        // Add $20 for each child above 4 years old
+                        if (this.formData.hasChildren && this.formData.childrenAbove4 > 0) {
+                            amount += this.formData.childrenAbove4 * 20;
+                        }
+                        return amount;
+                    }
                     if (this.formData.type === 'day_camper') return 7;
                     return 45;
                 },
                 getTypeDescription() {
                     if (this.formData.type === 'student') return 'Current student rate';
-                    if (this.formData.type === 'alumni') return 'Alumni rate (includes networking)';
+                    if (this.formData.type === 'alumni') {
+                        let desc = 'Alumni rate';
+                        if (this.formData.isMarried) {
+                            desc = '$130 includes spouse';
+                        }
+                        if (this.formData.hasChildren && this.formData.childrenAbove4 > 0) {
+                            desc += ' + $' + (this.formData.childrenAbove4 * 20) + ' for ' + this.formData.childrenAbove4 + ' child(ren) above 4';
+                        }
+                        if (this.formData.hasChildren && this.formData.childrenUnder4 > 0) {
+                            desc += ' | ' + this.formData.childrenUnder4 + ' child(ren) under 4 free';
+                        }
+                        return desc;
+                    }
                     if (this.formData.type === 'day_camper') return 'Sabbath Day Pass (April 4, 2026)';
                     return '';
                 },
@@ -2061,6 +2274,22 @@
                         return;
                     }
 
+                    // Validate spouse details if married (alumni only)
+                    if (this.formData.type === 'alumni' && this.formData.isMarried) {
+                        if (!this.formData.spouseFirstName) {
+                            this.errorMessage = 'Please enter your spouse\'s first name.';
+                            return;
+                        }
+                        if (!this.formData.spouseSurname) {
+                            this.errorMessage = 'Please enter your spouse\'s surname.';
+                            return;
+                        }
+                        if (!this.formData.spousePhone) {
+                            this.errorMessage = 'Please enter your spouse\'s phone number.';
+                            return;
+                        }
+                    }
+
                     // All validations passed - proceed to payment step (don't save yet)
                     this.paymentPhone = this.formData.phone;
                     this.step = 2;
@@ -2099,6 +2328,14 @@
                                 id_number: this.formData.idNumber,
                                 gender: this.formData.gender,
                                 level: this.formData.level,
+                                // Alumni family data
+                                is_married: this.formData.type === 'alumni' ? this.formData.isMarried : false,
+                                spouse_first_name: this.formData.isMarried ? this.formData.spouseFirstName : null,
+                                spouse_surname: this.formData.isMarried ? this.formData.spouseSurname : null,
+                                spouse_phone: this.formData.isMarried ? this.formData.spousePhone : null,
+                                has_children: this.formData.type === 'alumni' ? this.formData.hasChildren : false,
+                                children_above_4: this.formData.hasChildren ? this.formData.childrenAbove4 : 0,
+                                children_under_4: this.formData.hasChildren ? this.formData.childrenUnder4 : 0,
                                 // Payment data
                                 payment_method: this.paymentMethod,
                                 payment_phone: this.paymentPhone,
@@ -2244,7 +2481,15 @@
                         email: '',
                         idNumber: '',
                         gender: '',
-                        level: ''
+                        level: '',
+                        // Alumni family fields
+                        isMarried: false,
+                        spouseFirstName: '',
+                        spouseSurname: '',
+                        spousePhone: '',
+                        hasChildren: false,
+                        childrenAbove4: 0,
+                        childrenUnder4: 0
                     };
                     window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
                 }
