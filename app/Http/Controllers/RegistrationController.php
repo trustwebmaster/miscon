@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\RegistrationConfirmation;
+use App\Models\Donation;
 use App\Models\Registration;
 use App\Services\PaynowService;
 use Illuminate\Http\Request;
@@ -104,6 +105,8 @@ class RegistrationController extends Controller
             // Payment fields
             'payment_method' => ['required', Rule::in(['ecocash', 'innbucks', 'onemoney'])],
             'payment_phone' => ['required', 'string', 'max:20'],
+            // Optional donation
+            'donation_amount' => ['nullable', 'numeric', 'min:0'],
         ]);
 
         if ($validator->fails()) {
@@ -148,6 +151,29 @@ class RegistrationController extends Controller
             ]);
         }
 
+        // Handle optional donation
+        $donationAmount = $request->donation_amount && $request->donation_amount >= 1 ? (float) $request->donation_amount : 0;
+        $donation = null;
+
+        if ($donationAmount > 0) {
+            // Create a donation record linked to this registration
+            $donation = Donation::create([
+                'reference' => Donation::generateReference(),
+                'donor_name' => $request->full_name,
+                'donor_email' => $request->email,
+                'donor_phone' => $request->phone,
+                'message' => "Donation with registration {$registration->reference}",
+                'amount' => $donationAmount,
+                'payment_status' => 'pending',
+            ]);
+
+            // Store donation ID in registration for linking
+            $registration->update(['donation_id' => $donation->id]);
+        }
+
+        // Calculate total amount (registration + donation)
+        $totalAmount = (float) $registration->amount + $donationAmount;
+
         // Format phone number for Paynow
         $formattedPhone = PaynowService::formatPhone($request->payment_phone);
         $paymentMethod = PaynowService::mapPaymentMethod($request->payment_method);
@@ -156,13 +182,15 @@ class RegistrationController extends Controller
         $email = $formattedPhone . '@miscon26.co.zw';
 
         // Create description
-        $description = "MISCON26 Registration - {$registration->reference}";
+        $description = $donationAmount > 0 
+            ? "MISCON26 Registration + Donation - {$registration->reference}"
+            : "MISCON26 Registration - {$registration->reference}";
 
-        // Initiate payment with Paynow
+        // Initiate payment with Paynow (total amount including donation)
         $result = $this->paynowService->initiateMobilePayment(
             $registration->reference,
             $email,
-            (float) $registration->amount,
+            $totalAmount,
             $description,
             $formattedPhone,
             $paymentMethod
@@ -351,6 +379,21 @@ class RegistrationController extends Controller
                 'paid_at' => now(),
             ]);
 
+            // Also mark linked donation as paid if exists
+            if ($registration->donation_id && $registration->donation) {
+                $registration->donation->update([
+                    'payment_status' => 'completed',
+                    'paynow_reference' => $result['paynow_reference'],
+                    'paid_at' => now(),
+                ]);
+
+                Log::info('Linked donation marked as paid', [
+                    'registration_id' => $registration->id,
+                    'donation_id' => $registration->donation_id,
+                    'amount' => $registration->donation->amount,
+                ]);
+            }
+
             // Send confirmation email if payment was just completed
             if (!$wasPaid && $registration->email) {
                 try {
@@ -443,6 +486,21 @@ class RegistrationController extends Controller
                 'paynow_reference' => $status->paynowReference(),
                 'paid_at' => now(),
             ]);
+
+            // Also mark linked donation as paid if exists
+            if ($registration->donation_id && $registration->donation) {
+                $registration->donation->update([
+                    'payment_status' => 'completed',
+                    'paynow_reference' => $status->paynowReference(),
+                    'paid_at' => now(),
+                ]);
+
+                Log::info('Linked donation marked as paid via callback', [
+                    'registration_id' => $registration->id,
+                    'donation_id' => $registration->donation_id,
+                    'amount' => $registration->donation->amount,
+                ]);
+            }
 
             // Send confirmation email if payment was just completed
             if (!$wasPaid && $registration->email) {

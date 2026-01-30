@@ -29,7 +29,16 @@ class Registration extends Model
         'paynow_reference',
         'paynow_poll_url',
         'paid_at',
+        'donation_id',
     ];
+
+    /**
+     * Get the associated donation
+     */
+    public function donation()
+    {
+        return $this->belongsTo(\App\Models\Donation::class);
+    }
 
     /**
      * The attributes that should be cast.

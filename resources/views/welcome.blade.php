@@ -1220,6 +1220,100 @@
                             </div>
                         </div>
 
+                        <!-- Optional Donation Section -->
+                        <div class="mb-8 p-5 rounded-2xl border-2 border-dashed transition-all duration-300"
+                             :class="addDonation ? 'border-pink-500/50 bg-pink-500/5' : 'border-white/20 hover:border-pink-500/30'">
+                            <div class="flex items-start gap-4">
+                                <button @click="addDonation = !addDonation; if(!addDonation) donationAmount = 0;" type="button"
+                                        class="w-6 h-6 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all mt-0.5"
+                                        :class="addDonation ? 'bg-pink-500 border-pink-500' : 'border-white/40 hover:border-pink-500'">
+                                    <svg x-show="addDonation" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </button>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <svg class="w-5 h-5 text-pink-400" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        <span class="font-semibold text-white">Add a donation?</span>
+                                        <span class="text-xs text-white/50">(Optional)</span>
+                                    </div>
+                                    <p class="text-sm text-white/60 mb-3">Help underprivileged students attend MISCON26. Every dollar counts!</p>
+
+                                    <!-- Donation Amount Options -->
+                                    <div x-show="addDonation" x-transition class="space-y-3">
+                                        <div class="flex flex-wrap gap-2">
+                                            <button @click="donationAmount = 1" type="button"
+                                                    class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                                    :class="donationAmount === 1 ? 'bg-pink-500 text-white' : 'bg-white/10 hover:bg-pink-500/20'">
+                                                $1
+                                            </button>
+                                            <button @click="donationAmount = 5" type="button"
+                                                    class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                                    :class="donationAmount === 5 ? 'bg-pink-500 text-white' : 'bg-white/10 hover:bg-pink-500/20'">
+                                                $5
+                                            </button>
+                                            <button @click="donationAmount = 10" type="button"
+                                                    class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                                    :class="donationAmount === 10 ? 'bg-pink-500 text-white' : 'bg-white/10 hover:bg-pink-500/20'">
+                                                $10
+                                            </button>
+                                            <button @click="donationAmount = 20" type="button"
+                                                    class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                                    :class="donationAmount === 20 ? 'bg-pink-500 text-white' : 'bg-white/10 hover:bg-pink-500/20'">
+                                                $20
+                                            </button>
+                                            <button @click="donationAmount = 45" type="button"
+                                                    class="px-4 py-2 rounded-lg text-sm font-medium transition-all relative"
+                                                    :class="donationAmount === 45 ? 'bg-gradient-to-r from-pink-500 to-pcm-purple text-white' : 'bg-white/10 hover:bg-pink-500/20'">
+                                                <span class="absolute -top-2 -right-1 px-1 text-[9px] bg-miscon-gold text-miscon-navy font-bold rounded">1 STUDENT</span>
+                                                $45
+                                            </button>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-white/60 text-sm">Or enter custom:</span>
+                                            <div class="relative flex-1 max-w-[120px]">
+                                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-pink-400 font-bold">$</span>
+                                                <input type="number" x-model.number="customDonation" @input="if(customDonation >= 1) donationAmount = customDonation" min="1"
+                                                       class="w-full pl-8 pr-3 py-2 rounded-lg bg-white/10 border border-white/20 focus:border-pink-500/50 focus:outline-none text-sm"
+                                                       placeholder="Amount">
+                                            </div>
+                                        </div>
+                                        <p class="text-xs text-pink-300/70 flex items-center gap-1">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                            </svg>
+                                            Thank you for your generosity!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Updated Total with Donation -->
+                        <div x-show="addDonation && donationAmount > 0" x-transition class="mb-6 p-4 rounded-xl bg-gradient-to-r from-pink-500/10 to-pcm-purple/10 border border-pink-500/20">
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between text-white/70">
+                                    <span>Registration Fee</span>
+                                    <span x-text="'$' + (formData.type === 'student' ? '45' : '65')"></span>
+                                </div>
+                                <div class="flex justify-between text-pink-400">
+                                    <span class="flex items-center gap-1">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        Donation
+                                    </span>
+                                    <span x-text="'$' + donationAmount"></span>
+                                </div>
+                                <div class="flex justify-between text-lg font-bold pt-2 border-t border-white/10">
+                                    <span>Total</span>
+                                    <span class="text-miscon-gold" x-text="'$' + getTotalWithDonation() + ' USD'"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Error Message -->
                         <div x-show="errorMessage" x-transition class="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-3">
                             <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1788,6 +1882,10 @@
                 pollInterval: null,
                 pollAttempts: 0,
                 maxPollAttempts: 60, // 5 minutes with 5-second intervals
+                // Donation fields
+                addDonation: false,
+                donationAmount: 0,
+                customDonation: '',
                 formData: {
                     type: 'student',
                     fullName: '',
@@ -1797,6 +1895,14 @@
                     idNumber: '',
                     gender: '',
                     level: ''
+                },
+                getRegistrationAmount() {
+                    return this.formData.type === 'student' ? 45 : 65;
+                },
+                getTotalWithDonation() {
+                    const regAmount = this.getRegistrationAmount();
+                    const donation = this.addDonation && this.donationAmount > 0 ? this.donationAmount : 0;
+                    return regAmount + donation;
                 },
                 goToPayment() {
                     this.errorMessage = '';
@@ -1851,6 +1957,9 @@
                     this.paymentInstructions = '';
 
                     try {
+                        // Calculate donation amount
+                        const donationAmt = this.addDonation && this.donationAmount > 0 ? this.donationAmount : 0;
+
                         // Send registration + payment data together
                         const response = await fetch('/api/registration/pay', {
                             method: 'POST',
@@ -1872,6 +1981,8 @@
                                 // Payment data
                                 payment_method: this.paymentMethod,
                                 payment_phone: this.paymentPhone,
+                                // Optional donation
+                                donation_amount: donationAmt,
                             }),
                         });
 
@@ -1999,6 +2110,10 @@
                     this.errorMessage = '';
                     this.paymentInstructions = '';
                     this.pollAttempts = 0;
+                    // Reset donation fields
+                    this.addDonation = false;
+                    this.donationAmount = 0;
+                    this.customDonation = '';
                     this.formData = {
                         type: 'student',
                         fullName: '',
