@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\WhatsAppWebHookController;
 use Illuminate\Support\Facades\Route;
@@ -36,17 +37,17 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/export', [AdminController::class, 'export'])->name('export');
     Route::get('/registration/{registration}', [AdminController::class, 'show'])->name('registration.show');
-    
+
     // Prayer Requests
     Route::get('/prayer-requests', [AdminController::class, 'prayerRequests'])->name('prayer-requests');
     Route::post('/prayer-requests/{prayerRequest}/prayed', [AdminController::class, 'markPrayerRequestPrayed'])->name('prayer-requests.prayed');
-    
+
     // Guest Speakers
     Route::get('/guest-speakers', [AdminController::class, 'guestSpeakers'])->name('guest-speakers');
     Route::post('/guest-speakers', [AdminController::class, 'storeGuestSpeaker'])->name('guest-speakers.store');
     Route::put('/guest-speakers/{speaker}', [AdminController::class, 'updateGuestSpeaker'])->name('guest-speakers.update');
     Route::delete('/guest-speakers/{speaker}', [AdminController::class, 'deleteGuestSpeaker'])->name('guest-speakers.destroy');
-    
+
     // Program Schedule
     Route::get('/program-schedule', [AdminController::class, 'programSchedule'])->name('program-schedule');
     Route::post('/program-schedule', [AdminController::class, 'storeSchedule'])->name('program-schedule.store');
@@ -77,5 +78,15 @@ Route::prefix('api/registration')->name('registration.')->group(function () {
 // Paynow callback routes
 Route::post('/paynow/result', [RegistrationController::class, 'paynowCallback'])->name('paynow.result');
 Route::get('/paynow/return', [RegistrationController::class, 'paynowReturn'])->name('paynow.return');
+
+// Donation API Routes
+Route::prefix('api/donation')->name('donation.')->group(function () {
+    Route::post('/pay', [DonationController::class, 'pay'])->name('pay');
+    Route::post('/poll', [DonationController::class, 'pollPaymentStatus'])->name('poll');
+    Route::get('/stats', [DonationController::class, 'stats'])->name('stats');
+});
+
+// Paynow callback for donations
+Route::post('/paynow/donation/result', [DonationController::class, 'paynowCallback'])->name('paynow.donation.result');
 
 require __DIR__.'/auth.php';

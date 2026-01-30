@@ -49,6 +49,12 @@
                     <a href="#speakers" class="nav-link text-sm font-medium uppercase tracking-wider">Speakers</a>
                     <a href="#gallery" class="nav-link text-sm font-medium uppercase tracking-wider">Gallery</a>
                     <a href="#schedule" class="nav-link text-sm font-medium uppercase tracking-wider">Schedule</a>
+                    <a href="#donate" class="nav-link text-sm font-medium uppercase tracking-wider flex items-center gap-1 text-pink-400 hover:text-pink-300">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        Donate
+                    </a>
                     <button @click="$dispatch('open-status-modal')" class="nav-link text-sm font-medium uppercase tracking-wider flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -77,6 +83,12 @@
                 <a href="#speakers" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors">Speakers</a>
                 <a href="#gallery" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors">Gallery</a>
                 <a href="#schedule" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors">Schedule</a>
+                <a href="#donate" @click="mobileMenuOpen = false" class="text-lg font-medium py-2 border-b border-white/10 text-pink-400 hover:text-pink-300 transition-colors flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Donate
+                </a>
                 <button @click="mobileMenuOpen = false; $dispatch('open-status-modal')" class="text-lg font-medium py-2 border-b border-white/10 hover:text-miscon-gold transition-colors text-left flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -147,6 +159,14 @@
                             <svg class="w-5 h-5 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                             </svg>
+                        </span>
+                    </a>
+                    <a href="#donate" class="px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 to-pcm-purple text-white font-semibold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all hover:scale-105 group">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                            Donate
                         </span>
                     </a>
                     <a href="#gallery" class="btn-outline group">
@@ -239,16 +259,16 @@
 
                         <!-- Animated Stats -->
                         <div class="grid grid-cols-3 gap-6">
-                            <div class="text-center hover-lift cursor-default" x-data="{ count: 0 }" x-intersect="animateCounter($el, 4, 0)">
-                                <span class="stat-number" x-text="count">0</span>
+                            <div class="text-center hover-lift cursor-default" x-data="{ count: 0 }" x-intersect="animateCounter($el, 5, 0)">
+                                <span class="stat-number" x-text="count">4</span>
                                 <span class="block text-sm text-white/60">Days</span>
                             </div>
-                            <div class="text-center hover-lift cursor-default" x-data="{ count: 0 }" x-intersect="animateCounter($el, 6, 100)">
-                                <span class="stat-number" x-text="count + '+'">0+</span>
+                            <div class="text-center hover-lift cursor-default" x-data="{ count: 0 }" x-intersect="animateCounter($el, 8, 100)">
+                                <span class="stat-number" x-text="count + '+'">5+</span>
                                 <span class="block text-sm text-white/60">Speakers</span>
                             </div>
-                            <div class="text-center hover-lift cursor-default" x-data="{ count: 0 }" x-intersect="animateCounter($el, 1000, 200)">
-                                <span class="stat-number" x-text="count + '+'">0+</span>
+                            <div class="text-center hover-lift cursor-default" x-data="{ count: 0 }" x-intersect="animateCounter($el, 1500, 200)">
+                                <span class="stat-number" x-text="count + '+'">1200+</span>
                                 <span class="block text-sm text-white/60">Expected</span>
                             </div>
                         </div>
@@ -1339,6 +1359,278 @@
         </div>
     </section>
 
+    <!-- Donation Section -->
+    <section id="donate" class="py-24 relative overflow-hidden">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-600/20 via-pcm-purple/20 to-miscon-gold/20"></div>
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-[150px] animate-pulse"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-miscon-gold/20 rounded-full blur-[150px] animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-12 reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/20 border border-pink-500/30 text-pink-300 text-sm font-medium tracking-wider uppercase mb-6">
+                        <svg class="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        Support Our Students
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+                        Donate to <span class="bg-gradient-to-r from-pink-400 via-pcm-purple to-miscon-gold bg-clip-text text-transparent">Transform Lives</span>
+                    </h2>
+                    <p class="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
+                        Help underprivileged students attend MISCON26 and experience spiritual transformation.
+                        Your generous contribution can change a life forever.
+                    </p>
+                </div>
+
+                <!-- Impact Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-12 reveal">
+                    <div class="glass rounded-2xl p-6 text-center hover-lift">
+                        <div class="text-3xl font-bold text-pink-400 mb-2">50+</div>
+                        <p class="text-sm text-white/60">Students Sponsored Last Year</p>
+                    </div>
+                    <div class="glass rounded-2xl p-6 text-center hover-lift">
+                        <div class="text-3xl font-bold text-pcm-purple mb-2">$45</div>
+                        <p class="text-sm text-white/60">Cost per Student</p>
+                    </div>
+                    <div class="glass rounded-2xl p-6 text-center hover-lift">
+                        <div class="text-3xl font-bold text-miscon-gold mb-2">100%</div>
+                        <p class="text-sm text-white/60">Goes to Students</p>
+                    </div>
+                </div>
+
+                <!-- Donation Form -->
+                <div class="glass rounded-3xl p-8 md:p-10 reveal" x-data="donationForm()">
+                    <!-- Preset Amounts -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-white/80 mb-4 text-center">Select or Enter Donation Amount (USD)</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                            <button @click="selectAmount(5)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2"
+                                    :class="selectedAmount === 5 ? 'bg-pink-500 border-pink-500 text-white shadow-lg shadow-pink-500/30' : 'border-white/20 hover:border-pink-500/50 hover:bg-pink-500/10'">
+                                $5
+                            </button>
+                            <button @click="selectAmount(10)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2"
+                                    :class="selectedAmount === 10 ? 'bg-pink-500 border-pink-500 text-white shadow-lg shadow-pink-500/30' : 'border-white/20 hover:border-pink-500/50 hover:bg-pink-500/10'">
+                                $10
+                            </button>
+                            <button @click="selectAmount(25)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2"
+                                    :class="selectedAmount === 25 ? 'bg-pink-500 border-pink-500 text-white shadow-lg shadow-pink-500/30' : 'border-white/20 hover:border-pink-500/50 hover:bg-pink-500/10'">
+                                $25
+                            </button>
+                            <button @click="selectAmount(45)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2 relative overflow-hidden"
+                                    :class="selectedAmount === 45 ? 'bg-gradient-to-r from-pink-500 to-pcm-purple border-transparent text-white shadow-lg shadow-pink-500/30' : 'border-white/20 hover:border-pink-500/50 hover:bg-pink-500/10'">
+                                <span class="absolute top-0 right-0 px-1 text-[10px] bg-miscon-gold text-miscon-navy font-bold rounded-bl">1 STUDENT</span>
+                                $45
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <button @click="selectAmount(90)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2 relative overflow-hidden"
+                                    :class="selectedAmount === 90 ? 'bg-gradient-to-r from-pcm-purple to-miscon-gold border-transparent text-white shadow-lg shadow-pcm-purple/30' : 'border-white/20 hover:border-pcm-purple/50 hover:bg-pcm-purple/10'">
+                                <span class="absolute top-0 right-0 px-1 text-[10px] bg-miscon-gold text-miscon-navy font-bold rounded-bl">2 STUDENTS</span>
+                                $90
+                            </button>
+                            <button @click="selectAmount(135)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2 relative overflow-hidden"
+                                    :class="selectedAmount === 135 ? 'bg-gradient-to-r from-miscon-gold to-pink-500 border-transparent text-white shadow-lg shadow-miscon-gold/30' : 'border-white/20 hover:border-miscon-gold/50 hover:bg-miscon-gold/10'">
+                                <span class="absolute top-0 right-0 px-1 text-[10px] bg-miscon-gold text-miscon-navy font-bold rounded-bl">3 STUDENTS</span>
+                                $135
+                            </button>
+                            <button @click="selectAmount(225)" type="button"
+                                    class="py-4 rounded-xl font-bold text-lg transition-all duration-300 border-2 relative overflow-hidden col-span-2"
+                                    :class="selectedAmount === 225 ? 'bg-gradient-to-r from-pink-500 via-pcm-purple to-miscon-gold border-transparent text-white shadow-lg shadow-pcm-purple/30' : 'border-white/20 hover:border-white/40 hover:bg-white/5'">
+                                <span class="absolute top-0 right-0 px-1 text-[10px] bg-miscon-gold text-miscon-navy font-bold rounded-bl">5 STUDENTS</span>
+                                $225
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Amount Input -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-white/80 mb-2">Custom Amount (Min. $1 USD)</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-pink-400">$</span>
+                            <input type="number" x-model="customAmount" @input="handleCustomAmount()" min="1" step="1"
+                                   class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all text-2xl font-bold text-center"
+                                   placeholder="Enter amount">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 font-medium">USD</span>
+                        </div>
+                    </div>
+
+                    <!-- Donor Information -->
+                    <div class="space-y-6 mb-8">
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <!-- Donor Name -->
+                            <div>
+                                <label class="block text-sm font-medium text-white/80 mb-2">Your Name <span class="text-white/40">(Optional)</span></label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                    </span>
+                                    <input type="text" x-model="donorName"
+                                           class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30"
+                                           placeholder="Anonymous">
+                                </div>
+                            </div>
+
+                            <!-- Donor Email -->
+                            <div>
+                                <label class="block text-sm font-medium text-white/80 mb-2">Email <span class="text-white/40">(For receipt)</span></label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </span>
+                                    <input type="email" x-model="donorEmail"
+                                           class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30"
+                                           placeholder="your@email.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Number for Paynow -->
+                        <div>
+                            <label class="block text-sm font-medium text-white/80 mb-2">Phone Number (for Ecocash/OneMoney) <span class="text-red-400">*</span></label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                </span>
+                                <input type="tel" x-model="paymentPhone" required
+                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30"
+                                       placeholder="e.g., 0771234567">
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label class="block text-sm font-medium text-white/80 mb-2">Leave a Message <span class="text-white/40">(Optional)</span></label>
+                            <textarea x-model="donorMessage" rows="3"
+                                      class="w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30 resize-none"
+                                      placeholder="Your encouragement means a lot to the students..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div x-show="errorMessage" x-transition class="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-3">
+                        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span x-text="errorMessage"></span>
+                    </div>
+
+                    <!-- Waiting for Payment State -->
+                    <div x-show="isPolling" x-transition class="mb-8">
+                        <div class="bg-[#00a651]/10 border border-[#00a651]/30 rounded-2xl p-6 text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 relative">
+                                <div class="absolute inset-0 border-4 border-[#00a651]/30 rounded-full"></div>
+                                <div class="absolute inset-0 border-4 border-[#00a651] rounded-full border-t-transparent animate-spin"></div>
+                                <div class="absolute inset-3 bg-[#00a651]/20 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-[#00a651]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-[#00a651] mb-2">Waiting for Payment</h4>
+                            <p class="text-white/70 text-sm mb-4" x-text="paymentInstructions"></p>
+                            <p class="text-white/50 text-xs">Please complete the payment on your phone. This page will update automatically.</p>
+                        </div>
+                    </div>
+
+                    <!-- Success State -->
+                    <div x-show="donationSuccess" x-transition class="mb-8">
+                        <div class="bg-[#00a651]/10 border border-[#00a651]/30 rounded-2xl p-8 text-center">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-[#00a651] rounded-full flex items-center justify-center">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <h4 class="text-2xl font-bold text-[#00a651] mb-2">Thank You!</h4>
+                            <p class="text-white/70 mb-4">Your generous donation of <span class="text-miscon-gold font-bold" x-text="'$' + getFinalAmount()"></span> has been received.</p>
+                            <p class="text-white/50 text-sm">Your kindness will help underprivileged students experience MISCON26. God bless you!</p>
+                            <button @click="resetDonationForm()" class="mt-6 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium">
+                                Make Another Donation
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Donation Summary & Submit -->
+                    <div x-show="!isPolling && !donationSuccess">
+                        <!-- Summary -->
+                        <div class="bg-gradient-to-r from-pink-500/10 via-pcm-purple/10 to-miscon-gold/10 rounded-2xl p-6 mb-6 border border-white/10">
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/70">Your Donation:</span>
+                                <span class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-miscon-gold bg-clip-text text-transparent" x-text="'$' + getFinalAmount() + ' USD'">$0 USD</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-white/10 text-sm text-white/50" x-show="getFinalAmount() >= 45">
+                                <span class="text-pink-400">❤</span> This can sponsor <span class="text-miscon-gold font-semibold" x-text="Math.floor(getFinalAmount() / 45)"></span> student<span x-show="Math.floor(getFinalAmount() / 45) > 1">s</span>!
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button @click="processDonation()"
+                                class="w-full py-5 bg-gradient-to-r from-pink-500 via-pcm-purple to-miscon-gold text-white font-bold text-lg rounded-xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02]"
+                                :disabled="!canSubmit() || isProcessing">
+                            <span class="flex items-center justify-center gap-3" x-show="!isProcessing">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                                Donate Now
+                            </span>
+                            <span class="flex items-center justify-center gap-2" x-show="isProcessing">
+                                <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Processing...
+                            </span>
+                        </button>
+
+                        <!-- Cancel Polling Button -->
+                        <div x-show="isPolling" class="mt-4">
+                            <button @click="cancelDonation()" class="w-full py-3 text-white/60 hover:text-white text-sm font-medium transition-colors">
+                                Cancel and try again
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Security Note -->
+                    <p class="text-center text-xs text-white/40 mt-6 flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        Secure payment powered by Paynow Zimbabwe
+                    </p>
+                </div>
+
+                <!-- Testimonial/Impact Quote -->
+                <div class="mt-12 text-center reveal">
+                    <div class="glass rounded-2xl p-8 max-w-2xl mx-auto">
+                        <svg class="w-10 h-10 text-miscon-gold/50 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p class="text-lg text-white/80 italic leading-relaxed mb-4">
+                            "Last year, someone's donation allowed me to attend MISCON. That experience changed my life and strengthened my faith. Now I'm a campus ministry leader."
+                        </p>
+                        <p class="text-miscon-gold font-semibold">— A grateful student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="py-24 relative">
         <div class="container mx-auto px-6">
@@ -1407,6 +1699,14 @@
             </div>
         </div>
     </footer>
+
+    <!-- Floating Donate Button -->
+    <a href="#donate" x-show="scrolled" x-transition class="fixed bottom-8 left-8 px-6 py-3 rounded-full bg-gradient-to-r from-pink-500 to-pcm-purple text-white font-bold flex items-center gap-2 shadow-lg hover:shadow-[0_0_30px_rgba(236,72,153,0.5)] hover:scale-105 transition-all z-50 animate-pulse hover:animate-none" x-cloak>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        Donate
+    </a>
 
     <!-- Scroll to Top -->
     <button x-show="scrolled" x-transition @click="window.scrollTo({ top: 0, behavior: 'smooth' })" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-miscon-gold text-miscon-navy flex items-center justify-center shadow-lg hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] hover:scale-110 transition-all z-50" x-cloak>
@@ -1862,6 +2162,200 @@
                     } finally {
                         this.isLoading = false;
                     }
+                }
+            }
+        }
+
+        function donationForm() {
+            return {
+                selectedAmount: null,
+                customAmount: '',
+                donorName: '',
+                donorEmail: '',
+                paymentPhone: '',
+                donorMessage: '',
+                isProcessing: false,
+                isPolling: false,
+                donationSuccess: false,
+                errorMessage: '',
+                paymentInstructions: '',
+                pollInterval: null,
+                pollAttempts: 0,
+                maxPollAttempts: 60,
+                donationId: null,
+                reference: '',
+
+                selectAmount(amount) {
+                    this.selectedAmount = amount;
+                    this.customAmount = '';
+                },
+
+                handleCustomAmount() {
+                    if (this.customAmount && parseInt(this.customAmount) >= 1) {
+                        this.selectedAmount = null;
+                    }
+                },
+
+                getFinalAmount() {
+                    if (this.customAmount && parseInt(this.customAmount) >= 1) {
+                        return parseInt(this.customAmount);
+                    }
+                    return this.selectedAmount || 0;
+                },
+
+                canSubmit() {
+                    return this.getFinalAmount() >= 1 && this.paymentPhone;
+                },
+
+                async processDonation() {
+                    const amount = this.getFinalAmount();
+
+                    if (amount < 1) {
+                        this.errorMessage = 'Please select or enter a donation amount (minimum $1 USD).';
+                        return;
+                    }
+
+                    if (!this.paymentPhone) {
+                        this.errorMessage = 'Please enter your phone number for payment.';
+                        return;
+                    }
+
+                    this.isProcessing = true;
+                    this.errorMessage = '';
+                    this.paymentInstructions = '';
+
+                    try {
+                        const response = await fetch('/api/donation/pay', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                amount: amount,
+                                donor_name: this.donorName || 'Anonymous',
+                                donor_email: this.donorEmail,
+                                donor_phone: this.paymentPhone,
+                                message: this.donorMessage,
+                                payment_phone: this.paymentPhone,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            this.errorMessage = data.message || 'Donation failed. Please try again.';
+                            this.isProcessing = false;
+                            return;
+                        }
+
+                        // Store donation ID for polling
+                        this.donationId = data.data.donation_id;
+                        this.reference = data.data.reference;
+
+                        // Show instructions from Paynow
+                        this.paymentInstructions = data.data.instructions || 'Please check your phone and enter your PIN to complete the donation.';
+
+                        // Start polling for payment status
+                        this.isPolling = true;
+                        this.pollAttempts = 0;
+                        this.startDonationPolling();
+                    } catch (error) {
+                        console.error('Donation error:', error);
+                        this.errorMessage = 'Network error. Please check your connection and try again.';
+                        this.isProcessing = false;
+                    }
+                },
+
+                startDonationPolling() {
+                    if (this.pollInterval) {
+                        clearInterval(this.pollInterval);
+                    }
+
+                    this.pollInterval = setInterval(() => {
+                        this.pollDonationStatus();
+                    }, 5000);
+
+                    this.pollDonationStatus();
+                },
+
+                stopDonationPolling() {
+                    if (this.pollInterval) {
+                        clearInterval(this.pollInterval);
+                        this.pollInterval = null;
+                    }
+                    this.isPolling = false;
+                    this.isProcessing = false;
+                },
+
+                async pollDonationStatus() {
+                    this.pollAttempts++;
+
+                    if (this.pollAttempts > this.maxPollAttempts) {
+                        this.stopDonationPolling();
+                        this.errorMessage = 'Payment verification timed out. If you completed the payment, please contact us for confirmation.';
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/api/donation/poll', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                donation_id: this.donationId,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            console.log('Poll error:', data.message);
+                            return;
+                        }
+
+                        if (data.data.paid) {
+                            this.stopDonationPolling();
+                            this.donationSuccess = true;
+                            window.scrollTo({ top: document.getElementById('donate').offsetTop - 100, behavior: 'smooth' });
+                            return;
+                        }
+
+                        if (data.data.payment_status === 'failed') {
+                            this.stopDonationPolling();
+                            this.errorMessage = 'Payment was declined. Please try again.';
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('Poll error:', error);
+                    }
+                },
+
+                cancelDonation() {
+                    this.stopDonationPolling();
+                    this.errorMessage = '';
+                    this.paymentInstructions = '';
+                },
+
+                resetDonationForm() {
+                    this.selectedAmount = null;
+                    this.customAmount = '';
+                    this.donorName = '';
+                    this.donorEmail = '';
+                    this.paymentPhone = '';
+                    this.donorMessage = '';
+                    this.isProcessing = false;
+                    this.isPolling = false;
+                    this.donationSuccess = false;
+                    this.errorMessage = '';
+                    this.paymentInstructions = '';
+                    this.pollAttempts = 0;
+                    this.donationId = null;
+                    this.reference = '';
                 }
             }
         }
