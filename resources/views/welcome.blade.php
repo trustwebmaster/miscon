@@ -676,11 +676,11 @@
             <div class="max-w-4xl mx-auto" x-data="{ activeDay: 'day1' }">
                 <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
                     @foreach([
-                        ['id' => 'day1', 'day' => 'Wednesday', 'date' => 'April 2'],
-                        ['id' => 'day2', 'day' => 'Thursday', 'date' => 'April 3'],
-                        ['id' => 'day3', 'day' => 'Friday', 'date' => 'April 4'],
-                        ['id' => 'day4', 'day' => 'Sabbath', 'date' => 'April 5'],
-                        ['id' => 'day5', 'day' => 'Sunday', 'date' => 'April 6'],
+                        ['id' => 'day1', 'day' => 'Tuesday', 'date' => 'April 2'],
+                        ['id' => 'day2', 'day' => 'Wednesday', 'date' => 'April 3'],
+                        ['id' => 'day3', 'day' => 'Thursday', 'date' => 'April 4'],
+                        ['id' => 'day4', 'day' => 'Friday', 'date' => 'April 5'],
+                        ['id' => 'day5', 'day' => 'Sabbath', 'date' => 'April 6'],
                     ] as $d)
                     <button @click="activeDay = '{{ $d['id'] }}'" class="px-6 py-3 rounded-full font-medium transition-all duration-300 hover-lift" :class="activeDay === '{{ $d['id'] }}' ? 'bg-miscon-gold text-miscon-navy shadow-lg' : 'glass hover:border-miscon-gold/50'">
                         <span class="block text-xs uppercase tracking-wider opacity-70">{{ $d['day'] }}</span>
@@ -914,7 +914,7 @@
                                         </span>
                                     </button>
                                 </div>
-                                <p class="text-xs text-white/50 text-center mt-3">Sabbath Day Pass - April 4, 2026</p>
+                                <p class="text-xs text-white/50 text-center mt-3">Sabbath Day Pass - April 6, 2026</p>
                             </div>
                         </div>
 
@@ -1266,7 +1266,7 @@
                                 <div x-show="formData.type === 'day_camper'" class="grid sm:grid-cols-2 gap-3">
                                     <div class="flex items-center gap-2 text-sm text-white/70">
                                         <svg class="w-4 h-4 text-pcm-purple flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        Sabbath Day Access (April 4)
+                                        Sabbath Day Access (April 6)
                                     </div>
                                     <div class="flex items-center gap-2 text-sm text-white/70">
                                         <svg class="w-4 h-4 text-pcm-purple flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -1649,7 +1649,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Event Date</span>
-                                    <span x-text="formData.type === 'day_camper' ? 'April 4, 2026 (Sabbath)' : 'April 2-6, 2026'"></span>
+                                    <span x-text="formData.type === 'day_camper' ? 'April 6, 2026 (Sabbath)' : 'April 2-6, 2026'"></span>
                                 </div>
                             </div>
                         </div>
@@ -2214,7 +2214,7 @@
                         }
                         return desc;
                     }
-                    if (this.formData.type === 'day_camper') return 'Sabbath Day Pass (April 4, 2026)';
+                    if (this.formData.type === 'day_camper') return 'Sabbath Day Pass (April 6, 2026)';
                     return '';
                 },
                 getIdFieldLabel() {
