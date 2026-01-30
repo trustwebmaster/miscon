@@ -1134,35 +1134,19 @@
                                     <div x-show="formData.isMarried" x-transition class="mt-6 space-y-4 pt-6 border-t border-white/10">
                                         <p class="text-sm font-medium text-miscon-gold">Spouse Details</p>
 
-                                        <!-- Spouse First Name -->
+                                        <!-- Spouse Full Name -->
                                         <div>
-                                            <label class="block text-sm font-medium text-white/80 mb-2">Spouse First Name <span class="text-red-400">*</span></label>
+                                            <label class="block text-sm font-medium text-white/80 mb-2">Spouse Full Name <span class="text-red-400">*</span></label>
                                             <div class="relative">
                                                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                                     </svg>
                                                 </span>
-                                                <input type="text" x-model="formData.spouseFirstName"
+                                                <input type="text" x-model="formData.spouseFullName"
                                                        :required="formData.isMarried"
                                                        class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
-                                                       placeholder="Enter spouse's first name">
-                                            </div>
-                                        </div>
-
-                                        <!-- Spouse Surname -->
-                                        <div>
-                                            <label class="block text-sm font-medium text-white/80 mb-2">Spouse Surname <span class="text-red-400">*</span></label>
-                                            <div class="relative">
-                                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                                    </svg>
-                                                </span>
-                                                <input type="text" x-model="formData.spouseSurname"
-                                                       :required="formData.isMarried"
-                                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
-                                                       placeholder="Enter spouse's surname">
+                                                       placeholder="Enter spouse's full name">
                                             </div>
                                         </div>
 
@@ -1372,7 +1356,7 @@
                                 <div class="mb-4 pb-4 border-b border-white/10">
                                     <div class="flex justify-between items-center mb-2">
                                         <span class="text-white/60">Spouse</span>
-                                        <span class="font-medium" x-text="formData.spouseFirstName + ' ' + formData.spouseSurname"></span>
+                                        <span class="font-medium" x-text="formData.spouseFullName"></span>
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-white/40">Spouse registration</span>
@@ -2183,8 +2167,7 @@
                     level: '',
                     // Alumni family fields
                     isMarried: false,
-                    spouseFirstName: '',
-                    spouseSurname: '',
+                    spouseFullName: '',
                     spousePhone: '',
                     hasChildren: false,
                     childrenAbove4: 0,
@@ -2320,12 +2303,8 @@
 
                     // Validate spouse details if married (alumni only)
                     if (this.formData.type === 'alumni' && this.formData.isMarried) {
-                        if (!this.formData.spouseFirstName) {
-                            this.errorMessage = 'Please enter your spouse\'s first name.';
-                            return;
-                        }
-                        if (!this.formData.spouseSurname) {
-                            this.errorMessage = 'Please enter your spouse\'s surname.';
+                        if (!this.formData.spouseFullName) {
+                            this.errorMessage = 'Please enter your spouse\'s full name.';
                             return;
                         }
                         if (!this.formData.spousePhone) {
@@ -2374,8 +2353,7 @@
                                 level: this.formData.level,
                                 // Alumni family data
                                 is_married: this.formData.type === 'alumni' ? this.formData.isMarried : false,
-                                spouse_first_name: this.formData.isMarried ? this.formData.spouseFirstName : null,
-                                spouse_surname: this.formData.isMarried ? this.formData.spouseSurname : null,
+                                spouse_full_name: this.formData.isMarried ? this.formData.spouseFullName : null,
                                 spouse_phone: this.formData.isMarried ? this.formData.spousePhone : null,
                                 has_children: this.formData.type === 'alumni' ? this.formData.hasChildren : false,
                                 children_above_4: this.formData.hasChildren ? this.formData.childrenAbove4 : 0,
@@ -2528,8 +2506,7 @@
                         level: '',
                         // Alumni family fields
                         isMarried: false,
-                        spouseFirstName: '',
-                        spouseSurname: '',
+                        spouseFullName: '',
                         spousePhone: '',
                         hasChildren: false,
                         childrenAbove4: 0,
