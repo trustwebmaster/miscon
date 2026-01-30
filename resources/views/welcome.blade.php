@@ -1999,18 +1999,24 @@
                                 <p class="text-green-500">Message Us</p>
                             </div>
                         </a>
-                        <div class="flex flex-col items-center gap-4 p-6 rounded-2xl">
-                            <div class="w-16 h-16 rounded-full bg-pcm-purple/10 flex items-center justify-center">
+                        <a href="https://maps.app.goo.gl/z6tEkzRFYmb1PPYeA" target="_blank" class="flex flex-col items-center gap-4 p-6 rounded-2xl hover:bg-white/5 transition-colors group">
+                            <div class="w-16 h-16 rounded-full bg-pcm-purple/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-pcm-purple/20 transition-all">
                                 <svg class="w-8 h-8 text-pcm-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
-                            <div>
+                            <div class="text-center">
                                 <h4 class="font-semibold mb-1">Venue</h4>
                                 <p class="text-white/60">Amai Mugabe Group of Schools</p>
+                                <p class="text-pcm-purple text-sm mt-1 flex items-center justify-center gap-1 group-hover:underline">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                    </svg>
+                                    View on Maps
+                                </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
