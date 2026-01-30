@@ -129,7 +129,7 @@
                         <svg class="w-5 h-5 text-miscon-gold group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="font-medium">April 3-6, 2026</span>
+                        <span class="font-medium">April 2-6, 2026</span>
                     </div>
                     <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors cursor-default group">
                         <svg class="w-5 h-5 text-miscon-gold group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -201,7 +201,7 @@
                 <span class="inline-flex items-center gap-8 text-white/60 text-sm tracking-wider">
                     <span>🙏 WATCHMEN ON THE WALL</span>
                     <span>•</span>
-                    <span>📅 APRIL 3-6, 2026</span>
+                    <span>📅 APRIL 2-6, 2026</span>
                     <span>•</span>
                     <span>📍 AMAI MUGABE GROUP OF SCHOOLS</span>
                     <span>•</span>
@@ -209,7 +209,7 @@
                     <span>•</span>
                     <span>🙏 WATCHMEN ON THE WALL</span>
                     <span>•</span>
-                    <span>📅 APRIL 3-6, 2026</span>
+                    <span>📅 APRIL 2-6, 2026</span>
                     <span>•</span>
                     <span>📍 AMAI MUGABE GROUP OF SCHOOLS</span>
                     <span>•</span>
@@ -650,16 +650,17 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 reveal">
                 <span class="inline-block px-4 py-1 rounded-full bg-miscon-gold/10 text-miscon-gold text-sm font-medium tracking-wider uppercase mb-6">Event Schedule</span>
-                <h2 class="text-4xl sm:text-5xl font-bold">Four Days of <span class="gradient-text">Transformation</span></h2>
+                <h2 class="text-4xl sm:text-5xl font-bold">Five Days of <span class="gradient-text">Transformation</span></h2>
             </div>
 
             <div class="max-w-4xl mx-auto" x-data="{ activeDay: 'day1' }">
                 <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
                     @foreach([
-                        ['id' => 'day1', 'day' => 'Thursday', 'date' => 'April 3'],
-                        ['id' => 'day2', 'day' => 'Friday', 'date' => 'April 4'],
-                        ['id' => 'day3', 'day' => 'Sabbath', 'date' => 'April 5'],
-                        ['id' => 'day4', 'day' => 'Sunday', 'date' => 'April 6'],
+                        ['id' => 'day1', 'day' => 'Wednesday', 'date' => 'April 2'],
+                        ['id' => 'day2', 'day' => 'Thursday', 'date' => 'April 3'],
+                        ['id' => 'day3', 'day' => 'Friday', 'date' => 'April 4'],
+                        ['id' => 'day4', 'day' => 'Sabbath', 'date' => 'April 5'],
+                        ['id' => 'day5', 'day' => 'Sunday', 'date' => 'April 6'],
                     ] as $d)
                     <button @click="activeDay = '{{ $d['id'] }}'" class="px-6 py-3 rounded-full font-medium transition-all duration-300 hover-lift" :class="activeDay === '{{ $d['id'] }}' ? 'bg-miscon-gold text-miscon-navy shadow-lg' : 'glass hover:border-miscon-gold/50'">
                         <span class="block text-xs uppercase tracking-wider opacity-70">{{ $d['day'] }}</span>
@@ -669,7 +670,7 @@
                 </div>
 
                 <!-- Schedule Content -->
-                <template x-for="day in ['day1', 'day2', 'day3', 'day4']">
+                <template x-for="day in ['day1', 'day2', 'day3', 'day4', 'day5']">
                     <div x-show="activeDay === day" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="space-y-4">
                         <template x-if="day === 'day1'">
                             <div class="space-y-4">
@@ -677,6 +678,25 @@
                                     <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">14:00</div>
                                     <div class="flex-1"><h4 class="font-bold text-lg">Registration & Check-in</h4><p class="text-white/60 text-sm">Welcome delegates</p></div>
                                     <span class="px-3 py-1 rounded-full bg-pcm-blue/20 text-pcm-blue text-xs font-medium">Arrival</span>
+                                </div>
+                                <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
+                                    <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">18:00</div>
+                                    <div class="flex-1"><h4 class="font-bold text-lg">Dinner</h4><p class="text-white/60 text-sm">Fellowship meal</p></div>
+                                    <span class="px-3 py-1 rounded-full bg-pcm-pink/20 text-pcm-pink text-xs font-medium">Meal</span>
+                                </div>
+                                <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
+                                    <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">19:30</div>
+                                    <div class="flex-1"><h4 class="font-bold text-lg">Welcome & Orientation</h4><p class="text-white/60 text-sm">Meet your fellow delegates</p></div>
+                                    <span class="px-3 py-1 rounded-full bg-pcm-purple/20 text-pcm-purple text-xs font-medium">Social</span>
+                                </div>
+                            </div>
+                        </template>
+                        <template x-if="day === 'day2'">
+                            <div class="space-y-4">
+                                <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
+                                    <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">05:30</div>
+                                    <div class="flex-1"><h4 class="font-bold text-lg">Morning Devotion</h4><p class="text-white/60 text-sm">Prayer session</p></div>
+                                    <span class="px-3 py-1 rounded-full bg-pcm-pink/20 text-pcm-pink text-xs font-medium">Devotion</span>
                                 </div>
                                 <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
                                     <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">17:00</div>
@@ -690,7 +710,7 @@
                                 </div>
                             </div>
                         </template>
-                        <template x-if="day === 'day2'">
+                        <template x-if="day === 'day3'">
                             <div class="space-y-4">
                                 <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
                                     <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">05:30</div>
@@ -714,7 +734,7 @@
                                 </div>
                             </div>
                         </template>
-                        <template x-if="day === 'day3'">
+                        <template x-if="day === 'day4'">
                             <div class="space-y-4">
                                 <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
                                     <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">05:30</div>
@@ -738,7 +758,7 @@
                                 </div>
                             </div>
                         </template>
-                        <template x-if="day === 'day4'">
+                        <template x-if="day === 'day5'">
                             <div class="space-y-4">
                                 <div class="glass rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-miscon-gold/30 transition-all hover-lift">
                                     <div class="text-miscon-gold font-mono text-lg font-bold min-w-[100px]">06:00</div>
@@ -1290,7 +1310,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Event Date</span>
-                                    <span>April 3-6, 2026</span>
+                                    <span>April 2-6, 2026</span>
                                 </div>
                             </div>
                         </div>
@@ -1440,7 +1460,7 @@
                     setInterval(() => this.updateCountdown(), 1000);
                 },
                 updateCountdown() {
-                    const eventDate = new Date('April 3, 2026 00:00:00').getTime();
+                    const eventDate = new Date('April 2, 2026 00:00:00').getTime();
                     const now = new Date().getTime();
                     const distance = eventDate - now;
                     if (distance < 0) return;
