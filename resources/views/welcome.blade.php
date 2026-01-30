@@ -231,7 +231,7 @@
                             Rise As <span class="gradient-text">Watchmen</span><br>In Your Generation
                         </h2>
                         <p class="text-lg text-white/70 leading-relaxed mb-6">
-                            MISCON26 is the premier student conference organized by <strong class="text-white">Public Campus Ministries (PCM)</strong> under the North Zimbabwe Conference of the Seventh-day Adventist Church.
+                            MISCON26 is the premier  conference organized by <strong class="text-white">Public Campus Ministries (PCM)</strong> under the North Zimbabwe Conference of the Seventh-day Adventist Church.
                         </p>
                         <p class="text-lg text-white/70 leading-relaxed mb-8">
                             This year's theme, <strong class="text-miscon-gold">"Watchmen On The Wall"</strong>, calls upon young people to stand as spiritual guardians in their campuses, communities, and nations.
@@ -308,37 +308,102 @@
                 </div>
             </div>
 
-            <!-- Other Speakers -->
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children" id="speakersGrid">
+            <!-- Other Speakers - Modern Hexagonal Design -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children" id="speakersGrid">
                 @foreach([
-                    ['name' => 'Dr. N. Matinhira', 'initials' => 'NM', 'gradient' => 'from-pcm-blue to-pcm-purple'],
-                    ['name' => 'Elder Chenge Matondo', 'initials' => 'CM', 'gradient' => 'from-pcm-purple to-pcm-pink'],
-                    ['name' => 'Elder M. Machando', 'initials' => 'MM', 'gradient' => 'from-pcm-pink to-miscon-gold'],
-                    ['name' => 'Dr. Matanda', 'initials' => 'DM', 'gradient' => 'from-miscon-gold to-pcm-blue'],
-                    ['name' => 'Dr. Mapondera', 'initials' => 'DM', 'gradient' => 'from-pcm-blue to-miscon-gold'],
-                ] as $speaker)
-                <div class="speaker-card glass rounded-2xl p-6 hover-lift">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br {{ $speaker['gradient'] }} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                            <span class="text-xl font-bold">{{ $speaker['initials'] }}</span>
+                    ['name' => 'Dr. N. Matinhira', 'initials' => 'NM', 'gradient' => 'from-pcm-blue via-pcm-purple to-pcm-blue', 'role' => 'Evangelist', 'topic' => 'Faith & Purpose'],
+                    ['name' => 'Elder Chenge Matondo', 'initials' => 'CM', 'gradient' => 'from-pcm-purple via-pcm-pink to-pcm-purple', 'role' => 'Pastor', 'topic' => 'Youth Ministry'],
+                    ['name' => 'Elder M. Machando', 'initials' => 'MM', 'gradient' => 'from-pcm-pink via-miscon-gold to-pcm-pink', 'role' => 'Teacher', 'topic' => 'Biblical Studies'],
+                    ['name' => 'Dr. Matanda', 'initials' => 'DM', 'gradient' => 'from-miscon-gold via-pcm-blue to-miscon-gold', 'role' => 'Minister', 'topic' => 'Spiritual Growth'],
+                    ['name' => 'Dr. Mapondera', 'initials' => 'DM', 'gradient' => 'from-pcm-blue via-miscon-gold to-pcm-blue', 'role' => 'Elder', 'topic' => 'Leadership'],
+                ] as $index => $speaker)
+                <div class="group relative">
+                    <!-- Glow Effect -->
+                    <div class="absolute -inset-1 bg-gradient-to-r {{ $speaker['gradient'] }} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-700"></div>
+
+                    <!-- Card -->
+                    <div class="relative glass rounded-3xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-500 overflow-hidden h-full">
+                        <!-- Animated Background Pattern -->
+                        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br {{ $speaker['gradient'] }} rounded-full blur-3xl opacity-20 transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-700"></div>
+                            <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr {{ $speaker['gradient'] }} rounded-full blur-2xl opacity-20 transform -translate-x-12 translate-y-12 group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-700"></div>
                         </div>
-                        <div>
-                            <h4 class="text-lg font-bold">{{ $speaker['name'] }}</h4>
-                            <p class="text-sm text-miscon-gold">Guest Speaker</p>
+
+                        <!-- Content -->
+                        <div class="relative z-10">
+                            <!-- Avatar with Ring Animation -->
+                            <div class="flex justify-center mb-6">
+                                <div class="relative">
+                                    <!-- Rotating Ring -->
+                                    <div class="absolute -inset-2 rounded-full border-2 border-dashed border-white/20 group-hover:border-miscon-gold/40 transition-colors duration-500 group-hover:animate-[spin_20s_linear_infinite]"></div>
+                                    <!-- Avatar -->
+                                    <div class="relative w-24 h-24 rounded-full bg-gradient-to-br {{ $speaker['gradient'] }} p-1 transform group-hover:scale-110 transition-transform duration-500">
+                                        <div class="w-full h-full rounded-full bg-miscon-navy/80 backdrop-blur flex items-center justify-center">
+                                            <span class="text-3xl font-bold bg-gradient-to-br {{ $speaker['gradient'] }} bg-clip-text text-transparent">{{ $speaker['initials'] }}</span>
+                                        </div>
+                                    </div>
+                                    <!-- Status Dot -->
+                                    <div class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-miscon-navy shadow-lg shadow-green-500/50 animate-pulse"></div>
+                                </div>
+                            </div>
+
+                            <!-- Name & Role -->
+                            <div class="text-center mb-6">
+                                <h4 class="text-xl font-bold mb-2 group-hover:text-miscon-gold transition-colors duration-300">{{ $speaker['name'] }}</h4>
+                                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r {{ $speaker['gradient'] }} bg-opacity-20">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                    <span class="text-sm font-medium text-white/90">{{ $speaker['role'] }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Topic Badge -->
+                            <div class="flex justify-center mb-6">
+                                <div class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-miscon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                        </svg>
+                                        <span class="text-sm text-white/70">{{ $speaker['topic'] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quote/Tagline -->
+                            <p class="text-center text-sm text-white/50 italic leading-relaxed">
+                                "Bringing wisdom and insight to inspire the next generation."
+                            </p>
+
+                            <!-- Bottom Accent Line -->
+                            <div class="mt-6 h-1 rounded-full bg-gradient-to-r {{ $speaker['gradient'] }} opacity-30 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
                     </div>
-                    <p class="text-sm text-white/60">Bringing wisdom and insight to inspire the next generation.</p>
                 </div>
                 @endforeach
 
-                <div class="speaker-card glass rounded-2xl p-6 flex items-center justify-center hover-lift">
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto rounded-xl bg-white/5 border-2 border-dashed border-white/20 flex items-center justify-center mb-4">
-                            <svg class="w-8 h-8 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                            </svg>
+                <!-- More Speakers Coming Card -->
+                <div class="group relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-white/10 to-white/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition-all duration-700"></div>
+
+                    <div class="relative glass rounded-3xl p-8 border-2 border-dashed border-white/20 group-hover:border-miscon-gold/30 transition-all duration-500 h-full flex flex-col items-center justify-center min-h-[320px]">
+                        <!-- Animated Plus Icon -->
+                        <div class="relative mb-6">
+                            <div class="absolute -inset-4 rounded-full bg-miscon-gold/10 animate-ping opacity-20"></div>
+                            <div class="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/10 to-white/5 border-2 border-dashed border-white/30 group-hover:border-miscon-gold/50 flex items-center justify-center transition-all duration-500 group-hover:scale-110">
+                                <svg class="w-10 h-10 text-white/40 group-hover:text-miscon-gold transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                            </div>
                         </div>
-                        <p class="text-white/60 text-sm">More speakers coming</p>
+
+                        <h4 class="text-lg font-semibold text-white/70 mb-2 group-hover:text-white transition-colors">More Speakers</h4>
+                        <p class="text-sm text-white/40 text-center">Stay tuned for announcements</p>
+
+                        <!-- Decorative Dots -->
+                        <div class="flex gap-2 mt-6">
+                            <div class="w-2 h-2 rounded-full bg-white/20 animate-bounce" style="animation-delay: 0ms;"></div>
+                            <div class="w-2 h-2 rounded-full bg-white/20 animate-bounce" style="animation-delay: 150ms;"></div>
+                            <div class="w-2 h-2 rounded-full bg-white/20 animate-bounce" style="animation-delay: 300ms;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -982,14 +1047,7 @@
                                         <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         Meals included
                                     </div>
-                                    <div class="flex items-center gap-2 text-sm text-white/70">
-                                        <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        Conference materials
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-white/70">
-                                        <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        Certificate
-                                    </div>
+
                                     <div x-show="formData.type === 'alumni'" class="flex items-center gap-2 text-sm text-white/70">
                                         <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         Alumni networking
