@@ -844,9 +844,9 @@
                     <div class="glass rounded-3xl p-8 md:p-10">
                         <!-- Type Toggle -->
                         <div class="flex justify-center mb-10">
-                            <div class="glass rounded-full p-1.5 inline-flex gap-1">
-                                <button @click="formData.type = 'student'"
-                                        class="px-8 py-3 rounded-full font-semibold text-sm uppercase tracking-wider transition-all duration-300"
+                            <div class="glass rounded-full p-1.5 inline-flex gap-1 flex-wrap justify-center">
+                                <button @click="formData.type = 'student'; formData.subType = ''"
+                                        class="px-6 py-3 rounded-full font-semibold text-sm uppercase tracking-wider transition-all duration-300"
                                         :class="formData.type === 'student' ? 'bg-miscon-gold text-miscon-navy shadow-lg' : 'text-white/60 hover:text-white'">
                                     <span class="flex items-center gap-2">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -855,14 +855,24 @@
                                         Student
                                     </span>
                                 </button>
-                                <button @click="formData.type = 'alumni'"
-                                        class="px-8 py-3 rounded-full font-semibold text-sm uppercase tracking-wider transition-all duration-300"
+                                <button @click="formData.type = 'alumni'; formData.subType = ''"
+                                        class="px-6 py-3 rounded-full font-semibold text-sm uppercase tracking-wider transition-all duration-300"
                                         :class="formData.type === 'alumni' ? 'bg-miscon-gold text-miscon-navy shadow-lg' : 'text-white/60 hover:text-white'">
                                     <span class="flex items-center gap-2">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                         </svg>
                                         Alumni
+                                    </span>
+                                </button>
+                                <button @click="formData.type = 'day_camper'; formData.subType = 'student'"
+                                        class="px-6 py-3 rounded-full font-semibold text-sm uppercase tracking-wider transition-all duration-300"
+                                        :class="formData.type === 'day_camper' ? 'bg-gradient-to-r from-pcm-purple to-pcm-pink text-white shadow-lg' : 'text-white/60 hover:text-white'">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                        </svg>
+                                        Day Camper
                                     </span>
                                 </button>
                             </div>
@@ -872,11 +882,41 @@
                         <div class="text-center mb-10">
                             <p class="text-sm uppercase tracking-wider text-white/60 mb-2">Registration Fee</p>
                             <div class="flex items-baseline justify-center gap-1">
-                                <span class="text-5xl font-bold gradient-text" x-text="'$' + (formData.type === 'student' ? '45' : '65')">$45</span>
-                                    <span class="text-white/60">USD</span>
-                                </div>
-                            <p class="text-sm text-white/40 mt-2" x-text="formData.type === 'student' ? 'Current student rate' : 'Alumni rate (includes networking)'"></p>
+                                <span class="text-5xl font-bold gradient-text" x-text="'$' + getRegistrationAmount()">$45</span>
+                                <span class="text-white/60">USD</span>
                             </div>
+                            <p class="text-sm text-white/40 mt-2" x-text="getTypeDescription()"></p>
+                        </div>
+
+                        <!-- Day Camper Sub-Type Selection -->
+                        <div x-show="formData.type === 'day_camper'" x-transition class="mb-8">
+                            <div class="p-4 rounded-2xl bg-gradient-to-r from-pcm-purple/10 to-pcm-pink/10 border border-pcm-purple/30">
+                                <p class="text-sm font-medium text-white/80 mb-3 text-center">Are you a Student or Alumni?</p>
+                                <div class="flex justify-center gap-3">
+                                    <button @click="formData.subType = 'student'" type="button"
+                                            class="px-6 py-2 rounded-full font-medium text-sm transition-all duration-300"
+                                            :class="formData.subType === 'student' ? 'bg-pcm-purple text-white shadow-lg' : 'glass text-white/60 hover:text-white'">
+                                        <span class="flex items-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                            </svg>
+                                            Student
+                                        </span>
+                                    </button>
+                                    <button @click="formData.subType = 'alumni'" type="button"
+                                            class="px-6 py-2 rounded-full font-medium text-sm transition-all duration-300"
+                                            :class="formData.subType === 'alumni' ? 'bg-pcm-purple text-white shadow-lg' : 'glass text-white/60 hover:text-white'">
+                                        <span class="flex items-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                            </svg>
+                                            Alumni
+                                        </span>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-white/50 text-center mt-3">Sabbath Day Pass - April 4, 2026</p>
+                            </div>
+                        </div>
 
                         <!-- Form Fields -->
                         <form @submit.prevent="goToPayment()" class="space-y-6">
@@ -898,7 +938,7 @@
                             <!-- University / Former School -->
                             <div x-data="institutionSelect()" class="relative">
                                 <label class="block text-sm font-medium text-white/80 mb-2">
-                                    <span x-text="$root.formData.type === 'student' ? 'University / College' : 'Former School'"></span>
+                                    <span x-text="$root.isStudentType() ? 'University / College' : 'Former School'"></span>
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
@@ -913,7 +953,7 @@
                                            @click="open = true"
                                            @input="$dispatch('institution-selected', '')"
                                            class="w-full pl-12 pr-10 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
-                                           :placeholder="$root.formData.type === 'student' ? 'Search for your institution...' : 'Search for your former school...'"
+                                           :placeholder="$root.isStudentType() ? 'Search for your institution...' : 'Search for your former school...'"
                                            autocomplete="off">
                                     <span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
                                         <svg class="w-5 h-5 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -990,7 +1030,7 @@
                             <!-- Registration Number / National ID -->
                             <div>
                                 <label class="block text-sm font-medium text-white/80 mb-2">
-                                    <span x-text="formData.type === 'student' ? 'Registration Number' : 'National ID'"></span>
+                                    <span x-text="getIdFieldLabel()"></span>
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
@@ -1001,7 +1041,7 @@
                                     </span>
                                     <input type="text" x-model="formData.idNumber" required
                                            class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
-                                           :placeholder="formData.type === 'student' ? 'e.g., R2012345A' : 'e.g., 63-123456A78'">
+                                           :placeholder="getIdFieldPlaceholder()">
                                 </div>
                             </div>
 
@@ -1033,7 +1073,7 @@
                                 <!-- Level -->
                                 <div>
                                     <label class="block text-sm font-medium text-white/80 mb-2">
-                                        <span x-text="formData.type === 'student' ? 'Level' : 'Graduation Year'"></span>
+                                        <span x-text="getLevelFieldLabel()"></span>
                                         <span class="text-red-400">*</span>
                                     </label>
                                     <div class="relative">
@@ -1042,7 +1082,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                                             </svg>
                                         </span>
-                                        <template x-if="formData.type === 'student'">
+                                        <template x-if="isStudentType()">
                                             <select x-model="formData.level" required
                                                     class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all appearance-none cursor-pointer">
                                                 <option value="" disabled selected class="bg-miscon-navy">Select level</option>
@@ -1057,12 +1097,12 @@
                                                 <option value="5+" class="bg-miscon-navy">Level 5+</option>
                                             </select>
                                         </template>
-                                        <template x-if="formData.type === 'alumni'">
+                                        <template x-if="isAlumniType()">
                                             <input type="text" x-model="formData.level" required
                                                    class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-miscon-gold/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-miscon-gold/20 transition-all placeholder:text-white/30"
                                                    placeholder="e.g., 2020">
                                         </template>
-                                        <span x-show="formData.type === 'student'" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+                                        <span x-show="isStudentType()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                             </svg>
@@ -1074,7 +1114,8 @@
                             <!-- Features Preview -->
                             <div class="mt-8 p-6 rounded-2xl bg-white/5 border border-white/10">
                                 <p class="text-sm font-medium text-miscon-gold mb-4">What's Included:</p>
-                                <div class="grid sm:grid-cols-2 gap-3">
+                                <!-- Full Conference Features (Student/Alumni) -->
+                                <div x-show="formData.type !== 'day_camper'" class="grid sm:grid-cols-2 gap-3">
                                     <div class="flex items-center gap-2 text-sm text-white/70">
                                         <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         Full conference access
@@ -1087,10 +1128,28 @@
                                         <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         Meals included
                                     </div>
-
                                     <div x-show="formData.type === 'alumni'" class="flex items-center gap-2 text-sm text-white/70">
                                         <svg class="w-4 h-4 text-miscon-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                         Alumni networking
+                                    </div>
+                                </div>
+                                <!-- Day Camper Features -->
+                                <div x-show="formData.type === 'day_camper'" class="grid sm:grid-cols-2 gap-3">
+                                    <div class="flex items-center gap-2 text-sm text-white/70">
+                                        <svg class="w-4 h-4 text-pcm-purple flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        Sabbath Day Access (April 4)
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm text-white/70">
+                                        <svg class="w-4 h-4 text-pcm-purple flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        All Sabbath Sessions
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm text-white/70">
+                                        <svg class="w-4 h-4 text-pcm-purple flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        Lunch included
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm text-white/50 italic">
+                                        <svg class="w-4 h-4 text-white/30 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        No accommodation
                                     </div>
                                 </div>
                             </div>
@@ -1151,20 +1210,20 @@
                             <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
                                 <span class="text-white/60">Type</span>
                                 <span class="px-3 py-1 rounded-full text-sm font-medium"
-                                      :class="formData.type === 'student' ? 'bg-pcm-blue/20 text-pcm-blue' : 'bg-pcm-purple/20 text-pcm-purple'"
-                                      x-text="formData.type === 'student' ? 'Student' : 'Alumni'"></span>
+                                      :class="getTypeBadgeClass()"
+                                      x-text="getTypeDisplayName()"></span>
                             </div>
                             <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
                                 <span class="text-white/60">Phone</span>
                                 <span class="font-medium" x-text="formData.phone"></span>
                             </div>
                             <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
-                                <span class="text-white/60" x-text="formData.type === 'student' ? 'Reg Number' : 'National ID'"></span>
+                                <span class="text-white/60" x-text="getIdFieldLabel()"></span>
                                 <span class="font-medium font-mono" x-text="formData.idNumber"></span>
                             </div>
                             <div class="flex justify-between items-center text-lg">
                                 <span class="font-semibold">Total Amount</span>
-                                <span class="text-2xl font-bold text-miscon-gold" x-text="'$' + (formData.type === 'student' ? '45' : '65') + ' USD'"></span>
+                                <span class="text-2xl font-bold text-miscon-gold" x-text="'$' + getRegistrationAmount() + ' USD'"></span>
                             </div>
                         </div>
 
@@ -1416,15 +1475,15 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Type</span>
-                                    <span x-text="formData.type === 'student' ? 'Student' : 'Alumni'"></span>
+                                    <span x-text="getTypeDisplayName()"></span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Amount Paid</span>
-                                    <span class="font-semibold" x-text="'$' + (formData.type === 'student' ? '45' : '65') + ' USD'"></span>
+                                    <span class="font-semibold" x-text="'$' + getRegistrationAmount() + ' USD'"></span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60">Event Date</span>
-                                    <span>April 2-6, 2026</span>
+                                    <span x-text="formData.type === 'day_camper' ? 'April 4, 2026 (Sabbath)' : 'April 2-6, 2026'"></span>
                                 </div>
                             </div>
                         </div>
@@ -1888,6 +1947,7 @@
                 customDonation: '',
                 formData: {
                     type: 'student',
+                    subType: '', // For day_camper: 'student' or 'alumni'
                     fullName: '',
                     university: '',
                     phone: '',
@@ -1897,7 +1957,61 @@
                     level: ''
                 },
                 getRegistrationAmount() {
-                    return this.formData.type === 'student' ? 45 : 65;
+                    if (this.formData.type === 'student') return 45;
+                    if (this.formData.type === 'alumni') return 65;
+                    if (this.formData.type === 'day_camper') return 7;
+                    return 45;
+                },
+                getTypeDescription() {
+                    if (this.formData.type === 'student') return 'Current student rate';
+                    if (this.formData.type === 'alumni') return 'Alumni rate (includes networking)';
+                    if (this.formData.type === 'day_camper') return 'Sabbath Day Pass (April 4, 2026)';
+                    return '';
+                },
+                getIdFieldLabel() {
+                    if (this.formData.type === 'day_camper') {
+                        return this.formData.subType === 'student' ? 'Registration Number' : 'National ID';
+                    }
+                    return this.formData.type === 'student' ? 'Registration Number' : 'National ID';
+                },
+                getIdFieldPlaceholder() {
+                    if (this.formData.type === 'day_camper') {
+                        return this.formData.subType === 'student' ? 'e.g., R2012345A' : 'e.g., 63-123456A78';
+                    }
+                    return this.formData.type === 'student' ? 'e.g., R2012345A' : 'e.g., 63-123456A78';
+                },
+                getLevelFieldLabel() {
+                    if (this.formData.type === 'day_camper') {
+                        return this.formData.subType === 'student' ? 'Level' : 'Graduation Year';
+                    }
+                    return this.formData.type === 'student' ? 'Level' : 'Graduation Year';
+                },
+                isStudentType() {
+                    if (this.formData.type === 'day_camper') {
+                        return this.formData.subType === 'student';
+                    }
+                    return this.formData.type === 'student';
+                },
+                isAlumniType() {
+                    if (this.formData.type === 'day_camper') {
+                        return this.formData.subType === 'alumni';
+                    }
+                    return this.formData.type === 'alumni';
+                },
+                getTypeBadgeClass() {
+                    if (this.formData.type === 'student') return 'bg-pcm-blue/20 text-pcm-blue';
+                    if (this.formData.type === 'alumni') return 'bg-pcm-purple/20 text-pcm-purple';
+                    if (this.formData.type === 'day_camper') return 'bg-gradient-to-r from-pcm-purple/20 to-pcm-pink/20 text-pcm-pink';
+                    return 'bg-pcm-blue/20 text-pcm-blue';
+                },
+                getTypeDisplayName() {
+                    if (this.formData.type === 'student') return 'Student';
+                    if (this.formData.type === 'alumni') return 'Alumni';
+                    if (this.formData.type === 'day_camper') {
+                        const subTypeLabel = this.formData.subType === 'student' ? 'Student' : 'Alumni';
+                        return 'Day Camper (' + subTypeLabel + ')';
+                    }
+                    return 'Student';
                 },
                 getTotalWithDonation() {
                     const regAmount = this.getRegistrationAmount();
@@ -1906,6 +2020,12 @@
                 },
                 goToPayment() {
                     this.errorMessage = '';
+
+                    // Validate day_camper subType
+                    if (this.formData.type === 'day_camper' && !this.formData.subType) {
+                        this.errorMessage = 'Please select if you are a Student or Alumni.';
+                        return;
+                    }
 
                     // Validate all required fields
                     if (!this.formData.fullName) {
@@ -1929,7 +2049,7 @@
                         return;
                     }
                     if (!this.formData.idNumber) {
-                        this.errorMessage = this.formData.type === 'student' ? 'Please enter your registration number.' : 'Please enter your national ID.';
+                        this.errorMessage = this.isStudentType() ? 'Please enter your registration number.' : 'Please enter your national ID.';
                         return;
                     }
                     if (!this.formData.gender) {
@@ -1937,7 +2057,7 @@
                         return;
                     }
                     if (!this.formData.level) {
-                        this.errorMessage = this.formData.type === 'student' ? 'Please select your level.' : 'Please enter your graduation year.';
+                        this.errorMessage = this.isStudentType() ? 'Please select your level.' : 'Please enter your graduation year.';
                         return;
                     }
 
@@ -1971,6 +2091,7 @@
                             body: JSON.stringify({
                                 // Registration data
                                 type: this.formData.type,
+                                sub_type: this.formData.type === 'day_camper' ? this.formData.subType : null,
                                 full_name: this.formData.fullName,
                                 university: this.formData.university,
                                 phone: this.formData.phone,
@@ -2116,6 +2237,7 @@
                     this.customDonation = '';
                     this.formData = {
                         type: 'student',
+                        subType: '',
                         fullName: '',
                         university: '',
                         phone: '',

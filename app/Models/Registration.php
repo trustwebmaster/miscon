@@ -15,6 +15,7 @@ class Registration extends Model
     protected $fillable = [
         'reference',
         'type',
+        'sub_type', // For day_camper: 'student' or 'alumni'
         'full_name',
         'university',
         'phone',
@@ -53,6 +54,7 @@ class Registration extends Model
      */
     const STUDENT_AMOUNT = 45.00;
     const ALUMNI_AMOUNT = 65.00;
+    const DAY_CAMPER_AMOUNT = 7.00;
 
     /**
      * Generate a unique reference number
@@ -71,7 +73,12 @@ class Registration extends Model
      */
     public static function getAmount(string $type): float
     {
-        return $type === 'student' ? self::STUDENT_AMOUNT : self::ALUMNI_AMOUNT;
+        return match($type) {
+            'student' => self::STUDENT_AMOUNT,
+            'alumni' => self::ALUMNI_AMOUNT,
+            'day_camper' => self::DAY_CAMPER_AMOUNT,
+            default => self::STUDENT_AMOUNT,
+        };
     }
 
     /**
@@ -88,6 +95,14 @@ class Registration extends Model
     public function scopeAlumni($query)
     {
         return $query->where('type', 'alumni');
+    }
+
+    /**
+     * Scope for day campers
+     */
+    public function scopeDayCampers($query)
+    {
+        return $query->where('type', 'day_camper');
     }
 
     /**
@@ -131,6 +146,9 @@ class Registration extends Model
      */
     public function getIdLabel(): string
     {
+        if ($this->type === 'day_camper') {
+            return $this->sub_type === 'student' ? 'Reg Number' : 'National ID';
+        }
         return $this->type === 'student' ? 'Reg Number' : 'National ID';
     }
 
@@ -139,6 +157,9 @@ class Registration extends Model
      */
     public function getLevelLabel(): string
     {
+        if ($this->type === 'day_camper') {
+            return $this->sub_type === 'student' ? 'Level' : 'Graduation Year';
+        }
         return $this->type === 'student' ? 'Level' : 'Graduation Year';
     }
 }

@@ -28,7 +28,8 @@ class RegistrationController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'type' => ['required', Rule::in(['student', 'alumni'])],
+            'type' => ['required', Rule::in(['student', 'alumni', 'day_camper'])],
+            'sub_type' => ['nullable', 'required_if:type,day_camper', Rule::in(['student', 'alumni'])],
             'full_name' => ['required', 'string', 'max:255'],
             'university' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
@@ -50,7 +51,7 @@ class RegistrationController extends Controller
         $existingById = Registration::where('id_number', $request->id_number)->first();
 
         if ($existingById) {
-            $idLabel = $request->type === 'student' ? 'registration number' : 'national ID';
+            $idLabel = $this->getIdLabel($request->type, $request->sub_type);
             return response()->json([
                 'success' => false,
                 'message' => "A registration with this {$idLabel} already exists.",
@@ -62,6 +63,7 @@ class RegistrationController extends Controller
         $registration = Registration::create([
             'reference' => Registration::generateReference(),
             'type' => $request->type,
+            'sub_type' => $request->sub_type,
             'full_name' => $request->full_name,
             'university' => $request->university,
             'phone' => $request->phone,
@@ -87,6 +89,17 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Get ID label based on type and sub_type
+     */
+    private function getIdLabel(string $type, ?string $subType = null): string
+    {
+        if ($type === 'day_camper') {
+            return $subType === 'student' ? 'registration number' : 'national ID';
+        }
+        return $type === 'student' ? 'registration number' : 'national ID';
+    }
+
+    /**
      * Register and initiate payment in one atomic request
      * Registration is only saved when payment is initiated
      */
@@ -94,7 +107,8 @@ class RegistrationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             // Registration fields
-            'type' => ['required', Rule::in(['student', 'alumni'])],
+            'type' => ['required', Rule::in(['student', 'alumni', 'day_camper'])],
+            'sub_type' => ['nullable', 'required_if:type,day_camper', Rule::in(['student', 'alumni'])],
             'full_name' => ['required', 'string', 'max:255'],
             'university' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
@@ -123,7 +137,7 @@ class RegistrationController extends Controller
         if ($existingById) {
             // If already paid, reject
             if ($existingById->isPaid()) {
-                $idLabel = $request->type === 'student' ? 'registration number' : 'national ID';
+                $idLabel = $this->getIdLabel($request->type, $request->sub_type);
                 return response()->json([
                     'success' => false,
                     'message' => "A registration with this {$idLabel} has already been completed and paid.",
@@ -139,6 +153,7 @@ class RegistrationController extends Controller
             $registration = Registration::create([
                 'reference' => Registration::generateReference(),
                 'type' => $request->type,
+                'sub_type' => $request->sub_type,
                 'full_name' => $request->full_name,
                 'university' => $request->university,
                 'phone' => $request->phone,
@@ -182,7 +197,7 @@ class RegistrationController extends Controller
         $email = $formattedPhone . '@miscon26.co.zw';
 
         // Create description
-        $description = $donationAmount > 0 
+        $description = $donationAmount > 0
             ? "MISCON26 Registration + Donation - {$registration->reference}"
             : "MISCON26 Registration - {$registration->reference}";
 
@@ -640,10 +655,15 @@ class RegistrationController extends Controller
                 'total' => Registration::alumni()->count(),
                 'paid' => Registration::alumni()->paid()->count(),
             ],
+            'day_campers' => [
+                'total' => Registration::dayCampers()->count(),
+                'paid' => Registration::dayCampers()->paid()->count(),
+            ],
             'revenue' => [
                 'total' => Registration::paid()->sum('amount'),
                 'students' => Registration::students()->paid()->sum('amount'),
                 'alumni' => Registration::alumni()->paid()->sum('amount'),
+                'day_campers' => Registration::dayCampers()->paid()->sum('amount'),
             ],
         ];
 
