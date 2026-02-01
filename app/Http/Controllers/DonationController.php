@@ -121,6 +121,96 @@ class DonationController extends Controller
     }
 
     /**
+     * Process donation via web payment (browser redirect to Paynow)
+     */
+    public function payWeb(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'amount' => ['required', 'numeric', 'min:1'],
+            'donor_name' => ['nullable', 'string', 'max:255'],
+            'donor_email' => ['required', 'email', 'max:255'], // Email required for web payment
+            'donor_phone' => ['nullable', 'string', 'max:20'],
+            'message' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Validate minimum amount
+        if ($request->amount < Donation::MIN_AMOUNT) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Minimum donation amount is $' . Donation::MIN_AMOUNT . ' USD.',
+            ], 422);
+        }
+
+        // Create the donation record
+        $donation = Donation::create([
+            'reference' => Donation::generateReference(),
+            'donor_name' => $request->donor_name ?: 'Anonymous',
+            'donor_email' => $request->donor_email,
+            'donor_phone' => $request->donor_phone,
+            'message' => $request->message,
+            'amount' => $request->amount,
+            'payment_status' => 'pending',
+        ]);
+
+        // Create description
+        $description = "MISCON26 Donation - {$donation->reference} - Support underprivileged students";
+
+        // Initiate web payment with Paynow (redirects user to Paynow page)
+        $result = $this->paynowService->initiateWebPayment(
+            $donation->reference,
+            $request->donor_email,
+            (float) $donation->amount,
+            $description
+        );
+
+        if (!$result['success']) {
+            Log::warning('Donation web payment initiation failed', [
+                'donation_id' => $donation->id,
+                'error' => $result['error'] ?? 'Unknown error',
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Failed to initiate payment. Please try again.',
+            ], 400);
+        }
+
+        // Update donation with payment details
+        $donation->update([
+            'payment_method' => 'web',
+            'payment_status' => 'processing',
+            'paynow_poll_url' => $result['poll_url'],
+        ]);
+
+        Log::info('Donation web payment initiated successfully', [
+            'donation_id' => $donation->id,
+            'reference' => $donation->reference,
+            'amount' => $donation->amount,
+            'redirect_url' => $result['redirect_url'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment initiated successfully',
+            'data' => [
+                'donation_id' => $donation->id,
+                'reference' => $donation->reference,
+                'amount' => $donation->amount,
+                'payment_status' => 'processing',
+                'redirect_url' => $result['redirect_url'], // URL to redirect user to
+            ],
+        ]);
+    }
+
+    /**
      * Poll donation payment status
      */
     public function pollPaymentStatus(Request $request): JsonResponse

@@ -131,7 +131,7 @@ class PaynowService
             // Get detailed error from response
             $errorMessage = $response->error ?? null;
             $responseData = method_exists($response, 'data') ? $response->data() : [];
-            
+
             Log::warning('Paynow payment initiation failed', [
                 'reference' => $reference,
                 'error' => $errorMessage,
@@ -273,5 +273,111 @@ class PaynowService
             'onemoney' => 'onemoney',
             default => 'ecocash',
         };
+    }
+
+    /**
+     * Initiate a web/browser payment (redirects user to Paynow page)
+     *
+     * @param string $reference Unique transaction reference
+     * @param string $email Customer's email address
+     * @param float $amount Amount to charge
+     * @param string $description Payment description
+     * @return array
+     */
+    public function initiateWebPayment(
+        string $reference,
+        string $email,
+        float $amount,
+        string $description
+    ): array {
+        // Check if Paynow is configured
+        if (!$this->configured || !$this->paynow) {
+            Log::error('Paynow web payment attempted but not configured', [
+                'reference' => $reference,
+            ]);
+
+            return [
+                'success' => false,
+                'error' => 'Payment service is not configured. Please contact the administrator.',
+            ];
+        }
+
+        try {
+            // Use merchant email in test mode
+            $authEmail = $this->getAuthEmail($email);
+
+            Log::info('Initiating Paynow web payment', [
+                'reference' => $reference,
+                'email' => $authEmail,
+                'amount' => $amount,
+                'test_mode' => $this->testMode,
+            ]);
+
+            // Create payment
+            $payment = $this->paynow->createPayment($reference, $authEmail);
+            $payment->add($description, $amount);
+
+            // Send web payment request (returns redirect URL)
+            $response = $this->paynow->send($payment);
+
+            if ($response->success()) {
+                Log::info('Paynow web payment initiated successfully', [
+                    'reference' => $reference,
+                    'poll_url' => $response->pollUrl(),
+                    'redirect_url' => $response->redirectUrl(),
+                ]);
+
+                return [
+                    'success' => true,
+                    'poll_url' => $response->pollUrl(),
+                    'redirect_url' => $response->redirectUrl(),
+                    'status' => $response->status ?? 'created',
+                ];
+            }
+
+            // Get detailed error from response
+            $errorMessage = $response->error ?? null;
+
+            Log::warning('Paynow web payment initiation failed', [
+                'reference' => $reference,
+                'error' => $errorMessage,
+                'status' => $response->status ?? 'unknown',
+            ]);
+
+            // Provide user-friendly error messages
+            $userError = match(strtolower($errorMessage ?? '')) {
+                'invalid id.' => 'Payment service configuration error. Please contact support.',
+                'invalid integration' => 'Payment service configuration error. Please contact support.',
+                '' => 'Payment could not be initiated. Please try again.',
+                default => $errorMessage ?? 'Payment initiation failed. Please try again.',
+            };
+
+            return [
+                'success' => false,
+                'error' => $userError,
+            ];
+        } catch (\Paynow\Payments\InvalidIntegrationException $e) {
+            Log::error('Paynow invalid integration for web payment', [
+                'reference' => $reference,
+                'message' => $e->getMessage(),
+            ]);
+
+            return [
+                'success' => false,
+                'error' => 'Payment service configuration error. Please contact the administrator.',
+            ];
+        } catch (\Exception $e) {
+            Log::error('Paynow web payment exception', [
+                'reference' => $reference,
+                'message' => $e->getMessage(),
+                'class' => get_class($e),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return [
+                'success' => false,
+                'error' => 'Payment service error: ' . $e->getMessage(),
+            ];
+        }
     }
 }

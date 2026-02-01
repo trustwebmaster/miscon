@@ -251,6 +251,217 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Register and initiate web payment (browser redirect) in one atomic request
+     * User is redirected to Paynow page to complete payment
+     */
+    public function registerAndPayWeb(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            // Registration fields
+            'type' => ['required', Rule::in(['student', 'alumni', 'day_camper'])],
+            'sub_type' => ['nullable', 'required_if:type,day_camper', Rule::in(['student', 'alumni'])],
+            'full_name' => ['required', 'string', 'max:255'],
+            'university' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'email', 'max:255'],
+            'id_number' => ['required', 'string', 'max:50'],
+            'gender' => ['required', Rule::in(['male', 'female'])],
+            'level' => ['required', 'string', 'max:50'],
+            // Optional donation
+            'donation_amount' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Check for duplicate registration (ID number must be unique)
+        $existingById = Registration::where('id_number', $request->id_number)->first();
+
+        if ($existingById) {
+            // If already paid, reject
+            if ($existingById->isPaid()) {
+                $idLabel = $this->getIdLabel($request->type, $request->sub_type);
+                return response()->json([
+                    'success' => false,
+                    'message' => "A registration with this {$idLabel} has already been completed and paid.",
+                ], 422);
+            }
+
+            // If pending/processing, allow retry with same registration
+            // Update email if changed
+            $existingById->update(['email' => $request->email]);
+            $registration = $existingById;
+        } else {
+            // Create new registration
+            $registration = Registration::create([
+                'reference' => Registration::generateReference(),
+                'type' => $request->type,
+                'sub_type' => $request->sub_type,
+                'full_name' => $request->full_name,
+                'university' => $request->university,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'id_number' => $request->id_number,
+                'gender' => $request->gender,
+                'level' => $request->level,
+                'amount' => Registration::getAmount($request->type),
+                'payment_status' => 'pending',
+            ]);
+        }
+
+        // Handle optional donation
+        $donationAmount = $request->donation_amount && $request->donation_amount >= 1 ? (float) $request->donation_amount : 0;
+        $donation = null;
+
+        if ($donationAmount > 0) {
+            // Create a donation record linked to this registration
+            $donation = Donation::create([
+                'reference' => Donation::generateReference(),
+                'donor_name' => $request->full_name,
+                'donor_email' => $request->email,
+                'donor_phone' => $request->phone,
+                'message' => "Donation with registration {$registration->reference}",
+                'amount' => $donationAmount,
+                'payment_status' => 'pending',
+            ]);
+
+            // Store donation ID in registration for linking
+            $registration->update(['donation_id' => $donation->id]);
+        }
+
+        // Calculate total amount (registration + donation)
+        $totalAmount = (float) $registration->amount + $donationAmount;
+
+        // Create description
+        $description = $donationAmount > 0
+            ? "MISCON26 Registration + Donation - {$registration->reference}"
+            : "MISCON26 Registration - {$registration->reference}";
+
+        // Initiate web payment with Paynow (redirects user to Paynow page)
+        $result = $this->paynowService->initiateWebPayment(
+            $registration->reference,
+            $request->email,
+            $totalAmount,
+            $description
+        );
+
+        if (!$result['success']) {
+            Log::warning('Web payment initiation failed', [
+                'registration_id' => $registration->id,
+                'error' => $result['error'] ?? 'Unknown error',
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Failed to initiate payment. Please try again.',
+            ], 400);
+        }
+
+        // Update registration with payment details
+        $registration->update([
+            'payment_method' => 'web', // Mark as web/browser payment
+            'payment_status' => 'processing',
+            'paynow_poll_url' => $result['poll_url'],
+        ]);
+
+        Log::info('Web payment initiated successfully', [
+            'registration_id' => $registration->id,
+            'reference' => $registration->reference,
+            'amount' => $totalAmount,
+            'redirect_url' => $result['redirect_url'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment initiated successfully',
+            'data' => [
+                'registration_id' => $registration->id,
+                'reference' => $registration->reference,
+                'amount' => $registration->amount,
+                'total_amount' => $totalAmount,
+                'payment_status' => 'processing',
+                'redirect_url' => $result['redirect_url'], // URL to redirect user to
+            ],
+        ]);
+    }
+
+    /**
+     * Process web payment via Paynow (for existing registration)
+     * User is redirected to Paynow page to complete payment
+     */
+    public function processPaymentWeb(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'registration_id' => ['required', 'exists:registrations,id'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $registration = Registration::findOrFail($request->registration_id);
+
+        // Check if already paid
+        if ($registration->isPaid()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This registration has already been paid.',
+            ], 400);
+        }
+
+        // Create description
+        $description = "MISCON26 Registration - {$registration->reference}";
+
+        // Initiate web payment with Paynow
+        $result = $this->paynowService->initiateWebPayment(
+            $registration->reference,
+            $registration->email,
+            (float) $registration->amount,
+            $description
+        );
+
+        if (!$result['success']) {
+            Log::warning('Web payment initiation failed', [
+                'registration_id' => $registration->id,
+                'error' => $result['error'] ?? 'Unknown error',
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Failed to initiate payment. Please try again.',
+            ], 400);
+        }
+
+        // Update registration with payment details
+        $registration->update([
+            'payment_method' => 'web',
+            'payment_status' => 'processing',
+            'paynow_poll_url' => $result['poll_url'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment initiated successfully',
+            'data' => [
+                'registration_id' => $registration->id,
+                'reference' => $registration->reference,
+                'amount' => $registration->amount,
+                'payment_status' => 'processing',
+                'redirect_url' => $result['redirect_url'], // URL to redirect user to
+            ],
+        ]);
+    }
+
+    /**
      * Process payment via Paynow Zimbabwe (for existing registration)
      */
     public function processPayment(Request $request): JsonResponse

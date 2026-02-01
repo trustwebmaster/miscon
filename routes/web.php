@@ -66,8 +66,10 @@ Route::post('/logout', function () {
 // Registration API Routes
 Route::prefix('api/registration')->name('registration.')->group(function () {
     Route::post('/', [RegistrationController::class, 'store'])->name('store');
-    Route::post('/pay', [RegistrationController::class, 'registerAndPay'])->name('pay'); // Register + pay in one request
+    Route::post('/pay', [RegistrationController::class, 'registerAndPay'])->name('pay'); // Register + pay in one request (mobile)
+    Route::post('/pay-web', [RegistrationController::class, 'registerAndPayWeb'])->name('pay.web'); // Register + pay via Paynow web redirect
     Route::post('/payment', [RegistrationController::class, 'processPayment'])->name('payment');
+    Route::post('/payment-web', [RegistrationController::class, 'processPaymentWeb'])->name('payment.web'); // Pay via Paynow web redirect
     Route::post('/payment/poll', [RegistrationController::class, 'pollPaymentStatus'])->name('payment.poll');
     Route::post('/test-email', [RegistrationController::class, 'testEmail'])->name('email.test');
     Route::post('/check', [RegistrationController::class, 'checkByIdNumber'])->name('check');
@@ -81,7 +83,8 @@ Route::get('/paynow/return', [RegistrationController::class, 'paynowReturn'])->n
 
 // Donation API Routes
 Route::prefix('api/donation')->name('donation.')->group(function () {
-    Route::post('/pay', [DonationController::class, 'pay'])->name('pay');
+    Route::post('/pay', [DonationController::class, 'pay'])->name('pay'); // Mobile payment
+    Route::post('/pay-web', [DonationController::class, 'payWeb'])->name('pay.web'); // Web/browser payment
     Route::post('/poll', [DonationController::class, 'pollPaymentStatus'])->name('poll');
     Route::get('/stats', [DonationController::class, 'stats'])->name('stats');
 });

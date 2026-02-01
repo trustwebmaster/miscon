@@ -1393,55 +1393,22 @@
                             </div>
                         </div>
 
-                        <!-- Payment Method Selection -->
+                        <!-- Payment Method Info -->
                         <div class="mb-8">
-                            <p class="text-sm font-medium text-white/80 mb-4">Select Payment Method</p>
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <button @click="paymentMethod = 'ecocash'"
-                                        class="p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3"
-                                        :class="paymentMethod === 'ecocash' ? 'border-[#00a651] bg-[#00a651]/10' : 'border-white/10 hover:border-white/30'">
-                                    <div class="w-12 h-12 rounded-lg bg-[#ffc72c] flex items-center justify-center">
-                                        <span class="text-black font-bold text-sm">ECO</span>
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="font-semibold">EcoCash</p>
-                                        <p class="text-xs text-white/60">Mobile Money</p>
-                                    </div>
-                                    <div x-show="paymentMethod === 'ecocash'" class="ml-auto">
-                                        <svg class="w-6 h-6 text-[#00a651]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                                    </div>
-                                </button>
-                                <button @click="paymentMethod = 'innbucks'"
-                                        class="p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3"
-                                        :class="paymentMethod === 'innbucks' ? 'border-[#00a651] bg-[#00a651]/10' : 'border-white/10 hover:border-white/30'">
-                                    <div class="w-12 h-12 rounded-lg bg-[#ff6b00] flex items-center justify-center">
-                                        <span class="text-white font-bold text-sm">INN</span>
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="font-semibold">InnBucks</p>
-                                        <p class="text-xs text-white/60">Digital Wallet</p>
-                                    </div>
-                                    <div x-show="paymentMethod === 'innbucks'" class="ml-auto">
-                                        <svg class="w-6 h-6 text-[#00a651]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Mobile Number for Payment -->
-                        <div class="mb-8">
-                            <label class="block text-sm font-medium text-white/80 mb-2">
-                                <span x-text="paymentMethod === 'ecocash' ? 'EcoCash Number' : 'InnBucks Number'"></span>
-                            </label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            <p class="text-sm font-medium text-white/80 mb-4">Payment Method</p>
+                            <div class="p-4 rounded-xl border-2 border-[#00a651] bg-[#00a651]/10 flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                     </svg>
-                                </span>
-                                <input type="tel" x-model="paymentPhone"
-                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-[#00a651]/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#00a651]/20 transition-all placeholder:text-white/30"
-                                       :placeholder="paymentMethod === 'ecocash' ? '07XX XXX XXX' : '07XX XXX XXX'">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-white">Pay via Paynow</p>
+                                    <p class="text-sm text-white/60">You'll be redirected to Paynow to complete your payment using Visa, MasterCard, EcoCash, InnBucks, or other methods.</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <svg class="w-6 h-6 text-[#00a651]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
                             </div>
                         </div>
 
@@ -1575,12 +1542,12 @@
                                     Back
                                 </span>
                             </button>
-                            <button @click="processPayment()" class="flex-1 py-4 bg-[#00a651] hover:bg-[#00a651]/90 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,166,81,0.3)] disabled:opacity-50 disabled:cursor-not-allowed" :disabled="!paymentPhone || isProcessing">
+                            <button @click="processPayment()" class="flex-1 py-4 bg-[#00a651] hover:bg-[#00a651]/90 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,166,81,0.3)] disabled:opacity-50 disabled:cursor-not-allowed" :disabled="isProcessing">
                                 <span class="flex items-center justify-center gap-2" x-show="!isProcessing">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                     </svg>
-                                    Pay Now
+                                    Proceed to Paynow
                                 </span>
                                 <span class="flex items-center justify-center gap-2" x-show="isProcessing && !isPolling">
                                     <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -1804,70 +1771,39 @@
 
                             <!-- Donor Email -->
                             <div>
-                                <label class="block text-sm font-medium text-white/80 mb-2">Email <span class="text-white/40">(For receipt)</span></label>
+                                <label class="block text-sm font-medium text-white/80 mb-2">
+                                    Email <span class="text-red-400">*</span>
+                                    <span class="text-white/40">(Required for payment)</span>
+                                </label>
                                 <div class="relative">
                                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                         </svg>
                                     </span>
-                                    <input type="email" x-model="donorEmail"
+                                    <input type="email" x-model="donorEmail" required
                                            class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30"
                                            placeholder="your@email.com">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Payment Method Selection -->
+                        <!-- Payment Method Info -->
                         <div class="mb-6">
-                            <p class="text-sm font-medium text-white/80 mb-4">Select Payment Method</p>
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <button @click="donationPaymentMethod = 'ecocash'" type="button"
-                                        class="p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3"
-                                        :class="donationPaymentMethod === 'ecocash' ? 'border-pink-500 bg-pink-500/10' : 'border-white/10 hover:border-white/30'">
-                                    <div class="w-12 h-12 rounded-lg bg-[#ffc72c] flex items-center justify-center">
-                                        <span class="text-black font-bold text-sm">ECO</span>
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="font-semibold">EcoCash</p>
-                                        <p class="text-xs text-white/60">Mobile Money</p>
-                                    </div>
-                                    <div x-show="donationPaymentMethod === 'ecocash'" class="ml-auto">
-                                        <svg class="w-6 h-6 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                                    </div>
-                                </button>
-                                <button @click="donationPaymentMethod = 'innbucks'" type="button"
-                                        class="p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-3"
-                                        :class="donationPaymentMethod === 'innbucks' ? 'border-pink-500 bg-pink-500/10' : 'border-white/10 hover:border-white/30'">
-                                    <div class="w-12 h-12 rounded-lg bg-[#ff6b00] flex items-center justify-center">
-                                        <span class="text-white font-bold text-sm">INN</span>
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="font-semibold">InnBucks</p>
-                                        <p class="text-xs text-white/60">Digital Wallet</p>
-                                    </div>
-                                    <div x-show="donationPaymentMethod === 'innbucks'" class="ml-auto">
-                                        <svg class="w-6 h-6 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Phone Number for Payment -->
-                        <div>
-                            <label class="block text-sm font-medium text-white/80 mb-2">
-                                <span x-text="donationPaymentMethod === 'ecocash' ? 'EcoCash Number' : 'InnBucks Number'"></span>
-                                <span class="text-red-400">*</span>
-                            </label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            <p class="text-sm font-medium text-white/80 mb-4">Payment Method</p>
+                            <div class="p-4 rounded-xl border-2 border-pink-500 bg-pink-500/10 flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                     </svg>
-                                </span>
-                                <input type="tel" x-model="paymentPhone" required
-                                       class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-pink-500/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-white/30"
-                                       :placeholder="donationPaymentMethod === 'ecocash' ? '07XX XXX XXX' : '07XX XXX XXX'">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-white">Pay via Paynow</p>
+                                    <p class="text-sm text-white/60">You'll be redirected to Paynow to complete your donation using Visa, MasterCard, EcoCash, InnBucks, or other methods.</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <svg class="w-6 h-6 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
                             </div>
                         </div>
 
@@ -1941,10 +1877,10 @@
                                 class="w-full py-5 bg-gradient-to-r from-pink-500 via-pcm-purple to-miscon-gold text-white font-bold text-lg rounded-xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02]"
                                 :disabled="!canSubmit() || isProcessing">
                             <span class="flex items-center justify-center gap-3" x-show="!isProcessing">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                 </svg>
-                                Donate Now
+                                Proceed to Paynow
                             </span>
                             <span class="flex items-center justify-center gap-2" x-show="isProcessing">
                                 <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -2085,9 +2021,110 @@
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
     </button>
 
+    <!-- Universal Payment Success Modal -->
+    <div x-data="paymentSuccessModal()"
+         x-show="isOpen"
+         x-cloak
+         @payment-success.window="showModal($event.detail)"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="closeModal()"></div>
+
+        <!-- Modal Content -->
+        <div class="relative bg-gradient-to-br from-miscon-navy via-[#1a1a3e] to-miscon-navy rounded-3xl p-8 max-w-md w-full shadow-2xl border border-white/10"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90">
+
+            <!-- Close button -->
+            <button @click="closeModal()" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <!-- Success Animation -->
+            <div class="text-center">
+                <!-- Animated Checkmark -->
+                <div class="w-24 h-24 mx-auto mb-6 relative">
+                    <div class="absolute inset-0 bg-[#00a651] rounded-full animate-ping opacity-20"></div>
+                    <div class="absolute inset-0 bg-[#00a651] rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-3xl font-bold text-[#00a651] mb-2">Payment Successful!</h3>
+
+                <!-- Dynamic Message based on type -->
+                <template x-if="paymentType === 'donation'">
+                    <div>
+                        <p class="text-white/70 mb-4">Thank you for your generous donation!</p>
+                        <div class="bg-white/5 rounded-xl p-4 mb-6">
+                            <p class="text-sm text-white/60 mb-1">Amount Donated</p>
+                            <p class="text-3xl font-bold text-miscon-gold" x-text="'$' + amount + ' USD'"></p>
+                        </div>
+                        <p class="text-white/50 text-sm">Your kindness will help underprivileged students experience MISCON26. God bless you!</p>
+                    </div>
+                </template>
+
+                <template x-if="paymentType === 'registration'">
+                    <div>
+                        <p class="text-white/70 mb-4">Your registration has been confirmed!</p>
+                        <div class="bg-white/5 rounded-xl p-4 mb-6">
+                            <p class="text-sm text-white/60 mb-1">Amount Paid</p>
+                            <p class="text-3xl font-bold text-miscon-gold" x-text="'$' + amount + ' USD'"></p>
+                            <p class="text-sm text-white/60 mt-2" x-show="reference">Reference: <span class="text-white font-medium" x-text="reference"></span></p>
+                        </div>
+                        <p class="text-white/50 text-sm">A confirmation email has been sent to your email address. We look forward to seeing you at MISCON26!</p>
+                    </div>
+                </template>
+
+                <!-- Action Button -->
+                <button @click="closeModal()" class="mt-6 px-8 py-3 rounded-full bg-gradient-to-r from-[#00a651] to-emerald-600 text-white font-semibold hover:shadow-[0_0_30px_rgba(0,166,81,0.4)] transition-all hover:scale-105">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
+        // Universal Payment Success Modal
+        function paymentSuccessModal() {
+            return {
+                isOpen: false,
+                paymentType: '', // 'donation' or 'registration'
+                amount: 0,
+                reference: '',
+
+                showModal(detail) {
+                    this.paymentType = detail.type || 'donation';
+                    this.amount = detail.amount || 0;
+                    this.reference = detail.reference || '';
+                    this.isOpen = true;
+                    document.body.style.overflow = 'hidden';
+                },
+
+                closeModal() {
+                    this.isOpen = false;
+                    document.body.style.overflow = '';
+                }
+            }
+        }
+
         function mainApp() {
             return {
                 scrolled: false,
@@ -2147,7 +2184,7 @@
         function registrationForm() {
             return {
                 step: 1,
-                paymentMethod: 'ecocash',
+                paymentMethod: 'web', // Default to web payment
                 paymentPhone: '',
                 isProcessing: false,
                 isSubmitting: false,
@@ -2328,51 +2365,46 @@
                     window.scrollTo({ top: document.getElementById('registration').offsetTop - 100, behavior: 'smooth' });
                 },
                 async processPayment() {
-                    if (!this.paymentPhone) {
-                        this.errorMessage = 'Please enter your payment phone number.';
-                        return;
-                    }
-
                     this.isProcessing = true;
                     this.errorMessage = '';
-                    this.paymentInstructions = '';
 
                     try {
-                        // Calculate donation amount
+                        // Calculate total amount including donation
                         const donationAmt = this.addDonation && this.donationAmount > 0 ? this.donationAmount : 0;
+                        const totalAmount = this.getTotalWithDonation();
+
+                        // Build payload
+                        const payload = {
+                            // Registration data
+                            type: this.formData.type,
+                            sub_type: this.formData.type === 'day_camper' ? this.formData.subType : null,
+                            full_name: this.formData.fullName,
+                            university: this.formData.university,
+                            phone: this.formData.phone,
+                            email: this.formData.email,
+                            id_number: this.formData.idNumber,
+                            gender: this.formData.gender,
+                            level: this.formData.level,
+                            // Alumni family data
+                            is_married: this.formData.type === 'alumni' ? this.formData.isMarried : false,
+                            spouse_full_name: this.formData.isMarried ? this.formData.spouseFullName : null,
+                            spouse_phone: this.formData.isMarried ? this.formData.spousePhone : null,
+                            has_children: this.formData.type === 'alumni' ? this.formData.hasChildren : false,
+                            children_above_4: this.formData.hasChildren ? this.formData.childrenAbove4 : 0,
+                            children_under_4: this.formData.hasChildren ? this.formData.childrenUnder4 : 0,
+                            // Optional donation
+                            donation_amount: donationAmt,
+                        };
 
                         // Send registration + payment data together
-                        const response = await fetch('/api/registration/pay', {
+                        const response = await fetch('/api/registration/pay-web', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                                 'Accept': 'application/json',
                             },
-                            body: JSON.stringify({
-                                // Registration data
-                                type: this.formData.type,
-                                sub_type: this.formData.type === 'day_camper' ? this.formData.subType : null,
-                                full_name: this.formData.fullName,
-                                university: this.formData.university,
-                                phone: this.formData.phone,
-                                email: this.formData.email,
-                                id_number: this.formData.idNumber,
-                                gender: this.formData.gender,
-                                level: this.formData.level,
-                                // Alumni family data
-                                is_married: this.formData.type === 'alumni' ? this.formData.isMarried : false,
-                                spouse_full_name: this.formData.isMarried ? this.formData.spouseFullName : null,
-                                spouse_phone: this.formData.isMarried ? this.formData.spousePhone : null,
-                                has_children: this.formData.type === 'alumni' ? this.formData.hasChildren : false,
-                                children_above_4: this.formData.hasChildren ? this.formData.childrenAbove4 : 0,
-                                children_under_4: this.formData.hasChildren ? this.formData.childrenUnder4 : 0,
-                                // Payment data
-                                payment_method: this.paymentMethod,
-                                payment_phone: this.paymentPhone,
-                                // Optional donation
-                                donation_amount: donationAmt,
-                            }),
+                            body: JSON.stringify(payload),
                         });
 
                         const data = await response.json();
@@ -2383,17 +2415,18 @@
                             return;
                         }
 
-                        // Store registration ID for polling
+                        // Store registration info in localStorage for when user returns from Paynow
                         this.registrationId = data.data.registration_id;
                         this.reference = data.data.reference;
+                        localStorage.setItem('pending_registration_id', this.registrationId);
+                        localStorage.setItem('pending_registration_reference', this.reference);
+                        localStorage.setItem('pending_registration_amount', totalAmount);
 
-                        // Show instructions from Paynow
-                        this.paymentInstructions = data.data.instructions || 'Please check your phone and enter your PIN to complete the payment.';
-
-                        // Start polling for payment status
-                        this.isPolling = true;
-                        this.pollAttempts = 0;
-                        this.startPolling();
+                        // Redirect to Paynow
+                        if (data.data.redirect_url) {
+                            window.location.href = data.data.redirect_url;
+                            return;
+                        }
                     } catch (error) {
                         console.error('Payment error:', error);
                         this.errorMessage = 'Network error. Please check your connection and try again.';
@@ -2485,13 +2518,82 @@
                     this.isProcessing = false;
                     this.isPolling = false;
                 },
+                // Check for pending registration on init (when returning from Paynow)
+                init() {
+                    const pendingRegId = localStorage.getItem('pending_registration_id');
+                    if (pendingRegId) {
+                        this.registrationId = pendingRegId;
+                        this.reference = localStorage.getItem('pending_registration_reference') || '';
+                        // Check the payment status
+                        this.checkPendingRegistration();
+                    }
+                },
+
+                async checkPendingRegistration() {
+                    try {
+                        const response = await fetch('/api/registration/payment/poll', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                registration_id: this.registrationId,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.data.paid) {
+                            // Get the amount from localStorage or API response
+                            const amount = localStorage.getItem('pending_registration_amount') || data.data.amount || 0;
+
+                            // Clear localStorage
+                            localStorage.removeItem('pending_registration_id');
+                            localStorage.removeItem('pending_registration_reference');
+                            localStorage.removeItem('pending_registration_amount');
+
+                            // Dispatch event to show universal modal
+                            window.dispatchEvent(new CustomEvent('payment-success', {
+                                detail: {
+                                    type: 'registration',
+                                    amount: amount,
+                                    reference: this.reference
+                                }
+                            }));
+                        } else if (response.ok && data.data.payment_status === 'processing') {
+                            // Still processing, show step 2 with polling
+                            this.step = 2;
+                            this.isPolling = true;
+                            this.isProcessing = true;
+                            this.paymentInstructions = 'Checking payment status...';
+                            this.startPolling();
+                        } else {
+                            // Payment failed or other status - clear and let user try again
+                            localStorage.removeItem('pending_registration_id');
+                            localStorage.removeItem('pending_registration_reference');
+                            localStorage.removeItem('pending_registration_amount');
+                        }
+                    } catch (error) {
+                        console.error('Error checking pending registration:', error);
+                        localStorage.removeItem('pending_registration_id');
+                        localStorage.removeItem('pending_registration_reference');
+                        localStorage.removeItem('pending_registration_amount');
+                    }
+                },
+
                 resetForm() {
                     this.stopPolling();
                     this.step = 1;
-                    this.paymentMethod = 'ecocash';
+                    this.paymentMethod = 'web';
                     this.paymentPhone = '';
                     this.isProcessing = false;
                     this.isSubmitting = false;
+                    // Clear localStorage
+                    localStorage.removeItem('pending_registration_id');
+                    localStorage.removeItem('pending_registration_reference');
+                    localStorage.removeItem('pending_registration_amount');
                     this.isPolling = false;
                     this.registrationId = null;
                     this.reference = '';
@@ -2686,7 +2788,7 @@
                 donorEmail: '',
                 paymentPhone: '',
                 donorMessage: '',
-                donationPaymentMethod: 'ecocash',
+                donationPaymentMethod: 'web', // Default to web payment
                 isProcessing: false,
                 isPolling: false,
                 donationSuccess: false,
@@ -2717,7 +2819,10 @@
                 },
 
                 canSubmit() {
-                    return this.getFinalAmount() >= 1 && this.paymentPhone;
+                    const amount = this.getFinalAmount();
+                    if (amount < 1) return false;
+                    // Require valid email for Paynow payment
+                    return this.donorEmail && this.donorEmail.includes('@');
                 },
 
                 async processDonation() {
@@ -2728,32 +2833,30 @@
                         return;
                     }
 
-                    if (!this.paymentPhone) {
-                        this.errorMessage = 'Please enter your phone number for payment.';
+                    if (!this.donorEmail || !this.donorEmail.includes('@')) {
+                        this.errorMessage = 'Please enter a valid email address.';
                         return;
                     }
 
                     this.isProcessing = true;
                     this.errorMessage = '';
-                    this.paymentInstructions = '';
 
                     try {
-                        const response = await fetch('/api/donation/pay', {
+                        const payload = {
+                            amount: amount,
+                            donor_name: this.donorName || 'Anonymous',
+                            donor_email: this.donorEmail,
+                            message: this.donorMessage,
+                        };
+
+                        const response = await fetch('/api/donation/pay-web', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                                 'Accept': 'application/json',
                             },
-                            body: JSON.stringify({
-                                amount: amount,
-                                donor_name: this.donorName || 'Anonymous',
-                                donor_email: this.donorEmail,
-                                donor_phone: this.paymentPhone,
-                                message: this.donorMessage,
-                                payment_phone: this.paymentPhone,
-                                payment_method: this.donationPaymentMethod,
-                            }),
+                            body: JSON.stringify(payload),
                         });
 
                         const data = await response.json();
@@ -2764,17 +2867,18 @@
                             return;
                         }
 
-                        // Store donation ID for polling
+                        // Store donation info in localStorage for when user returns from Paynow
                         this.donationId = data.data.donation_id;
                         this.reference = data.data.reference;
+                        localStorage.setItem('pending_donation_id', this.donationId);
+                        localStorage.setItem('pending_donation_reference', this.reference);
+                        localStorage.setItem('pending_donation_amount', amount);
 
-                        // Show instructions from Paynow
-                        this.paymentInstructions = data.data.instructions || 'Please check your phone and enter your PIN to complete the donation.';
-
-                        // Start polling for payment status
-                        this.isPolling = true;
-                        this.pollAttempts = 0;
-                        this.startDonationPolling();
+                        // Redirect to Paynow
+                        if (data.data.redirect_url) {
+                            window.location.href = data.data.redirect_url;
+                            return;
+                        }
                     } catch (error) {
                         console.error('Donation error:', error);
                         this.errorMessage = 'Network error. Please check your connection and try again.';
@@ -2862,7 +2966,7 @@
                     this.donorEmail = '';
                     this.paymentPhone = '';
                     this.donorMessage = '';
-                    this.donationPaymentMethod = 'ecocash';
+                    this.donationPaymentMethod = 'web';
                     this.isProcessing = false;
                     this.isPolling = false;
                     this.donationSuccess = false;
@@ -2871,6 +2975,74 @@
                     this.pollAttempts = 0;
                     this.donationId = null;
                     this.reference = '';
+                    // Clear localStorage
+                    localStorage.removeItem('pending_donation_id');
+                    localStorage.removeItem('pending_donation_reference');
+                    localStorage.removeItem('pending_donation_amount');
+                },
+
+                // Check for pending donation on init (when returning from Paynow)
+                init() {
+                    const pendingDonationId = localStorage.getItem('pending_donation_id');
+                    if (pendingDonationId) {
+                        this.donationId = pendingDonationId;
+                        this.reference = localStorage.getItem('pending_donation_reference') || '';
+                        // Check the payment status
+                        this.checkPendingDonation();
+                    }
+                },
+
+                async checkPendingDonation() {
+                    try {
+                        const response = await fetch('/api/donation/poll', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                donation_id: this.donationId,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.data.paid) {
+                            // Get the amount from localStorage or API response
+                            const amount = localStorage.getItem('pending_donation_amount') || data.data.amount || 0;
+
+                            // Clear localStorage
+                            localStorage.removeItem('pending_donation_id');
+                            localStorage.removeItem('pending_donation_reference');
+                            localStorage.removeItem('pending_donation_amount');
+
+                            // Dispatch event to show universal modal
+                            window.dispatchEvent(new CustomEvent('payment-success', {
+                                detail: {
+                                    type: 'donation',
+                                    amount: amount,
+                                    reference: this.reference
+                                }
+                            }));
+                        } else if (response.ok && data.data.payment_status === 'processing') {
+                            // Still processing, start polling
+                            this.isPolling = true;
+                            this.isProcessing = true;
+                            this.paymentInstructions = 'Checking payment status...';
+                            this.startDonationPolling();
+                        } else {
+                            // Payment failed or other status
+                            localStorage.removeItem('pending_donation_id');
+                            localStorage.removeItem('pending_donation_reference');
+                            localStorage.removeItem('pending_donation_amount');
+                        }
+                    } catch (error) {
+                        console.error('Error checking pending donation:', error);
+                        localStorage.removeItem('pending_donation_id');
+                        localStorage.removeItem('pending_donation_reference');
+                        localStorage.removeItem('pending_donation_amount');
+                    }
                 }
             }
         }
